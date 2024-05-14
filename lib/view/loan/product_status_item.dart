@@ -9,13 +9,12 @@ import '../../util/hex_color.dart';
 enum ProductStatus { normal, pending, canBorrow, rollback, repayment, machineReview, offlineWithdraw, reject, paying, payFailed }
 
 class ProductStatusItem {
-  static Widget generateProductItem(ProductStatus status,
-      {required ProductModelEntity product, String? statusDescription, int? countdownTime, Function()? buttonClickedCallback, Function()? countdownFinishedCallback}) {
+  static Widget generateProductItem(ProductModelEntity product, {Function()? buttonClickedCallback}) {
     return Container(
       margin: const EdgeInsets.fromLTRB(0, 0, 0, 16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: status == ProductStatus.normal ? const BorderRadius.vertical(top: Radius.circular(10)) : BorderRadius.circular(16),
+        borderRadius: product.productState == ProductStatus.normal ? const BorderRadius.vertical(top: Radius.circular(10)) : BorderRadius.circular(16),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -28,8 +27,8 @@ class ProductStatusItem {
               Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  CommonImage(src: _getProductIcon(status)),
-                  if (status == ProductStatus.normal) const Positioned(left: -10, top: -14, child: CommonImage(src: 'asset/icons/crown.png'))
+                  CommonImage(src: _getProductIcon(product.productState)),
+                  if (product.productState == ProductStatus.normal) const Positioned(left: -10, top: -14, child: CommonImage(src: 'asset/icons/crown.png'))
                 ],
               ),
               const Padding(padding: EdgeInsets.only(left: 4)),
@@ -38,14 +37,16 @@ class ProductStatusItem {
                       style: TextStyle(color: HexColor('#FF102729'), fontSize: 16, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis, maxLines: 1, softWrap: true))
             ]),
           ),
-          if (status == ProductStatus.normal) _getNormalStatusContent(product: product, applyClickedCallback: buttonClickedCallback),
-          if (status == ProductStatus.pending)
-            _getPendingStatusContent(product: product, statusDescription: statusDescription, countdownTime: countdownTime, countdownStopCallback: countdownFinishedCallback),
-          if (status == ProductStatus.rollback || status == ProductStatus.reject)
-            _getRollbackOrRejectStatusContent(status, product: product, buttonClickedCallback: buttonClickedCallback),
-          if (status == ProductStatus.canBorrow) _getWithdrawStatusContent(product: product, buttonClickedCallback: buttonClickedCallback),
-          if(status != ProductStatus.normal && status != ProductStatus.pending && (status != ProductStatus.rollback || status != ProductStatus.reject) && status != ProductStatus.canBorrow)
-            _getPendingStatusContent(product: product, statusDescription: statusDescription, countdownTime: countdownTime, countdownStopCallback: countdownFinishedCallback),
+          if (product.productState == ProductStatus.normal) _getNormalStatusContent(product: product, applyClickedCallback: buttonClickedCallback),
+          if (product.productState == ProductStatus.pending) _getPendingStatusContent(product: product),
+          if (product.productState == ProductStatus.rollback || product.productState == ProductStatus.reject)
+            _getRollbackOrRejectStatusContent(product.productState, product: product, buttonClickedCallback: buttonClickedCallback),
+          if (product.productState == ProductStatus.canBorrow) _getWithdrawStatusContent(product: product, buttonClickedCallback: buttonClickedCallback),
+          if (product.productState != ProductStatus.normal &&
+              product.productState != ProductStatus.pending &&
+              (product.productState != ProductStatus.rollback || product.productState != ProductStatus.reject) &&
+              product.productState != ProductStatus.canBorrow)
+            _getPendingStatusContent(product: product),
         ],
       ),
     );
@@ -97,8 +98,8 @@ class ProductStatusItem {
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 16),
       child: Column(
         children: [
-          Text(statusDescription ?? '', style: TextStyle(fontSize: 15, color: HexColor('#FF3B414B'))),
-          CountDownWidget(countTime: countdownTime ?? 20 * 60, countDownFinishedCallback: countdownStopCallback),
+          Text('Under Review , The approval result will be given within 12 hours at the latest', style: TextStyle(fontSize: 15, color: HexColor('#FF3B414B'))),
+          // CountDownWidget(countTime: countdownTime ?? 20 * 60, countDownFinishedCallback: countdownStopCallback),
           // GestureDetector(
           //     behavior: HitTestBehavior.opaque,
           //     onTap: () => pendingStatusClickedCallback!(),

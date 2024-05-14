@@ -39,7 +39,7 @@ class CardOcrView extends StatelessWidget {
                             children: [
                               Text('Facial Recognition', style: TextStyle(color: HexColor('#FF3B414B'), fontSize: 15)),
                               InkWell(
-                                  onTap:  controller.go2doingLiveness,
+                                  onTap: controller.go2doingLiveness,
                                   child: Container(
                                     width: 100,
                                     clipBehavior: Clip.hardEdge,
@@ -49,7 +49,8 @@ class CardOcrView extends StatelessWidget {
                             ],
                           ),
                         ),
-                        CertifySelectionItem('Type of document to submit', selectedContent: controller.cardType.value, onTap: controller.go2selectCardType),
+                        CertifySelectionItem('Type of document to submit',
+                            selectedContent: controller.cardType.value, onTap: controller.ocrType == 0 ? controller.go2selectCardType : null),
                         Container(
                           width: double.infinity,
                           margin: EdgeInsets.only(left: 12, right: 12, bottom: 16),
@@ -68,10 +69,10 @@ class CardOcrView extends StatelessWidget {
                             Text('Front photo of ID card', style: TextStyle(color: HexColor('#FF757F8C'), fontSize: 15))
                           ]),
                         ),
-                        CertifyInputItem('Document ID Number', inputController: controller.cardNumController),
-                        CertifyInputItem('First Name', inputController: controller.firstNameController),
-                        CertifyInputItem('Last Name', inputController: controller.lastNameController),
-                        CertifyInputItem('Middle Name (Optional)', inputController: controller.midNameController),
+                        CertifyInputItem('Document ID Number', inputController: controller.cardNumController, inputEnable: controller.ocrType == 0),
+                        CertifyInputItem('First Name', inputController: controller.firstNameController, inputEnable: controller.ocrType == 0),
+                        CertifyInputItem('Last Name', inputController: controller.lastNameController, inputEnable: controller.ocrType == 0),
+                        CertifyInputItem('Middle Name (Optional)', inputController: controller.midNameController, inputEnable: controller.ocrType == 0),
                         Container(
                           margin: EdgeInsets.only(left: 12, right: 12, bottom: 16),
                           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -80,7 +81,7 @@ class CardOcrView extends StatelessWidget {
                             Text('Gender', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
                             Row(children: [
                               TextButton(
-                                  onPressed: () => controller.genderOptionsOnPressed(true),
+                                  onPressed: controller.ocrType.value == 0 ? () => controller.genderOptionsOnPressed(true) : null,
                                   child: Row(
                                     children: [
                                       Icon(controller.selectedGender.value == 'Male' ? Icons.radio_button_checked : Icons.radio_button_unchecked,
@@ -90,7 +91,7 @@ class CardOcrView extends StatelessWidget {
                                     ],
                                   )),
                               TextButton(
-                                  onPressed: () => controller.genderOptionsOnPressed(false),
+                                  onPressed: controller.ocrType.value == 0 ? () => controller.genderOptionsOnPressed(false) : null,
                                   child: Row(
                                     children: [
                                       Icon(controller.selectedGender.value == 'Female' ? Icons.radio_button_checked : Icons.radio_button_unchecked,
@@ -102,7 +103,7 @@ class CardOcrView extends StatelessWidget {
                             ])
                           ]),
                         ),
-                        CertifySelectionItem('Date of Birth', selectedContent: controller.birth.value, onTap: controller.go2selectBirthday),
+                        CertifySelectionItem('Date of Birth', selectedContent: controller.birth.value, onTap: controller.ocrType == 0 ? controller.go2selectBirthday : null),
                         Container(
                           margin: EdgeInsets.only(left: 12, right: 12, bottom: 12),
                           padding: EdgeInsets.all(8),

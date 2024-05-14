@@ -9,6 +9,7 @@ import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/models/id_card_type_entity.dart';
 import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
 import 'package:paghiram_loan/models/pgm_photo_entity.dart';
+import 'package:paghiram_loan/models/submited_ocr_model_entity.dart';
 import 'package:paghiram_loan/service/index.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
@@ -31,8 +32,23 @@ class CardOcrController extends GetxController {
   var midNameController = TextEditingController();
   var birth = ''.obs;
 
+  // 0: editable 1: uneditable
+  var ocrType = 0.obs;
+  String? cardImgUrl;
+  String? productId;
+
   late List<IdCardTypeEntity> idCardTypes;
   IdCardTypeEntity? selectedCardType;
+
+  @override
+  void onInit() {
+    super.onInit();
+    ocrType.value = Get.arguments['type'];
+    if (ocrType == 1) {
+      productId = Get.arguments['productId'];
+      _getUploadedInformation();
+    }
+  }
 
   @override
   void onReady() async {
@@ -42,9 +58,22 @@ class CardOcrController extends GetxController {
 
     Global.channel.setMethodCallHandler((call) async {
       if (call.method == 'takePhotoCompleted') {
-        takePhotoCompletedHandler(call.arguments);
+        _takePhotoCompletedHandler(call.arguments);
       }
     });
+  }
+
+  void _getUploadedInformation() async {
+    SubmitedOcrModelEntity? model = await NetworkService.fetchOCRRollbackInformation();
+    if (model != null) {
+      cardType.value = model.type;
+      cardNumController.text = model.idNumber;
+      firstNameController.text = model.firstName;
+      lastNameController.text = model.lastName;
+      midNameController.text = model.middleName;
+      selectedGender.value = model.gender;
+      birth.value = model.birthday;
+    }
   }
 
   Future<bool> _getCameraAuthStatus() async {
@@ -105,7 +134,21 @@ class CardOcrController extends GetxController {
     }
   }
 
-  void submitAction() {
+  void submitAction() => ocrType.value == 0 ? freshUserSubmit() : resubmit();
+
+  void resubmit() {
+    if (cardImgUrl == null) return CommonSnackBar.showSnackBar('Please submit a clear photo within the validity period');
+    if (livenessImg.value == 'asset/icons/liveness_placeholder.png') return CommonSnackBar.showSnackBar('Please perform facial recognition');
+    int startIndex = livenessImg.value.lastIndexOf('/') + 1;
+    String facePhoto = livenessImg.value.substring(startIndex);
+    var params = {'card_photo': cardImgUrl, 'face_photo': facePhoto, 'product_id': productId!};
+
+    NetworkService.resubmitIDCard(params, successCallback: () {
+      Get.back();
+    });
+  }
+
+  void freshUserSubmit() {
     if (livenessImg.value == 'asset/icons/liveness_placeholder.png') {
       return CommonSnackBar.showSnackBar('Please perform facial recognition');
     }
@@ -147,37 +190,37 @@ class CardOcrController extends GetxController {
 
     switch (curCardType) {
       case 'UMID':
-        RegExp umidReg = RegExp('/[0-9]{12,12}\$/');
+        RegExp umidReg = RegExp('[0-9]{12,12}\$');
         if (!umidReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('UMID Document ID Number must fill in 12 digits');
         }
       case 'PASSPOERT':
-        RegExp passReg = RegExp('/^[a-zA-Z][0-9]{7,7}[a-zA-Z]\$/');
+        RegExp passReg = RegExp('^[a-zA-Z][0-9]{7,7}[a-zA-Z]\$');
         if (!passReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('PASSPORT Document ID Number must fill in 9 digits or English letters');
         }
       case 'DRIVINGLICENSE':
-        RegExp drivingLicenseReg = RegExp('/^[a-zA-Z][0-9]{10,10}\$/');
+        RegExp drivingLicenseReg = RegExp('^[a-zA-Z][0-9]{10,10}\$');
         if (!drivingLicenseReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('DRIVINGLICENSE Document ID Number must fill in 11 digits or English letters');
         }
       case 'SSS':
-        RegExp sssReg = RegExp('/[0-9]{10,10}\$/');
+        RegExp sssReg = RegExp('[0-9]{10,10}\$');
         if (!sssReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('SSS Document ID Number must fill in 10 digits');
         }
       case 'PRC':
-        RegExp prcReg = RegExp('/[0-9] {7,7}\$/');
+        RegExp prcReg = RegExp('[0-9] {7,7}\$');
         if (!prcReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('PRC Document ID Number must fill in 7 digits');
         }
       case 'POSTALID':
-        RegExp postalIdReg = RegExp('/^[a-zA-Z]{1}[0-9]{11,11}\$/');
+        RegExp postalIdReg = RegExp('^[a-zA-Z]{1}[0-9]{11,11}\$');
         if (!postalIdReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('POSTALID Document ID Number must fill in 12 digits or English letters');
         }
       case 'NATIONALID':
-        RegExp nationalIdReg = RegExp('/[0-9]{16,16}\$/');
+        RegExp nationalIdReg = RegExp('[0-9]{16,16}\$');
         if (!nationalIdReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('NATIONALID Document ID Number must fill in 16 digits');
         }
@@ -201,7 +244,7 @@ class CardOcrController extends GetxController {
 
   void go2takeCardPicture() async {
     if (await _getCameraAuthStatus()) {
-      if (selectedCardType == null) {
+      if (selectedCardType == null && ocrType == 0) {
         return CommonSnackBar.showSnackBar('Please select ID type first!');
       }
 
@@ -209,17 +252,21 @@ class CardOcrController extends GetxController {
     }
   }
 
-  void takePhotoCompletedHandler(String photoPath) async {
+  void _takePhotoCompletedHandler(String photoPath) async {
     Map? uploadedImg = await NetworkService.aliyunUploadImge(photoPath, type: 2);
 
     if (uploadedImg == null) return;
     cardImg.value = uploadedImg['fullPath'];
-    OcrRecgnizedEntity ocrModel = await NetworkService.ocrRecgnizer(uploadedImg['sortPath'], cardType.value);
-    selectedGender.value = ocrModel.gender == 'M' ? 'Male' : 'Female';
-    cardNumController.text = ocrModel.idCardNumber;
-    firstNameController.text = ocrModel.replacedFirstName;
-    lastNameController.text = ocrModel.replacedLastName;
-    birth.value = ocrModel.birthday;
+    cardImgUrl = uploadedImg['sortPath'];
+
+    if (ocrType.value == 0) {
+      OcrRecgnizedEntity ocrModel = await NetworkService.ocrRecgnizer(cardImgUrl!, cardType.value);
+      selectedGender.value = ocrModel.gender == 'M' ? 'Male' : 'Female';
+      cardNumController.text = ocrModel.idCardNumber;
+      firstNameController.text = ocrModel.replacedFirstName;
+      lastNameController.text = ocrModel.replacedLastName;
+      birth.value = ocrModel.birthday;
+    }
   }
 
   void go2selectBirthday() async {

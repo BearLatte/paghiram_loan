@@ -30,9 +30,9 @@ class ProductModelEntity {
   @JSONField(name: "overdue_days")
   late int overdueDays;
   @JSONField(name: "back_time")
-  late int backTime;
-  late int money;
-  late int status;
+  int? backTime;
+  int? money;
+  int? status;
 
   ProductStatus get productState {
     switch (status) {

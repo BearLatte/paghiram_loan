@@ -11,6 +11,7 @@ import 'package:paghiram_loan/models/id_card_type_entity.dart';
 import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
 import 'package:paghiram_loan/models/pgm_photo_entity.dart';
 import 'package:paghiram_loan/models/product_model_entity.dart';
+import 'package:paghiram_loan/models/submited_ocr_model_entity.dart';
 import 'package:paghiram_loan/network/index.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/md5_util.dart';
@@ -237,6 +238,18 @@ class NetworkService {
   static Future<void> deleteAccount({required void Function() successCallback}) async {
     BaseResponse? response = await HttpUtils.get(path: '/Login/cancel_user');
     if (response != null) successCallback();
+  }
+
+  // get id card ocr rollback information
+  static Future<SubmitedOcrModelEntity?> fetchOCRRollbackInformation() async {
+    BaseResponse? response = await HttpUtils.get<SubmitedOcrModelEntity>(path: '/UserCard/index');
+    return response?.data;
+  }
+
+  // resubmit ID Card photo
+  static resubmitIDCard(Map<String, dynamic> parameters, {required void Function() successCallback}) async {
+   BaseResponse? response = await HttpUtils.post(path: '/UserCard/back_card', data: parameters);
+   if(response != null) successCallback();
   }
 
   static Future<void> buryPoint() async {

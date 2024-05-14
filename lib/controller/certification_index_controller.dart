@@ -58,7 +58,7 @@ class CertificationIndexController extends GetxController {
     if (!isBasicFinished.value) {
       Get.toNamed(ApplicationRoutes.basicInfo)?.then((value) => _getAuthStatus());
     } else {
-      Get.toNamed(ApplicationRoutes.cardOCR)?.then((value) => _getAuthStatus());
+      Get.toNamed(ApplicationRoutes.cardOCR, arguments: {'type': 0})?.then((value) => _getAuthStatus());
     }
   }
 

@@ -79,13 +79,12 @@ class LoanTab extends StatelessWidget {
                                 itemBuilder: (buildContext, index) => CommonImage(src: _banners[index], fit: BoxFit.cover),
                               )),
                           ...List.generate(
-                              controller.products.length,
-                              (index) => ProductStatusItem.generateProductItem(controller.products[index].productState,
-                                  countdownTime: controller.pendingCountdownTime.value,
-                                  buttonClickedCallback: () => controller.productButtonClickedCallBack(controller.products[index]),
-                                  product: controller.products[index],
-                                  statusDescription: controller.pendingStateDescription.value,
-                                  countdownFinishedCallback: controller.pendingStatusCountdownStopCallback)),
+                            controller.products.length,
+                            (index) => ProductStatusItem.generateProductItem(
+                              controller.products[index],
+                              buttonClickedCallback: () => controller.productButtonClickedCallBack(controller.products[index]),
+                            ),
+                          ),
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),

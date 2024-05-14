@@ -19,9 +19,6 @@ class LoanTabController extends GetxController {
   var userAccount = 'Login/Register'.obs;
   var products = <ProductModelEntity>[].obs;
   var marquees = <String>[].obs;
-  var pendingStateDescription = 'Under review, please wait a moment'.obs;
-  // var pendingCountdownTime = 1200.obs;
-  var pendingCountdownTime = 1200.obs;
 
   late RefreshController refreshController;
 
@@ -49,11 +46,6 @@ class LoanTabController extends GetxController {
     Global.prefs?.setString(Constant.SERVICE_PHONE_NUMBER_ONE, response?.serviceOne ?? '');
     Global.prefs?.setString(Constant.SERVICE_PHONE_NUMBER_TWO, response?.serviceTwo ?? '');
     refreshController.refreshCompleted();
-
-    // get pending countdown time count
-    String? phone = Global.prefs?.getString(Constant.PHONE_NUMBER_FLAG);
-    if(phone == null) return;
-    pendingCountdownTime.value = Global.prefs?.getInt(phone) ?? 1200;
   }
 
   void _loadMarqueeList() async {
@@ -101,13 +93,16 @@ class LoanTabController extends GetxController {
       return;
     }
 
+    if(product.status == 4) {
+      Get.toNamed(ApplicationRoutes.cardOCR, arguments: {'type': 1, 'productId': product.id});
+      return;
+    }
+
     if (product.status == 8) {
       go2Feedback();
       return;
     }
   }
-
-  void pendingStatusCountdownStopCallback() => pendingStateDescription.value = 'Under Review , The approval result will be given within 12 hours at the latest';
 
   void go2Certification(String? type, String? itemId) {
     Get.back();

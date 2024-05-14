@@ -7,9 +7,19 @@ class CertifyInputItem extends StatelessWidget {
   final TextEditingController? inputController;
   final FocusNode? inputNode;
   final TextInputType? keyboardType;
+  final bool inputEnable;
   final void Function()? onEditingCompleted;
 
-  const CertifyInputItem(this.title, {super.key, this.isEmpty = false, this.inputController, this.inputNode, this.keyboardType, this.onEditingCompleted});
+  const CertifyInputItem(
+    this.title, {
+    super.key,
+    this.isEmpty = false,
+    this.inputController,
+    this.inputNode,
+    this.keyboardType,
+    this.onEditingCompleted,
+    this.inputEnable = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +36,7 @@ class CertifyInputItem extends StatelessWidget {
               TextField(
                 maxLines: 5,
                 minLines: 1,
+                enabled: inputEnable,
                 controller: inputController,
                 focusNode: inputNode,
                 keyboardType: keyboardType,

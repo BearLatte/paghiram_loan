@@ -14,6 +14,7 @@ import 'package:paghiram_loan/models/marquee_entity.dart';
 import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
 import 'package:paghiram_loan/models/pgm_photo_entity.dart';
 import 'package:paghiram_loan/models/product_model_entity.dart';
+import 'package:paghiram_loan/models/submited_ocr_model_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -219,6 +220,9 @@ class JsonConvert {
     if (<ProductModelEntity>[] is M) {
       return data.map<ProductModelEntity>((Map<String, dynamic> e) => ProductModelEntity.fromJson(e)).toList() as M;
     }
+    if (<SubmitedOcrModelEntity>[] is M) {
+      return data.map<SubmitedOcrModelEntity>((Map<String, dynamic> e) => SubmitedOcrModelEntity.fromJson(e)).toList() as M;
+    }
 
     debugPrint("$M not found");
 
@@ -265,6 +269,7 @@ class JsonConvertClassCollection {
     (OcrRecgnizedEntity).toString(): OcrRecgnizedEntity.fromJson,
     (PgmPhotoEntity).toString(): PgmPhotoEntity.fromJson,
     (ProductModelEntity).toString(): ProductModelEntity.fromJson,
+    (SubmitedOcrModelEntity).toString(): SubmitedOcrModelEntity.fromJson,
   };
 
   bool containsKey(String type) {
