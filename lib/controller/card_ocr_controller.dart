@@ -11,10 +11,12 @@ import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
 import 'package:paghiram_loan/models/pgm_photo_entity.dart';
 import 'package:paghiram_loan/service/index.dart';
 import 'package:paghiram_loan/util/constant.dart';
+import 'package:paghiram_loan/util/hex_color.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
+import 'package:scroll_datetime_picker/scroll_datetime_picker.dart';
 
 import '../util/global.dart';
 
@@ -59,10 +61,10 @@ class CardOcrController extends GetxController {
     }
     return true;
   }
-  
+
   void backAction() async {
-    String result = await CommonAlert.showAlert(title: 'Warm Reminder',message: 'You have not finished filling in the authentication information. Still return it?');
-    if(result == 'confirm') {
+    String result = await CommonAlert.showAlert(title: 'Warm Reminder', message: 'You have not finished filling in the authentication information. Still return it?');
+    if (result == 'confirm') {
       Get.until((route) => route.settings.name == ApplicationRoutes.certificationIndex);
     }
   }
@@ -221,13 +223,57 @@ class CardOcrController extends GetxController {
   }
 
   void go2selectBirthday() async {
-    DateTime? tempBirth = await showDatePicker(
-        context: Get.context!,
-        firstDate: DateTime(DateTime.now().year - 80, 01, 01),
-        lastDate: DateTime(DateTime.now().year - 18, 01, 01),
-        initialDate: DateTime(DateTime.now().year - 22, 01, 01));
-    if (tempBirth == null) return;
-    birth.value = DateFormat.yMd().format(tempBirth);
+    late DateTime selectedDate;
+    String? result = await Get.bottomSheet(
+        enableDrag: false,
+        isDismissible: false,
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              decoration: BoxDecoration(color: Constant.themeColor, borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: Get.back,
+                    child: Text('Cancel', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                  ),
+                  Text('Date of Birth', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                  GestureDetector(
+                    onTap: () => Get.back(result: 'confirm'),
+                    child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              height: 294,
+              child: ScrollDateTimePicker(
+                  itemExtent: 54,
+                  visibleItem: 5,
+                  style: DateTimePickerStyle(
+                    activeStyle: TextStyle(color: HexColor('#FF2F2F2F'), fontSize: 16),
+                    inactiveStyle: TextStyle(color: HexColor('#FFCCCCCC'), fontSize: 16),
+                    activeDecoration: BoxDecoration(border: Border.symmetric(horizontal: BorderSide(color: HexColor('#FFCCCCCC'), width: 0.5))),
+                  ),
+                  dateOption: DateTimePickerOption(
+                      dateFormat: DateFormat('MMMMddyyyy'),
+                      minDate: DateTime(DateTime.now().year - 80, 01, 01),
+                      maxDate: DateTime(DateTime.now().year - 18, 01, 01),
+                      initialDate: DateTime(DateTime.now().year - 22, 01, 01)),
+                  onChange: (date) {
+                    selectedDate = date;
+                  }),
+            )
+          ],
+        ));
+
+    if (result == null) return;
+
+    birth.value = DateFormat('MMddyyyy').format(selectedDate);
   }
 
   void genderOptionsOnPressed(bool isMale) => selectedGender.value = isMale ? 'Male' : 'Female';
