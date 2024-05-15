@@ -190,17 +190,17 @@ class CardOcrController extends GetxController {
 
     switch (curCardType) {
       case 'UMID':
-        RegExp umidReg = RegExp('[0-9]{12,12}\$');
+        RegExp umidReg = RegExp('/[0-9]{12,12}\$/');
         if (!umidReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('UMID Document ID Number must fill in 12 digits');
         }
-      case 'PASSPOERT':
-        RegExp passReg = RegExp('^[a-zA-Z][0-9]{7,7}[a-zA-Z]\$');
+      case 'PASSPORT':
+        RegExp passReg = RegExp('^[a-zA-Z]{1,1}[0-9]{7,7}[a-zA-Z]{1,1}\$');
         if (!passReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('PASSPORT Document ID Number must fill in 9 digits or English letters');
         }
       case 'DRIVINGLICENSE':
-        RegExp drivingLicenseReg = RegExp('^[a-zA-Z][0-9]{10,10}\$');
+        RegExp drivingLicenseReg = RegExp('^[a-zA-Z]{1,1}[0-9]{10,10}\$');
         if (!drivingLicenseReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('DRIVINGLICENSE Document ID Number must fill in 11 digits or English letters');
         }
@@ -210,12 +210,12 @@ class CardOcrController extends GetxController {
           return CommonSnackBar.showSnackBar('SSS Document ID Number must fill in 10 digits');
         }
       case 'PRC':
-        RegExp prcReg = RegExp('[0-9] {7,7}\$');
+        RegExp prcReg = RegExp('[0-9]{7,7}\$');
         if (!prcReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('PRC Document ID Number must fill in 7 digits');
         }
       case 'POSTALID':
-        RegExp postalIdReg = RegExp('^[a-zA-Z]{1}[0-9]{11,11}\$');
+        RegExp postalIdReg = RegExp('^[a-zA-Z]{1,1}[0-9]{11,11}\$');
         if (!postalIdReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('POSTALID Document ID Number must fill in 12 digits or English letters');
         }
@@ -224,6 +224,19 @@ class CardOcrController extends GetxController {
         if (!nationalIdReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('NATIONALID Document ID Number must fill in 16 digits');
         }
+    }
+
+    RegExp nameReg = RegExp('[\\-\\*\\&\\%\$\\@\\#\\^\\.\\~\\?\\)\\(\\[\\]\\+\\=\\!]');
+    if (nameReg.hasMatch(fName)) {
+      return CommonSnackBar.showSnackBar('Please input your name in the correct format!');
+    }
+
+    if (nameReg.hasMatch(lName)) {
+      return CommonSnackBar.showSnackBar('Please input your name in the correct format!');
+    }
+
+    if (nameReg.hasMatch(mName)) {
+      return CommonSnackBar.showSnackBar('Please input your name in the correct format!');
     }
 
     NetworkService.submitIDCardInfo(
@@ -265,6 +278,7 @@ class CardOcrController extends GetxController {
       cardNumController.text = ocrModel.idCardNumber;
       firstNameController.text = ocrModel.replacedFirstName;
       lastNameController.text = ocrModel.replacedLastName;
+      midNameController.text = ocrModel.replacedMiddleName;
       birth.value = ocrModel.birthday;
     }
   }
@@ -320,7 +334,7 @@ class CardOcrController extends GetxController {
 
     if (result == null) return;
 
-    birth.value = DateFormat('MMddyyyy').format(selectedDate);
+    birth.value = DateFormat('MM/dd/yyyy').format(selectedDate);
   }
 
   void genderOptionsOnPressed(bool isMale) => selectedGender.value = isMale ? 'Male' : 'Female';

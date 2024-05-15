@@ -16,7 +16,7 @@ class ContactView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonView(
-        title: 'Emergency Contact',
+        title: 'Contact Person',
         navLeadingAction: controller.backAction,
         navTrailings: [IconButton(onPressed: controller.go2customerService, icon: CommonImage(src: 'asset/icons/certify_customer_service_icon.png'))],
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -27,7 +27,7 @@ class ContactView extends StatelessWidget {
                   children: [
                     ...List.generate(2, (index) {
                       return Column(children: [
-                        SectionHeader('Personal Reference Contact ${index + 1}'),
+                        SectionHeader('Contact person ${index + 1}'),
                         CertifySelectionItem('Name',
                             isContact: true,
                             selectedContent: index == 0 ? controller.nameOfContact1.value : controller.nameOfContact2.value,
@@ -45,7 +45,7 @@ class ContactView extends StatelessWidget {
                     }),
                     ...List.generate(3, (index) {
                       return Column(children: [
-                        SectionHeader('Additional Contact Person ${index + 1}'),
+                        SectionHeader('Contact person ${index + 3}'),
                         CertifySelectionItem('Name',
                             isContact: true,
                             selectedContent:

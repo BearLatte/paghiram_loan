@@ -38,22 +38,22 @@ class PersonalInfoView extends StatelessWidget {
                           selectedContent: controller.maritalStatus.value, isEmpty: controller.isMaritalEmpty.value, onTap: controller.go2selectMaritalStatus),
                       CertifySelectionItem('Number of Children',
                           selectedContent: controller.numOfChildren.value, isEmpty: controller.isChildrenEmpty.value, onTap: controller.go2selectNumOfChildren),
-                      CertifySelectionItem('Residential Ownership',
+                      CertifySelectionItem('Housing Ownership',
                           selectedContent: controller.residentialOwnership.value,
                           isEmpty: controller.isResidentialOwnershipEmpty.value,
                           onTap: controller.go2selectResidentialOwnership),
-                      CertifySelectionItem('Residence',
+                      CertifySelectionItem('Residence Address',
                           selectedContent: '${controller.residenceProvince.value} ${controller.residenceCity.value} ${controller.residenceDistrict.value}',
                           isEmpty: controller.isResidenceEmpty.value,
                           onTap: controller.go2selectResidence),
                       CertifyInputItem(
-                        'Detailed Address',
+                        'Complete Address',
                         isEmpty: controller.isDetailAddressEmpty.value,
                         inputController: controller.addressInputController,
                         inputNode: controller.addressNode,
                         onEditingCompleted: controller.onDetailAddressEditingCompleted,
                       ),
-                      SectionHeader('Contact Information'),
+                      SectionHeader('Contact Detail'),
                       if (controller.isShowDropDown.value)
                         Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                           _createMailDropDownItem(controller.dropMenuGmail.value, onTap: controller.mailDropDownMenuDidClicked, type: MailType.gmail),
@@ -87,13 +87,13 @@ class PersonalInfoView extends StatelessWidget {
                         onEditingCompleted: controller.onFBEditingCompleted,
                       ),
                       CertifyInputItem(
-                        'Viber Phone Number',
+                        'Viber contact Number',
                         isEmpty: controller.isViberEmpty.value,
                         inputController: controller.viberInputController,
                         keyboardType: TextInputType.phone,
                       ),
                       CertifyInputItem(
-                        'Backup Phone Number(Optional)',
+                        'Alternate Phone Number(Optional)',
                         inputController: controller.backupController,
                         keyboardType: TextInputType.phone,
                       )

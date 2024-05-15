@@ -200,7 +200,7 @@ class ContactController extends GetxController {
     }
 
     NetworkService.submitBasicInfo(certificationModel!.toJson(), successCallback: () {
-      Get.toNamed(ApplicationRoutes.cardOCR);
+      Get.toNamed(ApplicationRoutes.cardOCR, arguments: {'type': 0});
     });
   }
 

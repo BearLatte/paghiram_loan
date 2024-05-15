@@ -33,20 +33,20 @@ class BasicInfoView extends StatelessWidget {
                       children: [
                         SectionHeader('Basic Information'),
                         CertifySelectionItem(
-                          'Usage of Loan',
+                          'Loan Purpose',
                           onTap: controller.go2selectUsageOfLoan,
                           selectedContent: controller.usage.value,
                           isEmpty: controller.isPurposeEmpty.value,
                         ),
                         CertifySelectionItem(
-                          'UEducation Background',
+                          'Educational Background',
                           selectedContent: controller.edu.value,
                           onTap: controller.go2selectEduBackground,
                           isEmpty: controller.isEduEmpty.value,
                         ),
-                        SectionHeader('Job Information'),
+                        SectionHeader('Work Information'),
                         CertifySelectionItem(
-                          'Industry Category',
+                          'Industry Classification',
                           selectedContent: controller.industry.value,
                           onTap: controller.go2selectIndustry,
                           isEmpty: controller.isIndustryEmpty.value,
@@ -61,21 +61,21 @@ class BasicInfoView extends StatelessWidget {
                           ),
                         if (controller.isShowWorkDetail.value)
                           CertifySelectionItem(
-                            'Working Experience',
+                            'Work Experience',
                             selectedContent: controller.experience.value,
                             onTap: controller.go2selectExperience,
                             isEmpty: controller.isExperienceEmpty.value,
                           ),
                         if (controller.isShowWorkDetail.value)
                           CertifySelectionItem(
-                            'Payday 1 Date',
+                            'Payday 1',
                             selectedContent: controller.payday1.value,
                             onTap: controller.go2selectPaydayOne,
                             isEmpty: controller.isPayday1Empty.value,
                           ),
                         if (controller.isShowWorkDetail.value)
                           CertifySelectionItem(
-                            'Payday 2 Date',
+                            'Payday 2',
                             selectedContent: controller.payday2.value,
                             onTap: controller.go2selectPaydayTwo,
                             isEmpty: controller.isPayday2Empty.value,
@@ -96,7 +96,7 @@ class BasicInfoView extends StatelessWidget {
                           ),
                         if (controller.isShowWorkDetail.value)
                           CertifyInputItem(
-                            'Detailed Address',
+                            'Complete Address',
                             isEmpty: controller.isDetailAddressEmpty.value,
                             inputController: controller.addressInputController,
                             inputNode: controller.addressNode,

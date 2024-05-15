@@ -305,6 +305,14 @@ class PersonalInfoController extends GetxController with WidgetsBindingObserver 
       return CommonSnackBar.showSnackBar('Please enter a valid viber phone number.');
     }
 
+    if(viberPhone.length < 10) {
+      return CommonSnackBar.showSnackBar('Please enter a valid viber phone number.');
+    }
+
+    if (viberPhone == Global.phoneNumber) {
+      return CommonSnackBar.showSnackBar('The registered mobile phone number cannot be used as an alternate number.');
+    }
+
     if (!backupController.text.trim().isEmpty) {
       String backupPhone = backupController.text.trim();
       if (!RegExp('^0').hasMatch(backupPhone)) {
@@ -315,7 +323,7 @@ class PersonalInfoController extends GetxController with WidgetsBindingObserver 
       }
 
       if (backupPhone == Global.phoneNumber) {
-        return CommonSnackBar.showSnackBar('The backup phone number cannot be same to current login phone number.');
+        return CommonSnackBar.showSnackBar('The registered mobile phone number cannot be used as an alternate number');
       }
     }
 

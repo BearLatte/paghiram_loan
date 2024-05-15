@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/common/common_view.dart';
 import 'package:paghiram_loan/models/product_model_entity.dart';
+import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/controller/loan_tab_controller.dart';
 import 'package:paghiram_loan/util/global.dart';
@@ -135,11 +136,19 @@ class LoanTab extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Row(children: [
-              const CommonImage(src: 'asset/icons/avatar.png', width: 66, height: 66, fit: BoxFit.cover),
-              const SizedBox(width: 16),
-              Text(phone!, style: const TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.w600))
-            ]),
+            GestureDetector(
+              onTap: phone == 'Login/Register' ? () {
+                Get.back();
+                Get.toNamed(ApplicationRoutes.login);
+              } : null,
+              child: Row(
+                children: [
+                  const CommonImage(src: 'asset/icons/avatar.png', width: 66, height: 66, fit: BoxFit.cover),
+                  const SizedBox(width: 16),
+                  Text(phone!, style: const TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.w600))
+                ],
+              ),
+            ),
             const SizedBox(height: 40),
             Wrap(runSpacing: 24, spacing: 10, alignment: WrapAlignment.spaceBetween, children: [
               // _profileMenuItem(icon: 'asset/icons/profile_certification_icon.png', title: 'Certification', onTap: () => controller.go2Certification(null)),

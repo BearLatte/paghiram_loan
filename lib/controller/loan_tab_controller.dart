@@ -16,7 +16,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class LoanTabController extends GetxController {
-  var userAccount = 'Login/Register'.obs;
+  // var userAccount = 'Login/Register'.obs;
   var products = <ProductModelEntity>[].obs;
   var marquees = <String>[].obs;
 
