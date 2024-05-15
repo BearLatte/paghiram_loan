@@ -170,7 +170,7 @@ class PersonalInfoController extends GetxController with WidgetsBindingObserver 
 
   void go2selectResidentialOwnership() async {
     var options = await VerifySelectionUtil.getOptions(SelectionType.ownership);
-    int? selectedIndex = await CommonBottomSheet.showBottomSheet('Residential Ownership', options: options);
+    int? selectedIndex = await CommonBottomSheet.showBottomSheet('Housing Ownership', options: options);
     if (selectedIndex == null) return;
     certificationModel?.hbl = options[selectedIndex];
     isResidentialOwnershipEmpty.value = false;

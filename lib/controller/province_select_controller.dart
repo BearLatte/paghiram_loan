@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:paghiram_loan/models/city_model.dart';
@@ -17,7 +15,6 @@ class ProvinceSelectController extends GetxController {
   }
 
   void _loadData() async {
-    EasyLoading.show(status: 'Loading', maskType: EasyLoadingMaskType.black);
     String data = await rootBundle.loadString('asset/data/company_address.json');
     Map<String, dynamic> json = jsonDecode(data);
     var tempProvince = [];
@@ -26,7 +23,6 @@ class ProvinceSelectController extends GetxController {
     });
 
     tempProvince.sort((a, b) => a.prefix.compareTo(b.prefix));
-    EasyLoading.dismiss();
     province.value = tempProvince;
   }
 

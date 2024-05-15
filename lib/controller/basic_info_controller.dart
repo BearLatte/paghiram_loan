@@ -184,7 +184,7 @@ class BasicInfoController extends GetxController with WidgetsBindingObserver {
 
   void go2selectUsageOfLoan() async {
     List<String> options = await VerifySelectionUtil.getOptions(SelectionType.usage);
-    int? selectedIndex = await CommonBottomSheet.showBottomSheet('Usage of Loan', options: options);
+    int? selectedIndex = await CommonBottomSheet.showBottomSheet('Loan purpose', options: options);
     if (selectedIndex == null) return;
     isPurposeEmpty.value = false;
     certificationModel?.usageType = options[selectedIndex];
@@ -207,7 +207,7 @@ class BasicInfoController extends GetxController with WidgetsBindingObserver {
   void go2selectIndustry() async {
     var optionalsData = await VerifySelectionUtil.optionalsData;
     List<String> options = await VerifySelectionUtil.getOptions(SelectionType.industry);
-    int? selectedIndex = await CommonBottomSheet.showBottomSheet('Industry Category', options: options);
+    int? selectedIndex = await CommonBottomSheet.showBottomSheet('Industry Classification', options: options);
     if (selectedIndex == null) return;
     certificationModel?.branch = options[selectedIndex];
     certificationModel?.industryType = optionalsData.branch[selectedIndex].type;
@@ -244,7 +244,7 @@ class BasicInfoController extends GetxController with WidgetsBindingObserver {
 
   void go2selectExperience() async {
     List<String> options = await VerifySelectionUtil.getOptions(SelectionType.experience);
-    int? selectedIndex = await CommonBottomSheet.showBottomSheet('Working Experience', options: options);
+    int? selectedIndex = await CommonBottomSheet.showBottomSheet('Work Experience', options: options);
     if (selectedIndex == null) return;
     certificationModel?.workTimeLong = options[selectedIndex];
     isExperienceEmpty.value = false;
