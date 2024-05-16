@@ -45,7 +45,7 @@ class NotesTab extends StatelessWidget {
                           removeTop: true,
                           child: ListView.builder(
                               itemCount: controller.notes.value.length,
-                              itemBuilder: (context, index) => _listItem(controller.notes.value[index], () => controller.deleteNote(index)))))),
+                              itemBuilder: (context, index) => _listItem(controller.notes.value[index] as Note, () => controller.deleteNote(index)))))),
               // Expanded(child: SingleChildScrollView())
             ])));
   }

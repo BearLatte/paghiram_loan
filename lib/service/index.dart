@@ -235,8 +235,8 @@ class NetworkService {
   }
 
   // delete account
-  static Future<void> deleteAccount({required void Function() successCallback}) async {
-    BaseResponse? response = await HttpUtils.get(path: '/Login/cancel_user');
+  static Future<void> deleteAccount({required String password, required void Function() successCallback}) async {
+    BaseResponse? response = await HttpUtils.get(path: '/Login/cancel_user_new', queryParameters: {'password': password});
     if (response != null) successCallback();
   }
 

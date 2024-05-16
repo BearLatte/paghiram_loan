@@ -257,31 +257,37 @@ class PersonalInfoController extends GetxController with WidgetsBindingObserver 
     String viberPhone = viberInputController.text.trim();
     if (marital.isEmpty) {
       isMaritalEmpty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(11).currentContext!);
       return;
     }
 
     if (childrenCount.isEmpty) {
       isChildrenEmpty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(12).currentContext!);
       return;
     }
 
     if (ownership.isEmpty) {
       isResidentialOwnershipEmpty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(13).currentContext!);
       return;
     }
 
     if (province.isEmpty || city.isEmpty || district.isEmpty) {
       isResidenceEmpty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(14).currentContext!);
       return;
     }
 
     if (detailAdd.isEmpty) {
       isDetailAddressEmpty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(15).currentContext!);
       return;
     }
 
     if (email.isEmpty) {
       isEmailEmpty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(16).currentContext!);
       return;
     }
 
@@ -293,11 +299,13 @@ class PersonalInfoController extends GetxController with WidgetsBindingObserver 
 
     if (fb.isEmpty) {
       isFbEmpty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(17).currentContext!);
       return;
     }
 
     if (viberPhone.isEmpty) {
       isViberEmpty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(18).currentContext!);
       return;
     }
 

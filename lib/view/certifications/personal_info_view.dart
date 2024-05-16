@@ -35,19 +35,28 @@ class PersonalInfoView extends StatelessWidget {
                     children: [
                       SectionHeader('Personal Information'),
                       CertifySelectionItem('Marital Status',
-                          selectedContent: controller.maritalStatus.value, isEmpty: controller.isMaritalEmpty.value, onTap: controller.go2selectMaritalStatus),
+                          key: GlobalObjectKey(11),
+                          selectedContent: controller.maritalStatus.value,
+                          isEmpty: controller.isMaritalEmpty.value,
+                          onTap: controller.go2selectMaritalStatus),
                       CertifySelectionItem('Number of Children',
-                          selectedContent: controller.numOfChildren.value, isEmpty: controller.isChildrenEmpty.value, onTap: controller.go2selectNumOfChildren),
+                          key: GlobalObjectKey(12),
+                          selectedContent: controller.numOfChildren.value,
+                          isEmpty: controller.isChildrenEmpty.value,
+                          onTap: controller.go2selectNumOfChildren),
                       CertifySelectionItem('Housing Ownership',
+                          key: GlobalObjectKey(13),
                           selectedContent: controller.residentialOwnership.value,
                           isEmpty: controller.isResidentialOwnershipEmpty.value,
                           onTap: controller.go2selectResidentialOwnership),
                       CertifySelectionItem('Residence Address',
+                          key: GlobalObjectKey(14),
                           selectedContent: '${controller.residenceProvince.value} ${controller.residenceCity.value} ${controller.residenceDistrict.value}',
                           isEmpty: controller.isResidenceEmpty.value,
                           onTap: controller.go2selectResidence),
                       CertifyInputItem(
                         'Complete Address',
+                        key: GlobalObjectKey(15),
                         isEmpty: controller.isDetailAddressEmpty.value,
                         inputController: controller.addressInputController,
                         inputNode: controller.addressNode,
@@ -64,6 +73,7 @@ class PersonalInfoView extends StatelessWidget {
                         ]),
                       CertifyInputItem(
                         'E-mail',
+                        key: GlobalObjectKey(16),
                         isEmpty: controller.isEmailEmpty.value,
                         inputController: controller.emailInputController,
                         inputNode: controller.emailNode,
@@ -81,6 +91,7 @@ class PersonalInfoView extends StatelessWidget {
                       ),
                       CertifyInputItem(
                         'Facebook/Messenger Link',
+                        key: GlobalObjectKey(17),
                         isEmpty: controller.isFbEmpty.value,
                         inputNode: controller.fbNode,
                         inputController: controller.fbInputController,
@@ -88,6 +99,7 @@ class PersonalInfoView extends StatelessWidget {
                       ),
                       CertifyInputItem(
                         'Viber contact Number',
+                        key: GlobalObjectKey(18),
                         isEmpty: controller.isViberEmpty.value,
                         inputController: controller.viberInputController,
                         keyboardType: TextInputType.phone,
@@ -96,24 +108,23 @@ class PersonalInfoView extends StatelessWidget {
                         'Alternate Phone Number(Optional)',
                         inputController: controller.backupController,
                         keyboardType: TextInputType.phone,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.fromLTRB(10, 20, 10, 34),
+                        child: Container(
+                            height: 52,
+                            child: ElevatedButton(
+                              onPressed: controller.submitPersonalInfo,
+                              style: ElevatedButton.styleFrom(backgroundColor: Constant.themeColor),
+                              child: Text('Continue', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                            )),
                       )
                     ],
                   ),
                 ),
               ),
             ),
-            Container(
-              color: Colors.white,
-              width: double.infinity,
-              padding: EdgeInsets.fromLTRB(10, 20, 10, 34),
-              child: Container(
-                  height: 52,
-                  child: ElevatedButton(
-                    onPressed: controller.submitPersonalInfo,
-                    style: ElevatedButton.styleFrom(backgroundColor: Constant.themeColor),
-                    child: Text('Continue', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
-                  )),
-            )
           ],
         ),
       ),

@@ -29,15 +29,18 @@ class ContactView extends StatelessWidget {
                       return Column(children: [
                         SectionHeader('Contact person ${index + 1}'),
                         CertifySelectionItem('Name',
+                            key: GlobalObjectKey(1000 + index),
                             isContact: true,
                             selectedContent: index == 0 ? controller.nameOfContact1.value : controller.nameOfContact2.value,
                             isEmpty: index == 0 ? controller.isNameOfContact1Empty.value : controller.isNameOfContact2Empty.value,
                             onTap: () => controller.contactItemOnTap(ContactType.contact, index)),
                         CertifySelectionItem('Phone',
+                            key: GlobalObjectKey(2000 + index),
                             selectedContent: index == 0 ? controller.phoneOfContact1.value : controller.phoneOfContact2.value,
                             isEmpty: index == 0 ? controller.isPhoneOfContact1Empty.value : controller.isPhoneOfContact2Empty.value,
                             onTap: () => controller.contactItemOnTap(ContactType.contact, index)),
                         CertifySelectionItem('Relation',
+                            key: GlobalObjectKey(3000 + index),
                             selectedContent: index == 0 ? controller.relationOfContact1.value : controller.relationOfContact2.value,
                             isEmpty: index == 0 ? controller.isRelationOfContact1Empty.value : controller.isRelationOfContact2Empty.value,
                             onTap: () => controller.relationItemOnTap(ContactType.contact, index))
@@ -47,6 +50,7 @@ class ContactView extends StatelessWidget {
                       return Column(children: [
                         SectionHeader('Contact person ${index + 3}'),
                         CertifySelectionItem('Name',
+                            key: GlobalObjectKey(4000 + index),
                             isContact: true,
                             selectedContent:
                                 index == 0 ? controller.nameOfAdditional1.value : (index == 1 ? controller.nameOfAdditional2.value : controller.nameOfAdditional3.value),
@@ -55,6 +59,7 @@ class ContactView extends StatelessWidget {
                                 : (index == 1 ? controller.isNameOfAdditionalEmpty2.value : controller.isNameOfAdditionalEmpty3.value),
                             onTap: () => controller.contactItemOnTap(ContactType.additional, index)),
                         CertifySelectionItem('Phone',
+                            key: GlobalObjectKey(5000 + index),
                             isContact: true,
                             selectedContent:
                                 index == 0 ? controller.phoneOfAdditional1.value : (index == 1 ? controller.phoneOfAdditional2.value : controller.phoneOfAdditional3.value),
@@ -64,6 +69,7 @@ class ContactView extends StatelessWidget {
                             onTap: () => controller.contactItemOnTap(ContactType.additional, index)),
                         CertifySelectionItem(
                           'Relation',
+                          key: GlobalObjectKey(6000 + index),
                           isEmpty: index == 0
                               ? controller.isRelationOfAdditionalEmpty1.value
                               : (index == 1 ? controller.isRelationOfAdditionalEmpty2.value : controller.isRelationOfAdditionalEmpty3.value),

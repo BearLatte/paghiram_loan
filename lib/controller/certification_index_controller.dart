@@ -9,7 +9,6 @@ import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/service/index.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/file_manager.dart';
-import 'package:paghiram_loan/util/global.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
 
 class CertificationIndexController extends GetxController {
@@ -47,17 +46,18 @@ class CertificationIndexController extends GetxController {
   }
 
   void basicInfoOnPressed() {
-    if(isBasicFinished.value) {
-      return CommonSnackBar.showSnackBar("Please note that the data can't be changed after");
+    if (isBasicFinished.value) {
+      return CommonSnackBar.showSnackBar("Please note that the data can't be changed after submission");
     } else {
       Get.toNamed(ApplicationRoutes.basicInfo)?.then((value) => _getAuthStatus());
     }
   }
 
   void identityInfoOnPressed() {
+    if (isFaceFinished.value) return CommonSnackBar.showSnackBar("Please note that the data can't be changed after submission");
     if (!isBasicFinished.value) {
       Get.toNamed(ApplicationRoutes.basicInfo)?.then((value) => _getAuthStatus());
-    } else {
+    } else if (!isFaceFinished.value) {
       Get.toNamed(ApplicationRoutes.cardOCR, arguments: {'type': 0})?.then((value) => _getAuthStatus());
     }
   }

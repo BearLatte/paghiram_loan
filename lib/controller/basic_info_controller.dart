@@ -101,8 +101,10 @@ class BasicInfoController extends GetxController with WidgetsBindingObserver {
     String result = await CommonAlert.showAlert(
       title: 'Warm Reminder',
       message: 'You have not finished filling in the authentication information. Still return it?',
+      cancelText: 'Return',
+      confirmText: 'Continue',
     );
-    if(result == 'confirm') {
+    if (result == 'confirm') {
       Get.back();
     }
   }
@@ -130,52 +132,62 @@ class BasicInfoController extends GetxController with WidgetsBindingObserver {
 
     if (purpose.isEmpty) {
       isPurposeEmpty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(1).currentContext!);
       return;
     }
 
     if (eduBg.isEmpty) {
       isEduEmpty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(2).currentContext!);
       return;
     }
 
     if (curIndustry.isEmpty) {
       isIndustryEmpty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(3).currentContext!);
       return;
     }
 
     if (isShowDetail) {
       if (companyName.isEmpty) {
         isNameEmpty.value = true;
+        Scrollable.ensureVisible(GlobalObjectKey(4).currentContext!);
         return;
       }
 
       if (curExperience.isEmpty) {
         isExperienceEmpty.value = true;
+        Scrollable.ensureVisible(GlobalObjectKey(5).currentContext!);
         return;
       }
 
       if (curPayday1.isEmpty) {
         isPayday1Empty.value = true;
+        Scrollable.ensureVisible(GlobalObjectKey(6).currentContext!);
         return;
       }
 
       if (curPayday2.isEmpty) {
         isPayday2Empty.value = true;
+        Scrollable.ensureVisible(GlobalObjectKey(7).currentContext!);
         return;
       }
 
       if (curSalary.isEmpty) {
         isSalaryEmpty.value = true;
+        Scrollable.ensureVisible(GlobalObjectKey(8).currentContext!);
         return;
       }
 
       if (companyPro.isEmpty || companyCT.isEmpty || companyDis.isEmpty) {
         isCompanyAddressEmpty.value = true;
+        Scrollable.ensureVisible(GlobalObjectKey(9).currentContext!);
         return;
       }
 
       if (companyDetailAdd.isEmpty) {
         isDetailAddressEmpty.value = true;
+        Scrollable.ensureVisible(GlobalObjectKey(10).currentContext!);
         return;
       }
     }

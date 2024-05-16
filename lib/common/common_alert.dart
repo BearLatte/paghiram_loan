@@ -1,3 +1,7 @@
+// import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
+
+// import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,7 +10,7 @@ import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
 
 class CommonAlert {
-  static Future<String> showAlert({String title = '', required String message}) async {
+  static Future<String> showAlert({String title = '', required String message, required String cancelText, required String confirmText}) async {
     return await showDialog(
         context: Get.context!,
         barrierDismissible: false,
@@ -31,16 +35,13 @@ class CommonAlert {
                         child: TextButton(
                             style: TextButton.styleFrom(backgroundColor: HexColor('#FFEBF8F9')),
                             onPressed: () => Get.back(result: 'cancel'),
-                            child: Text('Return', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)))),
+                            child: Text(cancelText, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)))),
                     SizedBox(width: 16),
                     Expanded(
                         child: TextButton(
                             style: TextButton.styleFrom(backgroundColor: Constant.themeColor),
                             onPressed: () => Get.back(result: 'confirm'),
-                            child: Text(
-                              'Continue',
-                              style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w600),
-                            ))),
+                            child: Text(confirmText, style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w600)))),
                   ])
                 ]),
               ),

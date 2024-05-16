@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/application.dart';
@@ -126,76 +127,91 @@ class ContactController extends GetxController {
 
     if (nameContact1.isEmpty) {
       isNameOfContact1Empty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(1000).currentContext!);
       return;
     }
 
     if (phoneContact1.isEmpty) {
       isPhoneOfContact1Empty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(2000).currentContext!);
       return;
     }
 
     if (relationContact1.isEmpty) {
       isRelationOfContact1Empty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(3000).currentContext!);
       return;
     }
 
     if (nameContact2.isEmpty) {
       isNameOfContact2Empty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(1001).currentContext!);
       return;
     }
 
     if (phoneContact2.isEmpty) {
       isPhoneOfContact2Empty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(2001).currentContext!);
       return;
     }
 
     if (relationContact2.isEmpty) {
       isRelationOfContact2Empty.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(3001).currentContext!);
       return;
     }
 
     if (nameAdditional1.isEmpty) {
       isNameOfAdditionalEmpty1.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(4000).currentContext!);
       return;
     }
 
     if (phoneAdditional1.isEmpty) {
       isPhoneOfAdditionalEmpty1.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(5000).currentContext!);
       return;
     }
 
     if (relationAdditional1.isEmpty) {
       isRelationOfAdditionalEmpty1.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(6000).currentContext!);
       return;
     }
 
     if (nameAdditional2.isEmpty) {
       isNameOfAdditionalEmpty2.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(4001).currentContext!);
       return;
     }
 
     if (phoneAdditional2.isEmpty) {
       isPhoneOfAdditionalEmpty2.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(5001).currentContext!);
       return;
     }
 
     if (relationAdditional2.isEmpty) {
       isRelationOfAdditionalEmpty2.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(6001).currentContext!);
       return;
     }
 
     if (nameAdditional3.isEmpty) {
       isNameOfAdditionalEmpty3.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(4002).currentContext!);
       return;
     }
 
     if (phoneAdditional3.isEmpty) {
       isPhoneOfAdditionalEmpty3.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(5002).currentContext!);
       return;
     }
 
     if (relationAdditional3.isEmpty) {
       isRelationOfAdditionalEmpty3.value = true;
+      Scrollable.ensureVisible(GlobalObjectKey(6002).currentContext!);
       return;
     }
 
@@ -257,6 +273,7 @@ class ContactController extends GetxController {
             certificationModel?.gxNameTwo = name;
             certificationModel?.gxPhoneTwo = phone;
         }
+        relationItemOnTap(ContactType.contact, index);
       case ContactType.additional:
         switch (index) {
           case 0:
@@ -287,6 +304,7 @@ class ContactController extends GetxController {
             certificationModel?.gxNameFive = name;
             certificationModel?.gxPhoneFive = phone;
         }
+        relationItemOnTap(ContactType.additional, index);
     }
 
     _updateInfo();

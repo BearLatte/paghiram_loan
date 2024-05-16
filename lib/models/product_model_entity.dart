@@ -29,6 +29,8 @@ class ProductModelEntity {
   late int isLoan;
   @JSONField(name: "overdue_days")
   late int overdueDays;
+  @JSONField(name: "count_down")
+  int? countDown;
   @JSONField(name: "back_time")
   int? backTime;
   int? money;

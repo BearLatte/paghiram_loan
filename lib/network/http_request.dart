@@ -21,16 +21,16 @@ class HttpRequest {
         headers: HttpOptions.instance.headers);
 
     dio = Dio(options);
-    (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate = (client) {
-      client.badCertificateCallback = (cert, host, port) {
-        return true;
-      };
-
-      client.findProxy = (uri) {
-        return 'PROXY 192.168.0.25:8888';
-      };
-      return null;
-    };
+    // (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate = (client) {
+    //   client.badCertificateCallback = (cert, host, port) {
+    //     return true;
+    //   };
+    //
+    //   client.findProxy = (uri) {
+    //     return 'PROXY 192.168.0.25:8888';
+    //   };
+    //   return null;
+    // };
     dio.interceptors.add(PrettyDioLogger(requestHeader: true, requestBody: true, responseHeader: true, responseBody: true));
   }
 

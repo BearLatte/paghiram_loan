@@ -55,6 +55,10 @@ ProductModelEntity $ProductModelEntityFromJson(Map<String, dynamic> json) {
   if (overdueDays != null) {
     productModelEntity.overdueDays = overdueDays;
   }
+  final int? countDown = jsonConvert.convert<int>(json['count_down']);
+  if (countDown != null) {
+    productModelEntity.countDown = countDown;
+  }
   final int? backTime = jsonConvert.convert<int>(json['back_time']);
   if (backTime != null) {
     productModelEntity.backTime = backTime;
@@ -84,6 +88,7 @@ Map<String, dynamic> $ProductModelEntityToJson(ProductModelEntity entity) {
   data['logo_img'] = entity.logoImg;
   data['is_loan'] = entity.isLoan;
   data['overdue_days'] = entity.overdueDays;
+  data['count_down'] = entity.countDown;
   data['back_time'] = entity.backTime;
   data['money'] = entity.money;
   data['status'] = entity.status;
@@ -104,6 +109,7 @@ extension ProductModelEntityExtension on ProductModelEntity {
     String? logoImg,
     int? isLoan,
     int? overdueDays,
+    int? countDown,
     int? backTime,
     int? money,
     int? status,
@@ -121,6 +127,7 @@ extension ProductModelEntityExtension on ProductModelEntity {
       ..logoImg = logoImg ?? this.logoImg
       ..isLoan = isLoan ?? this.isLoan
       ..overdueDays = overdueDays ?? this.overdueDays
+      ..countDown = countDown ?? this.countDown
       ..backTime = backTime ?? this.backTime
       ..money = money ?? this.money
       ..status = status ?? this.status;

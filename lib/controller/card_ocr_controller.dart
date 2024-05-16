@@ -82,6 +82,8 @@ class CardOcrController extends GetxController {
       String result = await CommonAlert.showAlert(
         title: 'Camera authorization',
         message: 'Upload your ID document photo. Please ensure camera access is enabled in your system settings.',
+        cancelText: 'Return',
+        confirmText: 'Continue',
       );
       if (result == 'confirm') {
         openAppSettings();
@@ -92,7 +94,12 @@ class CardOcrController extends GetxController {
   }
 
   void backAction() async {
-    String result = await CommonAlert.showAlert(title: 'Warm Reminder', message: 'You have not finished filling in the authentication information. Still return it?');
+    String result = await CommonAlert.showAlert(
+      title: 'Warm Reminder',
+      message: 'You have not finished filling in the authentication information. Still return it?',
+      cancelText: 'Return',
+      confirmText: 'Continue',
+    );
     if (result == 'confirm') {
       Get.until((route) => route.settings.name == ApplicationRoutes.certificationIndex);
     }
@@ -190,37 +197,37 @@ class CardOcrController extends GetxController {
 
     switch (curCardType) {
       case 'UMID':
-        RegExp umidReg = RegExp('/[0-9]{12,12}\$/');
+        RegExp umidReg = RegExp(r'^\d{12}$');
         if (!umidReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('UMID Document ID Number must fill in 12 digits');
         }
       case 'PASSPORT':
-        RegExp passReg = RegExp('^[a-zA-Z]{1,1}[0-9]{7,7}[a-zA-Z]{1,1}\$');
+        RegExp passReg = RegExp(r'^[a-zA-Z][0-9]{7}[a-zA-Z]$');
         if (!passReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('PASSPORT Document ID Number must fill in 9 digits or English letters');
         }
       case 'DRIVINGLICENSE':
-        RegExp drivingLicenseReg = RegExp('^[a-zA-Z]{1,1}[0-9]{10,10}\$');
+        RegExp drivingLicenseReg = RegExp(r'^[a-zA-Z][0-9]{10}$');
         if (!drivingLicenseReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('DRIVINGLICENSE Document ID Number must fill in 11 digits or English letters');
         }
       case 'SSS':
-        RegExp sssReg = RegExp('[0-9]{10,10}\$');
+        RegExp sssReg = RegExp(r'^\d{10}$');
         if (!sssReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('SSS Document ID Number must fill in 10 digits');
         }
       case 'PRC':
-        RegExp prcReg = RegExp('[0-9]{7,7}\$');
+        RegExp prcReg = RegExp(r'^\d{7}$');
         if (!prcReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('PRC Document ID Number must fill in 7 digits');
         }
       case 'POSTALID':
-        RegExp postalIdReg = RegExp('^[a-zA-Z]{1,1}[0-9]{11,11}\$');
+        RegExp postalIdReg = RegExp(r'^[a-zA-Z][0-9]{11}$');
         if (!postalIdReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('POSTALID Document ID Number must fill in 12 digits or English letters');
         }
       case 'NATIONALID':
-        RegExp nationalIdReg = RegExp('[0-9]{16,16}\$');
+        RegExp nationalIdReg = RegExp(r'^\d{16}$');
         if (!nationalIdReg.hasMatch(idNum)) {
           return CommonSnackBar.showSnackBar('NATIONALID Document ID Number must fill in 16 digits');
         }
@@ -239,8 +246,16 @@ class CardOcrController extends GetxController {
       return CommonSnackBar.showSnackBar('Please input your name in the correct format!');
     }
 
-    NetworkService.submitIDCardInfo(
-        idCardNum: idNum, firstName: fName, midName: mName, lastName: lName, type: type, gender: gender, birthday: birthday, successCallback: () => Get.back());
+    // NetworkService.submitIDCardInfo(
+    //   idCardNum: idNum,
+    //   firstName: fName,
+    //   midName: mName,
+    //   lastName: lName,
+    //   type: type,
+    //   gender: gender,
+    //   birthday: birthday,
+    //   successCallback: () => Get.until((route) => route.settings.name == ApplicationRoutes.certificationIndex),
+    // );
   }
 
   void go2selectCardType() async {
@@ -284,7 +299,8 @@ class CardOcrController extends GetxController {
   }
 
   void go2selectBirthday() async {
-    late DateTime selectedDate;
+    DateTime? selectedDate;
+    DateTime initDate = DateTime(DateTime.now().year - 22, 01, 01);
     String? result = await Get.bottomSheet(
         enableDrag: false,
         isDismissible: false,
@@ -324,17 +340,19 @@ class CardOcrController extends GetxController {
                       dateFormat: DateFormat('MMMMddyyyy'),
                       minDate: DateTime(DateTime.now().year - 80, 01, 01),
                       maxDate: DateTime(DateTime.now().year - 18, 01, 01),
-                      initialDate: DateTime(DateTime.now().year - 22, 01, 01)),
+                      initialDate: initDate),
                   onChange: (date) {
-                    selectedDate = date;
+                    if (date != initDate) {
+                      selectedDate = date;
+                    }
                   }),
             )
           ],
         ));
 
-    if (result == null) return;
+    if (result == null || selectedDate == null) return;
 
-    birth.value = DateFormat('MM/dd/yyyy').format(selectedDate);
+    birth.value = DateFormat('MM/dd/yyyy').format(selectedDate!);
   }
 
   void genderOptionsOnPressed(bool isMale) => selectedGender.value = isMale ? 'Male' : 'Female';

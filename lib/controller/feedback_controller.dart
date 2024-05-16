@@ -56,7 +56,12 @@ class FeedbackController extends GetxController {
   void go2selectImage() async {
     var status = await Permission.photos.request();
     if (status != PermissionStatus.granted) {
-      var result = await CommonAlert.showAlert(title: 'Photo album authorization',message: 'Upload your feedback photo before, Please ensure photo album access is enabled in your system settings.');
+      var result = await CommonAlert.showAlert(
+        title: 'Photo album authorization',
+        message: 'Upload your feedback photo before, Please ensure photo album access is enabled in your system settings.',
+        cancelText: 'Return',
+        confirmText: 'Continue',
+      );
       if (result == 'confirm') openAppSettings();
       return;
     }
@@ -81,8 +86,8 @@ class FeedbackController extends GetxController {
   }
 
   void go2selectProblemType() async {
-    var problems = await  Get.toNamed(ApplicationRoutes.feedbackTypePicker, arguments: selectedProblems.value);
-    if(problems == null) return;
+    var problems = await Get.toNamed(ApplicationRoutes.feedbackTypePicker, arguments: selectedProblems.value);
+    if (problems == null) return;
     selectedProblems.value = problems;
   }
 

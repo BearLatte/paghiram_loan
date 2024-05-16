@@ -44,7 +44,7 @@ class ProductStatusItem {
           if (product.productState == ProductStatus.canBorrow) _getWithdrawStatusContent(product: product, buttonClickedCallback: buttonClickedCallback),
           if (product.productState != ProductStatus.normal &&
               product.productState != ProductStatus.pending &&
-              (product.productState != ProductStatus.rollback || product.productState != ProductStatus.reject) &&
+              product.productState != ProductStatus.rollback && product.productState != ProductStatus.reject &&
               product.productState != ProductStatus.canBorrow)
             _getPendingStatusContent(product: product),
         ],
@@ -126,7 +126,7 @@ class ProductStatusItem {
           if (status == ProductStatus.reject)
             Text.rich(TextSpan(children: [
               TextSpan(text: 'Sorry, you application has not been approved! You can reapply after ', style: TextStyle(color: HexColor('#FF3B414B'), fontSize: 15)),
-              TextSpan(text: '7', style: TextStyle(color: HexColor('#FFFF3232'), fontSize: 15)),
+              TextSpan(text: '${product.countDown}', style: TextStyle(color: HexColor('#FFFF3232'), fontSize: 15)),
               TextSpan(text: ' days ', style: TextStyle(color: HexColor('#FF3B414B'), fontSize: 15)),
             ])),
           Container(

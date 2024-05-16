@@ -4,6 +4,7 @@ import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:paghiram_loan/models/note.dart';
 import 'package:paghiram_loan/util/file_manager.dart';
+import 'package:paghiram_loan/util/global.dart';
 import 'dart:convert' as convert;
 
 import 'package:paghiram_loan/util/random_util.dart';
@@ -12,7 +13,7 @@ class AddNoteController extends GetxController {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
-  late List<Note> _notes;
+  late List _notes;
 
   @override
   void onReady() {
@@ -33,7 +34,7 @@ class AddNoteController extends GetxController {
     var formattedYear = DateFormat.y().format(DateTime.now());
 
     _notes.insert(0, Note(id: RandomUtil.generateRandomString(16),year: formattedYear, date: formattedDate, title: titleController.text, content: contentController.text));
-    var result = await FileManager.saveFile('notes.json', convert.jsonEncode(_notes));
+    var result = await FileManager.saveFile(Global.phoneNumber!+'_notes', convert.jsonEncode(_notes));
     if (result != null) {
       Get.back(result: 'saved');
     }

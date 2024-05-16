@@ -14,6 +14,7 @@ class CommonView extends StatelessWidget {
   final bool isShowAppBar;
   final Color? backgroundColor;
   final Function()? navLeadingAction;
+  final bool resizeToAvoidBottomInset;
 
   CommonView({
     super.key,
@@ -25,11 +26,13 @@ class CommonView extends StatelessWidget {
     this.isShowAppBar = true,
     this.backgroundColor,
     this.navLeadingAction,
+    this.resizeToAvoidBottomInset = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       appBar: isShowAppBar
           ? AppBar(
               title: Text(title ?? '', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
