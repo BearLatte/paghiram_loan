@@ -176,6 +176,7 @@ class NetworkService {
     String fileName = 'PGM_$namePrefix${MD5Util.md5Encode(RandomUtil.generateRandomString(16))}.jpg';
     final result = await client.putObject(fileData, fileName, option: PutRequestOption(bucketName: 'paghiram'));
     if (result.statusCode != 200) {
+      EasyLoading.dismiss();
       CommonSnackBar.showSnackBar(result.statusMessage, type: SnackType.error);
       return null;
     }

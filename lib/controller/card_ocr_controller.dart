@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:paghiram_loan/common/common_alert.dart';
 import 'package:paghiram_loan/common/common_bottom_sheet.dart';
@@ -246,16 +247,16 @@ class CardOcrController extends GetxController {
       return CommonSnackBar.showSnackBar('Please input your name in the correct format!');
     }
 
-    // NetworkService.submitIDCardInfo(
-    //   idCardNum: idNum,
-    //   firstName: fName,
-    //   midName: mName,
-    //   lastName: lName,
-    //   type: type,
-    //   gender: gender,
-    //   birthday: birthday,
-    //   successCallback: () => Get.until((route) => route.settings.name == ApplicationRoutes.certificationIndex),
-    // );
+    NetworkService.submitIDCardInfo(
+      idCardNum: idNum,
+      firstName: fName,
+      midName: mName,
+      lastName: lName,
+      type: type,
+      gender: gender,
+      birthday: birthday,
+      successCallback: () => Get.until((route) => route.settings.name == ApplicationRoutes.certificationIndex),
+    );
   }
 
   void go2selectCardType() async {
@@ -281,8 +282,9 @@ class CardOcrController extends GetxController {
   }
 
   void _takePhotoCompletedHandler(String photoPath) async {
+    EasyLoading.show(status: 'uploading...', maskType: EasyLoadingMaskType.black);
     Map? uploadedImg = await NetworkService.aliyunUploadImge(photoPath, type: 2);
-
+    EasyLoading.dismiss();
     if (uploadedImg == null) return;
     cardImg.value = uploadedImg['fullPath'];
     cardImgUrl = uploadedImg['sortPath'];
