@@ -3,10 +3,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
+import 'package:paghiram_loan/models/borrow_detail_model.dart';
 import 'package:paghiram_loan/models/id_card_type_entity.dart';
 import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
 import 'package:paghiram_loan/models/pgm_photo_entity.dart';
@@ -251,6 +253,12 @@ class NetworkService {
   static resubmitIDCard(Map<String, dynamic> parameters, {required void Function() successCallback}) async {
    BaseResponse? response = await HttpUtils.post(path: '/UserCard/back_card', data: parameters);
    if(response != null) successCallback();
+  }
+
+  // fetch product rate(borrow detail page)
+  static Future<BorrowDetailModel?> fetchProductRate(String productId) async {
+    BaseResponse? response = await HttpUtils.get<BorrowDetailModel>(path: '/instalmentData/getRatePgm', queryParameters: {'product_id': productId});
+    return response?.data;
   }
 
   static Future<void> buryPoint() async {

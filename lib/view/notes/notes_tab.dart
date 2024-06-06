@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -33,7 +32,7 @@ class NotesTab extends StatelessWidget {
                 const Positioned(left: 22, bottom: 16, child: Text('Repayment\nNotepad', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold))),
                 const Positioned(bottom: 2, right: 24, child: CommonImage(src: 'asset/icons/calendar.png'))
               ]),
-              Obx(() => controller.notes.value.isEmpty
+              Obx(() => controller.notes.isEmpty
                   ? Container(
                       padding: const EdgeInsets.symmetric(horizontal: 37, vertical: 62),
                       child: Column(
@@ -44,8 +43,8 @@ class NotesTab extends StatelessWidget {
                           context: context,
                           removeTop: true,
                           child: ListView.builder(
-                              itemCount: controller.notes.value.length,
-                              itemBuilder: (context, index) => _listItem(controller.notes.value[index] as Note, () => controller.deleteNote(index)))))),
+                              itemCount: controller.notes.length,
+                              itemBuilder: (context, index) => _listItem(controller.notes[index] as Note, () => controller.deleteNote(index)))))),
               // Expanded(child: SingleChildScrollView())
             ])));
   }

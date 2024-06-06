@@ -44,7 +44,8 @@ class ProductStatusItem {
           if (product.productState == ProductStatus.canBorrow) _getWithdrawStatusContent(product: product, buttonClickedCallback: buttonClickedCallback),
           if (product.productState != ProductStatus.normal &&
               product.productState != ProductStatus.pending &&
-              product.productState != ProductStatus.rollback && product.productState != ProductStatus.reject &&
+              product.productState != ProductStatus.rollback &&
+              product.productState != ProductStatus.reject &&
               product.productState != ProductStatus.canBorrow)
             _getPendingStatusContent(product: product),
         ],
@@ -148,6 +149,24 @@ class ProductStatusItem {
   }
 
   static Widget _getWithdrawStatusContent({required ProductModelEntity product, Function()? buttonClickedCallback}) {
-    return Container();
+    return Container(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text('Maximum amount required', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
+            SizedBox(height: 12),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text('PHP ${product.maxMoneyFormat}', style: TextStyle(color: Constant.themeColor, fontSize: 20, fontFamily: 'Impact')),
+              ElevatedButton(
+                onPressed: () => buttonClickedCallback!(),
+                style: ElevatedButton.styleFrom(backgroundColor: Constant.themeColor),
+                child: const Text('Withdraw money', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+              )
+            ]),
+            SizedBox(height: 12),
+            Text('Loan approval granted, proceed to withdraw funds.', style: TextStyle(color: HexColor('#FFAAAAAA'), fontSize: 13))
+          ],
+        ));
   }
 }

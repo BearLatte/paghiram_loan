@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart' show debugPrint;
 import 'package:paghiram_loan/models/aliyun_key_entity.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
+import 'package:paghiram_loan/models/borrow_detail_model.dart';
 import 'package:paghiram_loan/models/certification_entity.dart';
 import 'package:paghiram_loan/models/certify_selection_data_entity.dart';
 import 'package:paghiram_loan/models/contact_entity.dart';
@@ -148,6 +149,18 @@ class JsonConvert {
     if (<AuthStateEntity>[] is M) {
       return data.map<AuthStateEntity>((Map<String, dynamic> e) => AuthStateEntity.fromJson(e)).toList() as M;
     }
+    if (<BorrowDetailModel>[] is M) {
+      return data.map<BorrowDetailModel>((Map<String, dynamic> e) => BorrowDetailModel.fromJson(e)).toList() as M;
+    }
+    if (<BorrowDetailModelUserData>[] is M) {
+      return data.map<BorrowDetailModelUserData>((Map<String, dynamic> e) => BorrowDetailModelUserData.fromJson(e)).toList() as M;
+    }
+    if (<BorrowDetailModelUserDataInfo>[] is M) {
+      return data.map<BorrowDetailModelUserDataInfo>((Map<String, dynamic> e) => BorrowDetailModelUserDataInfo.fromJson(e)).toList() as M;
+    }
+    if (<BorrowDetailModelUserDataInfoData>[] is M) {
+      return data.map<BorrowDetailModelUserDataInfoData>((Map<String, dynamic> e) => BorrowDetailModelUserDataInfoData.fromJson(e)).toList() as M;
+    }
     if (<CertificationEntity>[] is M) {
       return data.map<CertificationEntity>((Map<String, dynamic> e) => CertificationEntity.fromJson(e)).toList() as M;
     }
@@ -245,6 +258,10 @@ class JsonConvertClassCollection {
   Map<String, JsonConvertFunction> convertFuncMap = {
     (AliyunKeyEntity).toString(): AliyunKeyEntity.fromJson,
     (AuthStateEntity).toString(): AuthStateEntity.fromJson,
+    (BorrowDetailModel).toString(): BorrowDetailModel.fromJson,
+    (BorrowDetailModelUserData).toString(): BorrowDetailModelUserData.fromJson,
+    (BorrowDetailModelUserDataInfo).toString(): BorrowDetailModelUserDataInfo.fromJson,
+    (BorrowDetailModelUserDataInfoData).toString(): BorrowDetailModelUserDataInfoData.fromJson,
     (CertificationEntity).toString(): CertificationEntity.fromJson,
     (CertifySelectionDataEntity).toString(): CertifySelectionDataEntity.fromJson,
     (CertifySelectionDataEschool).toString(): CertifySelectionDataEschool.fromJson,

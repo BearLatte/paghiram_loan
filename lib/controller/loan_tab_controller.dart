@@ -12,6 +12,7 @@ import 'package:paghiram_loan/service/index.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/file_manager.dart';
 import 'package:paghiram_loan/util/global.dart';
+import 'package:paghiram_loan/view/loan/product_status_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -82,24 +83,22 @@ class LoanTabController extends GetxController {
   }
 
   void productButtonClickedCallBack(ProductModelEntity product) {
-    if (product.status == 0) {
-      Get.toNamed(ApplicationRoutes.login)?.then((value) => fetchData());
-      return;
-    }
-
-    if (product.status == 1 || product.status == 12) {
-      go2Certification('product', product.id);
-      return;
-    }
-
-    if(product.status == 4) {
-      Get.toNamed(ApplicationRoutes.cardOCR, arguments: {'type': 1, 'productId': product.id});
-      return;
-    }
-
-    if (product.status == 8) {
-      go2Feedback();
-      return;
+    switch (product.productState) {
+      case ProductStatus.normal:
+        Get.toNamed(ApplicationRoutes.login)?.then((value) => fetchData());
+        return;
+      case ProductStatus.rollback:
+        Get.toNamed(ApplicationRoutes.cardOCR, arguments: {'type': 1, 'productId': product.id});
+        return;
+      case ProductStatus.reject:
+        go2Feedback();
+        return;
+      case ProductStatus.canBorrow:
+        Get.toNamed(ApplicationRoutes.borrowIndex, arguments: {'product_id': product.id});
+        return;
+      default:
+        go2Certification('product', product.id);
+        return;
     }
   }
 

@@ -217,6 +217,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "7.0.0"
+  diamond_node_slider:
+    dependency: "direct main"
+    description:
+      name: diamond_node_slider
+      sha256: "2cdf289a04a6fa384ae2737fa3f9cd231df6c6b5c1cc359d960e57472d0e7501"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.6"
   dio:
     dependency: "direct main"
     description:

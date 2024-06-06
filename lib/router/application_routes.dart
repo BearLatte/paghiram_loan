@@ -21,4 +21,5 @@ abstract class ApplicationRoutes {
   static const feedback = '/feedback';
   static const feedbackTypePicker = '/feedbackTypePicker';
   static const feedbackImageEnlarge = '/feedbackImageEnlarge';
+  static const borrowIndex = '/borrowIndex';
 }

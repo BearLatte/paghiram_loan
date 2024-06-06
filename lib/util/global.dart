@@ -1,6 +1,7 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/file_manager.dart';
@@ -34,10 +35,13 @@ class Global {
     appVersion = info.version;
   }
 
+
   static void clearLoginInfo() async {
     prefs?.setBool(Constant.LOGIN_FLAG, false);
     prefs?.remove(Constant.TOKEN_FLAG);
     prefs?.remove(Constant.PHONE_NUMBER_FLAG);
     Get.back();
   }
+
+  static String formatCurrency(int amount) => NumberFormat('0,000').format(amount);
 }

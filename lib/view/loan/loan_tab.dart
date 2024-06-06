@@ -120,8 +120,6 @@ class LoanTab extends StatelessWidget {
     if (Global.isLogin) {
       phone = Global.prefs?.getString(Constant.PHONE_NUMBER_FLAG)!.replaceRange(3, 7, '****');
     }
-    // phone = phone ?? 'Login/Register';
-    // if (phone != null) phone = phone.replaceRange(3, 7, '****');
 
     await Get.bottomSheet(
       enableDrag: false,
@@ -178,7 +176,7 @@ class LoanTab extends StatelessWidget {
                 height: 32,
                 child: ElevatedButton(
                     onPressed: Get.back,
-                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(HexColor('#FFEBF8F9')), elevation: MaterialStateProperty.all(0)),
+                    style: ButtonStyle(backgroundColor: WidgetStateProperty.all(HexColor('#FFEBF8F9')), elevation: WidgetStateProperty.all(0)),
                     child: const CommonImage(src: 'asset/icons/profile_double_arrow_icon.png')))
           ],
         ),
