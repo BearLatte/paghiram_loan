@@ -8,8 +8,15 @@ class BorrowIndexController extends GetxController {
   late String productId;
 
   // late BorrowDetailModel borrowModel;
-  // var borrowModel = BorrowDetailModel().obs;
-  Rx<BorrowDetailModel>? borrowModel;
+  late BorrowDetailModel borrowModel;
+
+  //
+  late BorrowDetailModelUserData currentUserData;
+
+  // can borrow max amount
+
+
+  // can borrow min amount
 
   var currentBorrowAmount = ''.obs;
 
@@ -22,7 +29,12 @@ class BorrowIndexController extends GetxController {
   Future<void> fetchProductRate() async {
     BorrowDetailModel? detailModel = await NetworkService.fetchProductRate(productId);
     if (detailModel == null) return;
-    borrowModel = detailModel.obs;
+    borrowModel = detailModel;
     currentBorrowAmount.value = Global.formatCurrency(detailModel.maxPrice);
+  }
+
+
+  void termSelectAction(int index) {
+
   }
 }
