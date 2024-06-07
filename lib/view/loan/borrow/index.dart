@@ -87,12 +87,15 @@ class BorrowIndex extends StatelessWidget {
                 children: List.generate(
                   3,
                   (index) {
+                    String text = index == 0 ? '90days' : (index == 1 ? '150days' : '210days');
                     return InkWell(
-                        onTap: () => controller.termSelectAction(index),
-                        child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                            decoration: BoxDecoration(color: Constant.themeColor, borderRadius: BorderRadius.circular(8)),
-                            child: Text('90days', style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold))));
+                      onTap: () => controller.termSelectAction(index),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        decoration: BoxDecoration(color: index == 0 ? Constant.themeColor : HexColor('#FFFAFAFA'), borderRadius: BorderRadius.circular(8)),
+                        child: Text(text, style: TextStyle(color: index == 0 ? Colors.white : HexColor('#FF3B414B'), fontSize: 15, fontWeight: FontWeight.bold)),
+                      ),
+                    );
                   },
                 ),
               )

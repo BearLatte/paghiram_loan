@@ -35,6 +35,8 @@ class BorrowIndexController extends GetxController {
 
 
   void termSelectAction(int index) {
-
+    if(index != 0) {
+      CommonSnackBar.showSnackBar("Repay on time for a longer loan term.")
+    }
   }
 }
