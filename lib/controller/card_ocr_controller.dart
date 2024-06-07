@@ -303,6 +303,7 @@ class CardOcrController extends GetxController {
   void go2selectBirthday() async {
     DateTime? selectedDate;
     DateTime initDate = DateTime(DateTime.now().year - 22, 01, 01);
+    DateTime lastSelectedDate = initDate;
     String? result = await Get.bottomSheet(
         enableDrag: false,
         isDismissible: false,
@@ -342,10 +343,11 @@ class CardOcrController extends GetxController {
                       dateFormat: DateFormat('MMMMddyyyy'),
                       minDate: DateTime(DateTime.now().year - 80, 01, 01),
                       maxDate: DateTime(DateTime.now().year - 18, 01, 01),
-                      initialDate: initDate),
+                      initialDate: DateTime(DateTime.now().year - 22, 01, 01)),
                   onChange: (date) {
-                    if (date != initDate) {
+                    if (date != lastSelectedDate) {
                       selectedDate = date;
+                      lastSelectedDate = date;
                     }
                   }),
             )
