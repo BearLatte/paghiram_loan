@@ -75,11 +75,11 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
-    super.onClose();
     phoneInputController.dispose();
     passwordInputController.dispose();
     verifyCodeInputController.dispose();
     focusNode.dispose();
+    super.onClose();
   }
 
   void loginMenuClicked() {
@@ -201,7 +201,7 @@ class LoginController extends GetxController {
         password: pwd,
         verifyCode: verifyCode,
         successCallback: (data) {
-          _countDownState?.stopCountDown();
+          // _countDownState?.stopCountDown();
           verifyCodeInputController.clear();
           passwordInputController.clear();
           isCheckedPolicy.value = false;
