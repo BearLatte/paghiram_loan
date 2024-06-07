@@ -36,4 +36,8 @@ class BorrowIndexController extends GetxController {
       CommonSnackBar.showSnackBar("Repay on time for a longer loan term.");
     }
   }
+
+  void confirmWithdraw() {
+
+  }
 }
