@@ -98,7 +98,8 @@ class BorrowIndex extends StatelessWidget {
                     );
                   },
                 ),
-              )
+              ),
+              Container(padding: EdgeInsets.symmetric(),child: Text('Divided into 6 installments to repay', style: TextStyle(color: Constant.themeColor, fontSize: 15),),)
             ]),
           )
         ]),

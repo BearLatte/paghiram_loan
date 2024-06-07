@@ -3,18 +3,16 @@ import 'package:paghiram_loan/models/borrow_detail_model.dart';
 import 'package:paghiram_loan/service/index.dart';
 import 'package:paghiram_loan/util/global.dart';
 
+import '../common/common_snack_bar.dart';
+
 class BorrowIndexController extends GetxController {
   // product_id
   late String productId;
 
   // late BorrowDetailModel borrowModel;
   late BorrowDetailModel borrowModel;
-
-  //
   late BorrowDetailModelUserData currentUserData;
-
-  // can borrow max amount
-
+  var productMaxAmount = ''.obs;
 
   // can borrow min amount
 
@@ -33,10 +31,9 @@ class BorrowIndexController extends GetxController {
     currentBorrowAmount.value = Global.formatCurrency(detailModel.maxPrice);
   }
 
-
   void termSelectAction(int index) {
-    if(index != 0) {
-      CommonSnackBar.showSnackBar("Repay on time for a longer loan term.")
+    if (index != 0) {
+      CommonSnackBar.showSnackBar("Repay on time for a longer loan term.");
     }
   }
 }
