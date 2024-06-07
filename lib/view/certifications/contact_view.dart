@@ -18,7 +18,7 @@ class ContactView extends StatelessWidget {
     return CommonView(
         title: 'Contact Person',
         navLeadingAction: controller.backAction,
-        navTrailings: [IconButton(onPressed: controller.go2customerService, icon: CommonImage(src: 'asset/icons/certify_customer_service_icon.png'))],
+        isShowConnectCustomers: true,
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Expanded(
             child: SingleChildScrollView(

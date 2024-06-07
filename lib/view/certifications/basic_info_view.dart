@@ -21,8 +21,8 @@ class BasicInfoView extends StatelessWidget {
     return HideKeyboardWrapper(
         child: CommonView(
             title: 'Basic Information',
+            isShowConnectCustomers: true,
             navLeadingAction: controller.backAction,
-            navTrailings: [IconButton(onPressed: controller.go2customerService, icon: CommonImage(src: 'asset/icons/certify_customer_service_icon.png'))],
             child: Obx(() => Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [

@@ -75,7 +75,7 @@ class ChangePasswordController extends GetxController {
 
   void _showSnackBarLogic(String message) {
     if (_snackBarStatus == SnackbarStatus.CLOSED) {
-      return CommonSnackBar.showSnackBar(message, snackBarStatus: (status) => _snackBarStatus = status);
+      return CommonSnackBar.showSnackBar(message);
     } else {
       return;
     }

@@ -5,6 +5,8 @@ import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
 
+import '../router/application_routes.dart';
+
 class CommonView extends StatelessWidget {
   final Widget child;
   final Widget? navLeading;
@@ -15,6 +17,7 @@ class CommonView extends StatelessWidget {
   final Color? backgroundColor;
   final Function()? navLeadingAction;
   final bool resizeToAvoidBottomInset;
+  final bool isShowConnectCustomers;
 
   CommonView({
     super.key,
@@ -27,6 +30,7 @@ class CommonView extends StatelessWidget {
     this.backgroundColor,
     this.navLeadingAction,
     this.resizeToAvoidBottomInset = true,
+    this.isShowConnectCustomers = false,
   });
 
   @override
@@ -39,7 +43,17 @@ class CommonView extends StatelessWidget {
               backgroundColor: Constant.themeColor,
               foregroundColor: Colors.white,
               leading: navLeading ?? _navLeading(),
-              actions: navTrailings,
+              actions: isShowConnectCustomers
+                  ? [
+                      IconButton(
+                        onPressed: () => Get.toNamed(ApplicationRoutes.webView, arguments: {
+                          'title': 'Help Center',
+                          'url': 'https://api.paghiram.top/Api/Help/index',
+                        }),
+                        icon: CommonImage(src: 'asset/icons/certify_customer_service_icon.png'),
+                      )
+                    ]
+                  : navTrailings,
             )
           : null,
       body: Container(color: backgroundColor ?? HexColor('#FFFAFAFA'), child: child),

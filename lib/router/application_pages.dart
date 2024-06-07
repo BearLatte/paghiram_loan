@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:paghiram_loan/controller/add_note_controller.dart';
+import 'package:paghiram_loan/controller/borrow_detail_controller.dart';
 import 'package:paghiram_loan/controller/borrow_index_controller.dart';
 import 'package:paghiram_loan/controller/card_ocr_controller.dart';
 import 'package:paghiram_loan/controller/certification_index_controller.dart';
@@ -35,6 +36,7 @@ import 'package:paghiram_loan/view/feedback/feedback_type_select_view.dart';
 import 'package:paghiram_loan/view/feedback/feedback_view.dart';
 import 'package:paghiram_loan/view/home_view.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
+import 'package:paghiram_loan/view/loan/borrow/detail.dart';
 import 'package:paghiram_loan/view/loan/borrow/index.dart';
 import 'package:paghiram_loan/view/login/change_password_view.dart';
 import 'package:paghiram_loan/view/login/login_view.dart';
@@ -142,6 +144,12 @@ class ApplicationPages {
       page: () => BorrowIndex(),
       transition: Transition.rightToLeft,
       binding: BindingsBuilder(() => Get.lazyPut(() => BorrowIndexController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.borrowDetail,
+      page: () => BorrowDetailView(),
+      transition: Transition.rightToLeft,
+      binding: BindingsBuilder(() => Get.lazyPut(() => BorrowDetailController())),
     )
   ];
 }

@@ -15,8 +15,8 @@ class OrdersTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonView(
+        isShowConnectCustomers: true,
         navLeading: Center(child: Text('BILL', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
-        navTrailings: [IconButton(onPressed: controller.go2contactCustomerService, icon: CommonImage(src: 'asset/icons/certify_customer_service_icon.png'))],
         child: Obx(() => Column(children: [
               Container(
                   color: Constant.themeColor,

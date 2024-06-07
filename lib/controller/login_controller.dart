@@ -57,11 +57,11 @@ class LoginController extends GetxController {
     });
 
     verifyCodeInputController.addListener(() {
-      if(isLoginPart.value && verifyCodeInputController.text.trim().length > 6) {
+      if (isLoginPart.value && verifyCodeInputController.text.trim().length > 6) {
         verifyCodeInputController.text = verifyCodeInputController.text.substring(0, 6);
       }
 
-      if(!isLoginPart.value && verifyCodeInputController.text.trim().length > 4) {
+      if (!isLoginPart.value && verifyCodeInputController.text.trim().length > 4) {
         verifyCodeInputController.text = verifyCodeInputController.text.substring(0, 4);
       }
     });
@@ -104,12 +104,9 @@ class LoginController extends GetxController {
   }
 
   void go2ReadPrivacyPolicy() async {
-    var result = await Get.toNamed(ApplicationRoutes.webView, arguments: {
-      'title': 'Privacy Policy',
-      'url': 'https://api.paghiram.top/Api/Help/register_ios',
-      'isShowBottomBar': '1'
-    });
-    if(result != null)  isCheckedPolicy.value = true;
+    var result =
+        await Get.toNamed(ApplicationRoutes.webView, arguments: {'title': 'Privacy Policy', 'url': 'https://api.paghiram.top/Api/Help/register_ios', 'isShowBottomBar': '1'});
+    if (result != null) isCheckedPolicy.value = true;
   }
 
   void loginAndRegisterAction() => isLoginPart.value ? loginAction() : registerAction();
@@ -121,7 +118,7 @@ class LoginController extends GetxController {
 
     if (phone.isEmpty) {
       if (currentSnackBarStatus == SnackbarStatus.CLOSED) {
-        return CommonSnackBar.showSnackBar('Please enter a valid phone number', snackBarStatus: (status) => currentSnackBarStatus = status);
+        return CommonSnackBar.showSnackBar('Please enter a valid phone number');
       } else {
         return;
       }
@@ -129,7 +126,7 @@ class LoginController extends GetxController {
 
     if (verifyCode.isEmpty) {
       if (currentSnackBarStatus == SnackbarStatus.CLOSED) {
-        return CommonSnackBar.showSnackBar('Verification code error.', snackBarStatus: (status) => currentSnackBarStatus = status);
+        return CommonSnackBar.showSnackBar('Verification code error.');
       } else {
         return;
       }
@@ -137,13 +134,13 @@ class LoginController extends GetxController {
 
     if (pwd.isEmpty) {
       if (currentSnackBarStatus == SnackbarStatus.CLOSED) {
-        return CommonSnackBar.showSnackBar('The password cannot be empty.', snackBarStatus: (status) => currentSnackBarStatus = status);
+        return CommonSnackBar.showSnackBar('The password cannot be empty.');
       } else {
         return;
       }
     }
 
-    if (!isCheckedPolicy.value) return CommonSnackBar.showSnackBar('Please read and agree to the agreement.', snackBarStatus: (status) => currentSnackBarStatus = status);
+    if (!isCheckedPolicy.value) return CommonSnackBar.showSnackBar('Please read and agree to the agreement.');
 
     bool isPhoneNumberAvailable = await NetworkService.checkIfPhoneNumberAvailable(phone: phone, verifyCode: verifyCode);
     if (isPhoneNumberAvailable) {
@@ -162,7 +159,7 @@ class LoginController extends GetxController {
     final pwd = passwordInputController.text.trim();
     if (phone.isEmpty) {
       if (currentSnackBarStatus == SnackbarStatus.CLOSED) {
-        return CommonSnackBar.showSnackBar('Please enter a valid phone number', snackBarStatus: (status) => currentSnackBarStatus = status);
+        return CommonSnackBar.showSnackBar('Please enter a valid phone number');
       } else {
         return;
       }
@@ -170,7 +167,7 @@ class LoginController extends GetxController {
 
     if (pwd.isEmpty) {
       if (currentSnackBarStatus == SnackbarStatus.CLOSED) {
-        return CommonSnackBar.showSnackBar('The password cannot be empty.', snackBarStatus: (status) => currentSnackBarStatus = status);
+        return CommonSnackBar.showSnackBar('The password cannot be empty.');
       } else {
         return;
       }
@@ -181,7 +178,7 @@ class LoginController extends GetxController {
     if (_codeType == 0) {
       _codeType = 1;
       isShowVerifyItem.value = true;
-      return CommonSnackBar.showSnackBar('Please enter verification code.', snackBarStatus: (status) => currentSnackBarStatus = status);
+      return CommonSnackBar.showSnackBar('Please enter verification code.');
     }
 
     final verifyCode = verifyCodeInputController.text.trim();
@@ -189,7 +186,7 @@ class LoginController extends GetxController {
     if (isShowVerifyItem.value) {
       if (verifyCode.isEmpty) {
         if (currentSnackBarStatus == SnackbarStatus.CLOSED) {
-          return CommonSnackBar.showSnackBar('Verification code error.', snackBarStatus: (status) => currentSnackBarStatus = status);
+          return CommonSnackBar.showSnackBar('Verification code error.');
         } else {
           return;
         }
@@ -241,7 +238,7 @@ class LoginController extends GetxController {
 
   void _showSnackBarLogic(String message) {
     if (currentSnackBarStatus == SnackbarStatus.CLOSED) {
-      return CommonSnackBar.showSnackBar(message, snackBarStatus: (status) => currentSnackBarStatus = status);
+      return CommonSnackBar.showSnackBar(message);
     } else {
       return;
     }

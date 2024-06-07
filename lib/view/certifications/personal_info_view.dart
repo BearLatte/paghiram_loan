@@ -22,9 +22,9 @@ class PersonalInfoView extends StatelessWidget {
   Widget build(BuildContext context) {
     return HideKeyboardWrapper(
       child: CommonView(
+        isShowConnectCustomers: true,
         title: 'Personal Information',
         navLeadingAction: controller.backAction,
-        navTrailings: [IconButton(onPressed: controller.go2customerService, icon: CommonImage(src: 'asset/icons/certify_customer_service_icon.png'))],
         child: Column(
           children: [
             Expanded(
