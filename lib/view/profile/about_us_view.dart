@@ -17,7 +17,7 @@ class AboutUsView extends StatelessWidget {
             const SizedBox(height: 12),
             const Text('Paghiram Loan', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600)),
             _textContainer('GUINA PAWNSHOP AND MONEY CHANGER', topMargin: 30),
-            _textContainer('MSB Registration No.31-00316-0-00000'),
+            _textContainer('PS Registration No.31-00316-0-00000'),
             _textContainer('Address：NATIONAL ROAD, WAKAS, ORION, BATAAN'),
             _textContainer('Paghiram Loan belongs to GUINA PAWNSHOP AND MONEY CHANGER.')
           ]),

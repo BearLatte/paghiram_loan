@@ -99,9 +99,8 @@ class LoanTab extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.fromLTRB(0, 16, 0, 34),
                             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                              const CommonImage(src: 'asset/icons/qualification_logo.png'),
                               Expanded(
-                                  child: Text('GUINA PAWNSHOP AND MONEY CHANGER\nMSB Registration No.31-00316-0-00000\nAddress：NATIONAL ROAD, WAKAS, ORION, BATAAN',
+                                  child: Text('GUINA PAWNSHOP AND MONEY CHANGER\nPS Registration No.31-00316-0-00000\nAddress：NATIONAL ROAD, WAKAS, ORION, BATAAN',
                                       style: TextStyle(fontSize: 13, color: HexColor('#FF757F8C')))),
                             ]),
                           ),
@@ -120,8 +119,6 @@ class LoanTab extends StatelessWidget {
     if (Global.isLogin) {
       phone = Global.prefs?.getString(Constant.PHONE_NUMBER_FLAG)!.replaceRange(3, 7, '****');
     }
-    // phone = phone ?? 'Login/Register';
-    // if (phone != null) phone = phone.replaceRange(3, 7, '****');
 
     await Get.bottomSheet(
       enableDrag: false,
