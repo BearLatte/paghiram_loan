@@ -23,4 +23,5 @@ abstract class ApplicationRoutes {
   static const feedbackImageEnlarge = '/feedbackImageEnlarge';
   static const borrowIndex = '/borrowIndex';
   static const borrowDetail = '/borrowDetail';
+  static const withdrawMethod = '/withdrawMethod';
 }

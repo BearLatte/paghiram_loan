@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:paghiram_loan/application.dart';
 import 'package:paghiram_loan/controller/add_note_controller.dart';
 import 'package:paghiram_loan/controller/borrow_detail_controller.dart';
 import 'package:paghiram_loan/controller/borrow_index_controller.dart';
@@ -22,6 +23,7 @@ import 'package:paghiram_loan/controller/personal_info_controller.dart';
 import 'package:paghiram_loan/controller/province_select_controller.dart';
 import 'package:paghiram_loan/controller/settings_controller.dart';
 import 'package:paghiram_loan/controller/web_view_controller.dart';
+import 'package:paghiram_loan/controller/withdraw_method_controller.dart';
 import 'package:paghiram_loan/view/certifications/card_ocr_view.dart';
 import 'package:paghiram_loan/view/certifications/city_select_view.dart';
 import 'package:paghiram_loan/view/certifications/contact_view.dart';
@@ -38,6 +40,7 @@ import 'package:paghiram_loan/view/home_view.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/view/loan/borrow/detail.dart';
 import 'package:paghiram_loan/view/loan/borrow/index.dart';
+import 'package:paghiram_loan/view/loan/borrow/withdraw_method.dart';
 import 'package:paghiram_loan/view/login/change_password_view.dart';
 import 'package:paghiram_loan/view/login/login_view.dart';
 import 'package:paghiram_loan/view/notes/add_node_view.dart';
@@ -150,6 +153,12 @@ class ApplicationPages {
       page: () => BorrowDetailView(),
       transition: Transition.rightToLeft,
       binding: BindingsBuilder(() => Get.lazyPut(() => BorrowDetailController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.withdrawMethod,
+      page: () => WithdrawMethod(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => WithdrawMethodController())),
     )
   ];
 }

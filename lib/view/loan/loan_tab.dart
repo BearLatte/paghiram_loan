@@ -99,9 +99,8 @@ class LoanTab extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.fromLTRB(0, 16, 0, 34),
                             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                              const CommonImage(src: 'asset/icons/qualification_logo.png'),
                               Expanded(
-                                  child: Text('MYCASH LENDING INVESTORS INC.SEC REGISTRATION NO.CS201840987 CERT. OF AUTHORITY NO.2814',
+                                  child: Text('GUINA PAWNSHOP AND MONEY CHANGER\nPS Registration No.31-00316-0-00000\nAddress：NATIONAL ROAD, WAKAS, ORION, BATAAN',
                                       style: TextStyle(fontSize: 13, color: HexColor('#FF757F8C')))),
                             ]),
                           ),
@@ -135,10 +134,12 @@ class LoanTab extends StatelessWidget {
         child: Column(
           children: [
             GestureDetector(
-              onTap: phone == 'Login/Register' ? () {
-                Get.back();
-                Get.toNamed(ApplicationRoutes.login);
-              } : null,
+              onTap: phone == 'Login/Register'
+                  ? () {
+                      Get.back();
+                      Get.toNamed(ApplicationRoutes.login);
+                    }
+                  : null,
               child: Row(
                 children: [
                   const CommonImage(src: 'asset/icons/avatar.png', width: 66, height: 66, fit: BoxFit.cover),

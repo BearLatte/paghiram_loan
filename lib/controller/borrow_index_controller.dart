@@ -93,7 +93,7 @@ class BorrowIndexController extends GetxController {
   void confirmWithdraw() {
     Map<String, dynamic> params = {};
     params['days'] = currentUserData.days;
-    params['price'] = currentUserData.info.money;
+    params['price'] = currentUserData.info.money.toString();
     params['pro_id'] = currentUserData.info.proId;
     params['product_id'] = productId;
     params['rate_id'] = _currentInfoData.rid;

@@ -16,10 +16,10 @@ class AboutUsView extends StatelessWidget {
             const CommonImage(src: 'asset/icons/about_us_logo.png'),
             const SizedBox(height: 12),
             const Text('Paghiram Loan', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600)),
-            _textContainer('OKLIK LENDING COMPANY INC.', topMargin: 30),
-            _textContainer('CERTIFICATE OF AUTHORITY NO.2896'),
-            _textContainer('NOYICE：Paghiram is owned and operated by OKLIKLENDING COMPANY INC.'),
-            _textContainer('ADVISORY：All borrowers are enjoined to study the TEAMS&CONDITIONS in the Disclosure Statement Before Proceeding with the Load Transaction')
+            _textContainer('GUINA PAWNSHOP AND MONEY CHANGER', topMargin: 30),
+            _textContainer('PS Registration No.31-00316-0-00000'),
+            _textContainer('Address：NATIONAL ROAD, WAKAS, ORION, BATAAN'),
+            _textContainer('Paghiram Loan belongs to GUINA PAWNSHOP AND MONEY CHANGER.')
           ]),
         ));
   }

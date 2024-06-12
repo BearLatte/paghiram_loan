@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
@@ -264,6 +265,18 @@ class NetworkService {
   static Future<BorrowDetailModel?> fetchBorrowDetail(Map<String, dynamic> param) async {
     BaseResponse? response = await HttpUtils.post<BorrowDetailModel>(path: '/instalmentData/getInsDataPgm', data: param);
     return response?.data;
+  }
+
+  // get user's bound bank cards
+  static Future<void> fetchUserBindedBankCards() async {
+    BaseResponse? response = await HttpUtils.get(path: '/Bank/get_user_banks');
+    debugPrint(response?.originalData);
+  }
+
+  // get user's bound E-wallet
+  static Future<void> fetchUserBoundEWallet() async {
+    BaseResponse? response = await HttpUtils.get(path: '/ElectronicWallet/get_user_wallet');
+    debugPrint(response?.originalData);
   }
 
   static Future<void> buryPoint() async {

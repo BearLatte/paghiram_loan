@@ -43,15 +43,24 @@ class BorrowDetailView extends StatelessWidget {
                               title = 'Withdraw method';
                               value = controller.withdrawMethod.value;
                           }
-
+                          if (index == 2 && !controller.isShowServiceFee.value) {
+                            return SizedBox();
+                          }
                           return Container(
-                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-                              decoration: BoxDecoration(border: index != 3 ? Border(bottom: BorderSide(color: HexColor('#FFE6E6E6'), width: 1.0)) : null),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                Text(title, style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
-                                Text(value, style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
-
-                              ]));
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+                            decoration: BoxDecoration(border: index != 3 ? Border(bottom: BorderSide(color: HexColor('#FFE6E6E6'), width: 1.0)) : null),
+                            child: InkWell(
+                                onTap: () => controller.topListItemAction(index),
+                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                  Text(title, style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
+                                  Row(children: [
+                                    Text(value, style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
+                                    if (index > 1) SizedBox(width: 8),
+                                    if (index == 2) CommonImage(src: 'asset/icons/question_icon.png'),
+                                    if (index == 3) Icon(Icons.keyboard_arrow_right_sharp, size: 24, color: HexColor('#CCCCCC'))
+                                  ])
+                                ])),
+                          );
                         }),
                       ),
                     ),
