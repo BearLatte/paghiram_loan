@@ -44,6 +44,7 @@ class HttpUtils {
     data = await _configParameters(data, path);
     String responseStr = await httpRequest.request(path: path, method: HttpMethod.post, data: data, showLoading: showLoading, showErrorMessage: showErrorMessage);
     BaseResponse<T> response = BaseResponse<T>.fromJson(jsonDecode(responseStr));
+    response.originalData = responseStr;
     if (response.code == 103) {
       EasyLoading.showInfo('Login status is invalid, please log in again');
       Global.clearLoginInfo();

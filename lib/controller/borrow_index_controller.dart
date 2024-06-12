@@ -1,6 +1,6 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:paghiram_loan/models/borrow_detail_model.dart';
+import 'package:paghiram_loan/models/borrow_rate_model.dart';
+// import 'package:paghiram_loan/models/borrow_detail_model.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/service/index.dart';
 import 'package:paghiram_loan/util/global.dart';
@@ -12,8 +12,8 @@ class BorrowIndexController extends GetxController {
   late String productId;
   var productMaxLoanAmount = ''.obs;
 
-  late BorrowDetailModel borrowModel;
-  late BorrowDetailModelUserData currentUserData;
+  late BorrowRateModel borrowModel;
+  late BorrowRateModelUserData currentUserData;
   var productMaxAmount = ''.obs;
   var partOfProductMinAmount = ''.obs;
   var partOfProductMaxAmount = ''.obs;
@@ -22,6 +22,8 @@ class BorrowIndexController extends GetxController {
   var sliderValue = 0.0.obs;
   var slierMaxValue = 0.0.obs;
 
+  late BorrowRateModelUserDataInfoData _currentInfoData;
+
   @override
   void onInit() async {
     super.onInit();
@@ -29,13 +31,13 @@ class BorrowIndexController extends GetxController {
   }
 
   Future<void> fetchProductRate() async {
-    BorrowDetailModel? detailModel = await NetworkService.fetchProductRate(productId);
+    BorrowRateModel? detailModel = await NetworkService.fetchProductRate(productId);
     if (detailModel == null) return;
     borrowModel = detailModel;
 
     productMaxLoanAmount.value = borrowModel.maxPriceFormat;
 
-    BorrowDetailModelUserData lastData = detailModel.userData[0];
+    BorrowRateModelUserData lastData = detailModel.userData[0];
     for (var userData in detailModel.userData) {
       if (userData.info.instalmentNum > lastData.info.instalmentNum) {
         lastData = userData;
@@ -49,8 +51,10 @@ class BorrowIndexController extends GetxController {
 
     slierMaxValue.value = (currentUserData.info.data.length - 1) / 1.0;
 
-    debugPrint(currentUserData.toString());
-    // currentBorrowAmount.value = Global.formatCurrency(detailModel.maxPrice);
+    String currentAmount = currentUserData.info.money;
+    for (var item in currentUserData.info.data) {
+      if (currentAmount == item.amount) _currentInfoData = item;
+    }
   }
 
   void termSelectAction(int index) {
@@ -61,25 +65,34 @@ class BorrowIndexController extends GetxController {
 
   void sliderValueChanged(double value) {
     sliderValue.value = value;
-    BorrowDetailModelUserDataInfoData dataInfoData = currentUserData.info.data[value.truncate()];
-    canBorrowAmount.value = Global.formatCurrency(int.parse(dataInfoData.amount));
+    BorrowRateModelUserDataInfoData dataInfoData = currentUserData.info.data[value.truncate()];
+    canBorrowAmount.value = Global.formatCurrency(dataInfoData.amount);
   }
 
   void sliderValueChangedEnd(double value) {
-    BorrowDetailModelUserDataInfoData dataInfoData = currentUserData.info.data[value.truncate()];
-    if(int.parse(dataInfoData.amount) > int.parse(currentUserData.info.money)) {
-      late BorrowDetailModelUserDataInfoData currentMaxData;
-      for(var item in currentUserData.info.data) {
-        if(item.amount == currentUserData.info.money) {
+    BorrowRateModelUserDataInfoData dataInfoData = currentUserData.info.data[value.truncate()];
+    if (dataInfoData.amount > int.parse(currentUserData.info.money)) {
+      late BorrowRateModelUserDataInfoData currentMaxData;
+      for (var item in currentUserData.info.data) {
+        if (item.amount == int.parse(currentUserData.info.money)) {
           currentMaxData = item;
         }
-        canBorrowAmount.value = Global.formatCurrency(int.parse(currentMaxData.amount));
+        _currentInfoData = currentMaxData;
+        canBorrowAmount.value = Global.formatCurrency(currentMaxData.amount);
         sliderValue.value = currentUserData.info.data.indexOf(currentMaxData) / 1.0;
       }
     }
   }
 
   void confirmWithdraw() {
-    Get.toNamed(ApplicationRoutes.borrowDetail);
+    Map<String, dynamic> params = {};
+    params['days'] = currentUserData.days;
+    params['price'] = currentUserData.info.money;
+    params['pro_id'] = currentUserData.info.proId;
+    params['product_id'] = productId;
+    params['rate_id'] = _currentInfoData.rid;
+    params['tid'] = currentUserData.termId;
+
+    Get.toNamed(ApplicationRoutes.borrowDetail, arguments: params);
   }
 }

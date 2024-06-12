@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
@@ -20,6 +18,7 @@ import 'package:paghiram_loan/util/md5_util.dart';
 import 'package:paghiram_loan/util/random_util.dart';
 import '../models/aliyun_key_entity.dart';
 import '../models/base_response.dart';
+import '../models/borrow_rate_model.dart';
 import '../util/global.dart';
 
 enum VerifyCodeType { login, register, changePassword }
@@ -66,7 +65,7 @@ class NetworkService {
       )
     });
     if (response == null) return null;
-    return response?.data['code_type'];
+    return response.data['code_type'];
   }
 
   // register
@@ -256,8 +255,14 @@ class NetworkService {
   }
 
   // fetch product rate(borrow detail page)
-  static Future<BorrowDetailModel?> fetchProductRate(String productId) async {
-    BaseResponse? response = await HttpUtils.get<BorrowDetailModel>(path: '/instalmentData/getRatePgm', queryParameters: {'product_id': productId});
+  static Future<BorrowRateModel?> fetchProductRate(String productId) async {
+    BaseResponse? response = await HttpUtils.get<BorrowRateModel>(path: '/instalmentData/getRatePgm', queryParameters: {'product_id': productId});
+    return response?.data;
+  }
+
+  // borrow detail
+  static Future<BorrowDetailModel?> fetchBorrowDetail(Map<String, dynamic> param) async {
+    BaseResponse? response = await HttpUtils.post<BorrowDetailModel>(path: '/instalmentData/getInsDataPgm', data: param);
     return response?.data;
   }
 

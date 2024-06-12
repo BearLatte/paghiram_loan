@@ -7,6 +7,7 @@ import 'package:flutter/material.dart' show debugPrint;
 import 'package:paghiram_loan/models/aliyun_key_entity.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
 import 'package:paghiram_loan/models/borrow_detail_model.dart';
+import 'package:paghiram_loan/models/borrow_rate_model.dart';
 import 'package:paghiram_loan/models/certification_entity.dart';
 import 'package:paghiram_loan/models/certify_selection_data_entity.dart';
 import 'package:paghiram_loan/models/contact_entity.dart';
@@ -152,14 +153,20 @@ class JsonConvert {
     if (<BorrowDetailModel>[] is M) {
       return data.map<BorrowDetailModel>((Map<String, dynamic> e) => BorrowDetailModel.fromJson(e)).toList() as M;
     }
-    if (<BorrowDetailModelUserData>[] is M) {
-      return data.map<BorrowDetailModelUserData>((Map<String, dynamic> e) => BorrowDetailModelUserData.fromJson(e)).toList() as M;
+    if (<BorrowDetailModelRepayData>[] is M) {
+      return data.map<BorrowDetailModelRepayData>((Map<String, dynamic> e) => BorrowDetailModelRepayData.fromJson(e)).toList() as M;
     }
-    if (<BorrowDetailModelUserDataInfo>[] is M) {
-      return data.map<BorrowDetailModelUserDataInfo>((Map<String, dynamic> e) => BorrowDetailModelUserDataInfo.fromJson(e)).toList() as M;
+    if (<BorrowRateModel>[] is M) {
+      return data.map<BorrowRateModel>((Map<String, dynamic> e) => BorrowRateModel.fromJson(e)).toList() as M;
     }
-    if (<BorrowDetailModelUserDataInfoData>[] is M) {
-      return data.map<BorrowDetailModelUserDataInfoData>((Map<String, dynamic> e) => BorrowDetailModelUserDataInfoData.fromJson(e)).toList() as M;
+    if (<BorrowRateModelUserData>[] is M) {
+      return data.map<BorrowRateModelUserData>((Map<String, dynamic> e) => BorrowRateModelUserData.fromJson(e)).toList() as M;
+    }
+    if (<BorrowRateModelUserDataInfo>[] is M) {
+      return data.map<BorrowRateModelUserDataInfo>((Map<String, dynamic> e) => BorrowRateModelUserDataInfo.fromJson(e)).toList() as M;
+    }
+    if (<BorrowRateModelUserDataInfoData>[] is M) {
+      return data.map<BorrowRateModelUserDataInfoData>((Map<String, dynamic> e) => BorrowRateModelUserDataInfoData.fromJson(e)).toList() as M;
     }
     if (<CertificationEntity>[] is M) {
       return data.map<CertificationEntity>((Map<String, dynamic> e) => CertificationEntity.fromJson(e)).toList() as M;
@@ -259,9 +266,11 @@ class JsonConvertClassCollection {
     (AliyunKeyEntity).toString(): AliyunKeyEntity.fromJson,
     (AuthStateEntity).toString(): AuthStateEntity.fromJson,
     (BorrowDetailModel).toString(): BorrowDetailModel.fromJson,
-    (BorrowDetailModelUserData).toString(): BorrowDetailModelUserData.fromJson,
-    (BorrowDetailModelUserDataInfo).toString(): BorrowDetailModelUserDataInfo.fromJson,
-    (BorrowDetailModelUserDataInfoData).toString(): BorrowDetailModelUserDataInfoData.fromJson,
+    (BorrowDetailModelRepayData).toString(): BorrowDetailModelRepayData.fromJson,
+    (BorrowRateModel).toString(): BorrowRateModel.fromJson,
+    (BorrowRateModelUserData).toString(): BorrowRateModelUserData.fromJson,
+    (BorrowRateModelUserDataInfo).toString(): BorrowRateModelUserDataInfo.fromJson,
+    (BorrowRateModelUserDataInfoData).toString(): BorrowRateModelUserDataInfoData.fromJson,
     (CertificationEntity).toString(): CertificationEntity.fromJson,
     (CertifySelectionDataEntity).toString(): CertifySelectionDataEntity.fromJson,
     (CertifySelectionDataEschool).toString(): CertifySelectionDataEschool.fromJson,
