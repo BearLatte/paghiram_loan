@@ -1,5 +1,7 @@
 import 'package:paghiram_loan/generated/json/base/json_convert_content.dart';
 import 'package:paghiram_loan/models/borrow_rate_model.dart';
+import 'package:intl/intl.dart';
+
 
 BorrowRateModel $BorrowRateModelFromJson(Map<String, dynamic> json) {
   final BorrowRateModel borrowRateModel = BorrowRateModel();
@@ -121,7 +123,7 @@ BorrowRateModelUserDataInfo $BorrowRateModelUserDataInfoFromJson(Map<String, dyn
   if (max != null) {
     borrowRateModelUserDataInfo.max = max;
   }
-  final String? money = jsonConvert.convert<String>(json['money']);
+  final int? money = jsonConvert.convert<int>(json['money']);
   if (money != null) {
     borrowRateModelUserDataInfo.money = money;
   }
@@ -152,7 +154,7 @@ extension BorrowRateModelUserDataInfoExtension on BorrowRateModelUserDataInfo {
     int? instalmentNum,
     String? min,
     String? max,
-    String? money,
+    int? money,
     List<BorrowRateModelUserDataInfoData>? data,
   }) {
     return BorrowRateModelUserDataInfo()

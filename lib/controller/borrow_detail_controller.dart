@@ -19,11 +19,10 @@ class BorrowDetailController extends GetxController {
   }
 
   void _fetchDetailData(Map<String, dynamic> params) async {
-    BorrowDetailModel? detailModel = await NetworkService.fetchBorrowDetail(params);
-    if(detailModel == null) return;
-    loanAmount.value = Global.formatCurrency(detailModel.loanAmount);
-    serviceFee.value = 'PHP ${Global.formatCurrency(detailModel.serviceFee)}';
-
+    // BorrowDetailModel? detailModel = await NetworkService.fetchBorrowDetail(params);
+    // if(detailModel == null) return;
+    // loanAmount.value = Global.formatCurrency(detailModel.loanAmount);
+    // serviceFee.value = 'PHP ${Global.formatCurrency(detailModel.serviceFee)}';
   }
 
   void checkLoanAgreementStatus() => loanAgreementChecked.value = !loanAgreementChecked.value;

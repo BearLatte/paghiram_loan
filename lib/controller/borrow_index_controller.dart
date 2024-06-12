@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/models/borrow_rate_model.dart';
 // import 'package:paghiram_loan/models/borrow_detail_model.dart';
@@ -47,14 +48,19 @@ class BorrowIndexController extends GetxController {
     currentUserData = lastData;
     partOfProductMinAmount.value = Global.formatCurrency(int.parse(currentUserData.info.min));
     partOfProductMaxAmount.value = Global.formatCurrency(int.parse(currentUserData.info.max));
-    canBorrowAmount.value = Global.formatCurrency(int.parse(currentUserData.info.money));
+    canBorrowAmount.value = Global.formatCurrency(currentUserData.info.money);
 
     slierMaxValue.value = (currentUserData.info.data.length - 1) / 1.0;
 
-    String currentAmount = currentUserData.info.money;
+    int currentAmount = currentUserData.info.money;
     for (var item in currentUserData.info.data) {
-      if (currentAmount == item.amount) _currentInfoData = item;
+      if (currentAmount == item.amount) {
+        _currentInfoData = item;
+        break;
+      }
     }
+
+    debugPrint(_currentInfoData.toString());
   }
 
   void termSelectAction(int index) {
@@ -71,10 +77,10 @@ class BorrowIndexController extends GetxController {
 
   void sliderValueChangedEnd(double value) {
     BorrowRateModelUserDataInfoData dataInfoData = currentUserData.info.data[value.truncate()];
-    if (dataInfoData.amount > int.parse(currentUserData.info.money)) {
+    if (dataInfoData.amount > currentUserData.info.money) {
       late BorrowRateModelUserDataInfoData currentMaxData;
       for (var item in currentUserData.info.data) {
-        if (item.amount == int.parse(currentUserData.info.money)) {
+        if (item.amount == currentUserData.info.money) {
           currentMaxData = item;
         }
         _currentInfoData = currentMaxData;

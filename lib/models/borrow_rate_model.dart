@@ -63,7 +63,7 @@ class BorrowRateModelUserDataInfo {
   late int instalmentNum;
   late String min;
   late String max;
-  late String money;
+  late int money;
   late List<BorrowRateModelUserDataInfoData> data;
 
   BorrowRateModelUserDataInfo();
