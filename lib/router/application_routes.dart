@@ -24,4 +24,5 @@ abstract class ApplicationRoutes {
   static const borrowIndex = '/borrowIndex';
   static const borrowDetail = '/borrowDetail';
   static const withdrawMethod = '/withdrawMethod';
+  static const addEWallet = '/addEWallet';
 }

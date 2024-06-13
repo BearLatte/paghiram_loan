@@ -11,6 +11,7 @@ import 'package:paghiram_loan/models/borrow_rate_model.dart';
 import 'package:paghiram_loan/models/certification_entity.dart';
 import 'package:paghiram_loan/models/certify_selection_data_entity.dart';
 import 'package:paghiram_loan/models/contact_entity.dart';
+import 'package:paghiram_loan/models/e_wallet_model.dart';
 import 'package:paghiram_loan/models/id_card_type_entity.dart';
 import 'package:paghiram_loan/models/marquee_entity.dart';
 import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
@@ -225,6 +226,15 @@ class JsonConvert {
     if (<ContactEntity>[] is M) {
       return data.map<ContactEntity>((Map<String, dynamic> e) => ContactEntity.fromJson(e)).toList() as M;
     }
+    if (<EWalletModel>[] is M) {
+      return data.map<EWalletModel>((Map<String, dynamic> e) => EWalletModel.fromJson(e)).toList() as M;
+    }
+    if (<EWalletCategory>[] is M) {
+      return data.map<EWalletCategory>((Map<String, dynamic> e) => EWalletCategory.fromJson(e)).toList() as M;
+    }
+    if (<CardBindingData>[] is M) {
+      return data.map<CardBindingData>((Map<String, dynamic> e) => CardBindingData.fromJson(e)).toList() as M;
+    }
     if (<IdCardTypeEntity>[] is M) {
       return data.map<IdCardTypeEntity>((Map<String, dynamic> e) => IdCardTypeEntity.fromJson(e)).toList() as M;
     }
@@ -290,6 +300,9 @@ class JsonConvertClassCollection {
     (CertifySelectionDataIto).toString(): CertifySelectionDataIto.fromJson,
     (CertifySelectionDataRelist).toString(): CertifySelectionDataRelist.fromJson,
     (ContactEntity).toString(): ContactEntity.fromJson,
+    (EWalletModel).toString(): EWalletModel.fromJson,
+    (EWalletCategory).toString(): EWalletCategory.fromJson,
+    (CardBindingData).toString(): CardBindingData.fromJson,
     (IdCardTypeEntity).toString(): IdCardTypeEntity.fromJson,
     (MarqueeEntity).toString(): MarqueeEntity.fromJson,
     (OcrRecgnizedEntity).toString(): OcrRecgnizedEntity.fromJson,

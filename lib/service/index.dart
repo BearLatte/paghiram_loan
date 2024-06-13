@@ -8,6 +8,7 @@ import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
 import 'package:paghiram_loan/models/borrow_detail_model.dart';
+import 'package:paghiram_loan/models/e_wallet_model.dart';
 import 'package:paghiram_loan/models/id_card_type_entity.dart';
 import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
 import 'package:paghiram_loan/models/pgm_photo_entity.dart';
@@ -251,8 +252,8 @@ class NetworkService {
 
   // resubmit ID Card photo
   static resubmitIDCard(Map<String, dynamic> parameters, {required void Function() successCallback}) async {
-   BaseResponse? response = await HttpUtils.post(path: '/UserCard/back_card', data: parameters);
-   if(response != null) successCallback();
+    BaseResponse? response = await HttpUtils.post(path: '/UserCard/back_card', data: parameters);
+    if (response != null) successCallback();
   }
 
   // fetch product rate(borrow detail page)
@@ -274,12 +275,30 @@ class NetworkService {
   }
 
   // get user's bound E-wallet
-  static Future<void> fetchUserBoundEWallet() async {
-    BaseResponse? response = await HttpUtils.get(path: '/ElectronicWallet/get_user_wallet');
-    debugPrint(response?.originalData);
+  static Future<List<EWalletModel>?> fetchUserBoundEWallet() async {
+    BaseResponse? response = await HttpUtils.get<List<EWalletModel>>(path: '/ElectronicWallet/get_user_wallet');
+    return response?.data;
   }
 
-  static Future<void> buryPoint() async {
-
+  // get e-wallet categories
+  static Future<List<EWalletCategory>?> fetchEWalletCategories() async {
+    BaseResponse? response = await HttpUtils.get<List<EWalletCategory>>(path: '/ElectronicWallet/get_wallet');
+    return response?.data;
   }
+
+  // get binding card default name
+  static Future<CardBindingData?> fetchCardBindingNameData() async {
+    BaseResponse? response = await HttpUtils.get<CardBindingData>(path: '/Bank/bind_data');
+    return response?.data;
+  }
+
+  // add new E-Wallet
+  static Future<bool> addNewEWallet(Map<String, dynamic> params) async {
+    Map<String, dynamic> wrapperParams = {'data': jsonEncode(params)};
+    BaseResponse? response = await HttpUtils.post(path: '/ElectronicWallet/add', data: wrapperParams);
+    if (response?.code == 200) return true;
+    return false;
+  }
+
+  static Future<void> buryPoint() async {}
 }

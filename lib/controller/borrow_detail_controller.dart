@@ -3,11 +3,13 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/models/borrow_detail_model.dart';
+import 'package:paghiram_loan/models/e_wallet_model.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/service/index.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/global.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
+import 'package:paghiram_loan/view/loan/borrow/withdraw_method.dart';
 
 class BorrowDetailController extends GetxController {
   var loanAgreementChecked = false.obs;
@@ -18,20 +20,37 @@ class BorrowDetailController extends GetxController {
   var withdrawMethod = ''.obs;
   var isShowServiceFee = false.obs;
 
+  EWalletModel? defaultWithdrawMethod;
+
+  late BorrowDetailModel curDetailModel;
+
   @override
   void onInit() {
     super.onInit();
     _fetchDetailData(Get.arguments);
+    _fetchDefaultWithdrawMethod();
   }
 
   void _fetchDetailData(Map<String, dynamic> params) async {
     BorrowDetailModel? detailModel = await NetworkService.fetchBorrowDetail(params);
     if (detailModel == null) return;
+    curDetailModel = detailModel;
     loanAmount.value = Global.formatCurrency(detailModel.loanAmount);
     if (detailModel.serviceFee > 0) isShowServiceFee.value = true;
     String servicePrice = detailModel.serviceFee > 1000 ? Global.formatCurrency(detailModel.serviceFee) : detailModel.serviceFee.toString();
     serviceFee.value = 'PHP $servicePrice';
     // withdrawMethod.value = detailModel
+  }
+
+  void _fetchDefaultWithdrawMethod() async {
+    List<EWalletModel>? wallets = await NetworkService.fetchUserBoundEWallet();
+    if (wallets == null) return;
+    wallets.forEach((item) {
+      if (item.isDefault == '1') {
+        withdrawMethod.value = item.formattedNoPrefixNumber;
+        defaultWithdrawMethod = item;
+      }
+    });
   }
 
   void checkLoanAgreementStatus() => loanAgreementChecked.value = !loanAgreementChecked.value;
@@ -46,17 +65,26 @@ class BorrowDetailController extends GetxController {
     isShowFullTerm.value = !isShowFullTerm.value;
   }
 
-  void topListItemAction(int index) {
+  void topListItemAction(int index) async {
     if (index == 2) {
       _showServiceFeeDetailInfo();
     }
 
     if (index == 3) {
-      Get.toNamed(ApplicationRoutes.withdrawMethod);
+      var result = await Get.toNamed(ApplicationRoutes.withdrawMethod);
+      if (result != null) {
+        defaultWithdrawMethod = result;
+        withdrawMethod.value = result.formattedNoPrefixNumber;
+      }
     }
   }
 
   void _showServiceFeeDetailInfo() {
+    String totalFee = curDetailModel.serviceFee > 1000 ? 'PHP ${Global.formatCurrency(curDetailModel.serviceFee)}' : 'PHP ${curDetailModel.serviceFee}';
+    String techFee = curDetailModel.techPrice > 1000 ? 'PHP ${Global.formatCurrency(curDetailModel.techPrice)}' : 'PHP ${curDetailModel.techPrice}';
+    String accountManagementFee = curDetailModel.managePrice > 1000 ? 'PHP ${Global.formatCurrency(curDetailModel.managePrice)}' : 'PHP ${curDetailModel.managePrice}';
+    String creditFee = curDetailModel.creditPrice > 1000 ? 'PHP ${Global.formatCurrency(curDetailModel.creditPrice)}' : 'PHP ${curDetailModel.creditPrice}';
+    String issuedFee = curDetailModel.issuedAmount > 1000 ? 'PHP ${Global.formatCurrency(curDetailModel.issuedAmount)}' : 'PHP ${curDetailModel.issuedAmount}';
     Get.dialog(
         barrierDismissible: false,
         Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -75,19 +103,19 @@ class BorrowDetailController extends GetxController {
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                   decoration: BoxDecoration(border: Border(bottom: BorderSide(color: HexColor('#E6E6E6'), width: 1.0))),
                   child: Column(children: [
-                    _generateItemRow(title: 'Service Fees', value: '占位文字'),
+                    _generateItemRow(title: 'Service Fees', value: totalFee),
                     Container(
                       padding: EdgeInsets.only(top: 12, left: 16, right: 16),
                       decoration: BoxDecoration(color: HexColor('#FFFAFAFA'), borderRadius: BorderRadius.circular(16)),
                       child: Column(children: [
-                        _generateItemRow(title: 'Technical Service Fees', value: '占位文字'),
-                        _generateItemRow(title: 'Account Management Fees', value: '占位文字'),
-                        _generateItemRow(title: 'Credit Assessment Fees', value: '占位文字'),
+                        _generateItemRow(title: 'Technical Service Fees', value: techFee),
+                        _generateItemRow(title: 'Account Management Fees', value: accountManagementFee),
+                        _generateItemRow(title: 'Credit Assessment Fees', value: creditFee),
                       ]),
                     ),
                   ])),
               SizedBox(height: 16),
-              _generateItemRow(title: 'Issued Amount', value: '占位文字', isHorizontalPadding: true)
+              _generateItemRow(title: 'Issued Amount', value: issuedFee, isHorizontalPadding: true)
             ]),
           ),
           IconButton(onPressed: Get.back, icon: CommonImage(src: 'asset/icons/close_icon.png')),

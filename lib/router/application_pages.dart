@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:paghiram_loan/application.dart';
+import 'package:paghiram_loan/controller/add_e_wallet_controller.dart';
 import 'package:paghiram_loan/controller/add_note_controller.dart';
 import 'package:paghiram_loan/controller/borrow_detail_controller.dart';
 import 'package:paghiram_loan/controller/borrow_index_controller.dart';
@@ -38,6 +39,7 @@ import 'package:paghiram_loan/view/feedback/feedback_type_select_view.dart';
 import 'package:paghiram_loan/view/feedback/feedback_view.dart';
 import 'package:paghiram_loan/view/home_view.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
+import 'package:paghiram_loan/view/loan/borrow/add_e_wallet.dart';
 import 'package:paghiram_loan/view/loan/borrow/detail.dart';
 import 'package:paghiram_loan/view/loan/borrow/index.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_method.dart';
@@ -159,6 +161,12 @@ class ApplicationPages {
       page: () => WithdrawMethod(),
       transition: Transition.native,
       binding: BindingsBuilder(() => Get.lazyPut(() => WithdrawMethodController())),
-    )
+    ),
+    GetPage(
+      name: ApplicationRoutes.addEWallet,
+      page: () => AddEWallet(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => AddEWalletController())),
+    ),
   ];
 }
