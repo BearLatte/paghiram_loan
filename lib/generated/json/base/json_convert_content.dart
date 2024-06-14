@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart' show debugPrint;
 import 'package:paghiram_loan/models/aliyun_key_entity.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
+import 'package:paghiram_loan/models/bank_card_model.dart';
 import 'package:paghiram_loan/models/borrow_detail_model.dart';
 import 'package:paghiram_loan/models/borrow_rate_model.dart';
 import 'package:paghiram_loan/models/certification_entity.dart';
@@ -151,6 +152,9 @@ class JsonConvert {
     if (<AuthStateEntity>[] is M) {
       return data.map<AuthStateEntity>((Map<String, dynamic> e) => AuthStateEntity.fromJson(e)).toList() as M;
     }
+    if (<BankCardModel>[] is M) {
+      return data.map<BankCardModel>((Map<String, dynamic> e) => BankCardModel.fromJson(e)).toList() as M;
+    }
     if (<BorrowDetailModel>[] is M) {
       return data.map<BorrowDetailModel>((Map<String, dynamic> e) => BorrowDetailModel.fromJson(e)).toList() as M;
     }
@@ -275,6 +279,7 @@ class JsonConvertClassCollection {
   Map<String, JsonConvertFunction> convertFuncMap = {
     (AliyunKeyEntity).toString(): AliyunKeyEntity.fromJson,
     (AuthStateEntity).toString(): AuthStateEntity.fromJson,
+    (BankCardModel).toString(): BankCardModel.fromJson,
     (BorrowDetailModel).toString(): BorrowDetailModel.fromJson,
     (BorrowDetailModelRepayData).toString(): BorrowDetailModelRepayData.fromJson,
     (BorrowRateModel).toString(): BorrowRateModel.fromJson,

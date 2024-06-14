@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:paghiram_loan/application.dart';
+import 'package:paghiram_loan/controller/add_bank_card_controller.dart';
 import 'package:paghiram_loan/controller/add_e_wallet_controller.dart';
 import 'package:paghiram_loan/controller/add_note_controller.dart';
 import 'package:paghiram_loan/controller/borrow_detail_controller.dart';
@@ -39,6 +40,7 @@ import 'package:paghiram_loan/view/feedback/feedback_type_select_view.dart';
 import 'package:paghiram_loan/view/feedback/feedback_view.dart';
 import 'package:paghiram_loan/view/home_view.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
+import 'package:paghiram_loan/view/loan/borrow/add_bank_card.dart';
 import 'package:paghiram_loan/view/loan/borrow/add_e_wallet.dart';
 import 'package:paghiram_loan/view/loan/borrow/detail.dart';
 import 'package:paghiram_loan/view/loan/borrow/index.dart';
@@ -167,6 +169,12 @@ class ApplicationPages {
       page: () => AddEWallet(),
       transition: Transition.native,
       binding: BindingsBuilder(() => Get.lazyPut(() => AddEWalletController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.addBankCard,
+      page: () => AddBankCard(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => AddBankCardController())),
     ),
   ];
 }

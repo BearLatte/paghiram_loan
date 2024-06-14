@@ -68,12 +68,16 @@ class WithdrawMethod extends StatelessWidget {
   Widget _eWalletListView() {
     return Obx(() {
       if (controller.eWalletList.isEmpty) {
-        return Column(
-          children: [
-            CommonImage(src: 'asset/icons/withdraw_empty_icon.png'),
-            _generateAddButton(controller.addButtonAction),
-          ],
-        );
+        return Container(
+            margin: EdgeInsets.only(top: 40),
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              children: [
+                CommonImage(src: 'asset/icons/withdraw_empty_icon.png'),
+                SizedBox(height: 40),
+                _generateAddButton(controller.addButtonAction),
+              ],
+            ));
       } else {
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -110,11 +114,69 @@ class WithdrawMethod extends StatelessWidget {
   }
 
   Widget _generateCashView() {
-    return Container(child: Center(child: Text('现金取款')));
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      InkWell(
+        onTap: controller.go2cashWithdraw,
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          padding: EdgeInsets.symmetric(vertical: 20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Constant.themeColor, width: 0.5),
+          ),
+          child: Column(children: [
+            CommonImage(src: 'asset/icons/withdraw_cash.png'),
+            Text('Withdraw cash in store', style: TextStyle(color: HexColor('#FF3B414B'), fontSize: 16)),
+          ]),
+        ),
+      )
+    ]);
   }
 
   Widget _generateBankCardView() {
-    return Container(child: Center(child: Text('银行卡列表')));
+    return Obx(() {
+      if (controller.bankCards.isEmpty) {
+        return Container(
+            margin: EdgeInsets.only(top: 40),
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              children: [
+                CommonImage(src: 'asset/icons/withdraw_empty_icon.png'),
+                SizedBox(height: 40),
+                _generateAddButton(controller.addButtonAction),
+              ],
+            ));
+      } else {
+        return SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          child: Column(
+            children: [
+              ...controller.bankCards.map(
+                (item) => Container(
+                  margin: EdgeInsets.fromLTRB(12, 0, 12, 16),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: item.isDefault == '1' ? Border.all(color: Constant.themeColor, width: 0.5) : null,
+                  ),
+                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    Row(children: [
+                      CommonImage(src: 'asset/icons/bank_card_icon.png'),
+                      SizedBox(width: 7),
+                      Text(item.name, style: TextStyle(color: HexColor('#FF3B414B'))),
+                    ]),
+                    Text(item.formattedBankNumber, style: TextStyle(color: HexColor('#FF3B414B'))),
+                  ]),
+                ),
+              ),
+              _generateAddButton(controller.addButtonAction),
+            ],
+          ),
+        );
+      }
+    });
   }
 
   Widget _generateAddButton(void Function()? addAction) {

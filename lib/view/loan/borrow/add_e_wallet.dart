@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_view.dart';
 import 'package:paghiram_loan/controller/add_e_wallet_controller.dart';
 import 'package:paghiram_loan/util/constant.dart';
+import 'package:paghiram_loan/util/global.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
 import 'package:paghiram_loan/widget/hide_keyboard_wraper.dart';
 
@@ -37,17 +38,18 @@ class AddEWallet extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                 child: Column(
                   children: [
-                    _generateItem(
+                    Global.generateAddWithdrawMethodItem(
                       'Full Name',
                       editingController: controller.fullNameController,
                     ),
-                    _generateItem('E-Wallet Name', type: 1, editingController: controller.walletNameController, textFieldOnTap: controller.go2selectEWalletName),
-                    _generateItem(
+                    Global.generateAddWithdrawMethodItem('E-Wallet Name',
+                        type: 1, editingController: controller.walletNameController, textFieldOnTap: controller.go2selectEWalletName),
+                    Global.generateAddWithdrawMethodItem(
                       'E-Wallet Account No.',
                       keyboardType: TextInputType.phone,
                       editingController: controller.walletNoController,
                     ),
-                    _generateItem(
+                    Global.generateAddWithdrawMethodItem(
                       'Same E-Wallet Account No.',
                       keyboardType: TextInputType.phone,
                       editingController: controller.repeatNoController,
@@ -68,43 +70,5 @@ class AddEWallet extends StatelessWidget {
             ),
           )
         ]));
-  }
-
-  Widget _generateItem(
-    String title, {
-    int type = 0,
-    TextEditingController? editingController,
-    TextInputType keyboardType = TextInputType.text,
-    void Function()? textFieldOnTap,
-  }) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 16),
-      padding: EdgeInsets.all(12),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(title, style: TextStyle(color: HexColor('#FF3B414B'), fontSize: 15)),
-          SizedBox(height: 12),
-          ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 24),
-              child: TextField(
-                style: TextStyle(color: HexColor('#FF3B414B'), fontSize: 15),
-                controller: editingController,
-                onTap: textFieldOnTap,
-                readOnly: type == 1,
-                keyboardType: type == 1 ? TextInputType.none : keyboardType,
-                decoration: InputDecoration(
-                  isDense: true,
-                  hintText: type == 0 ? 'Please fill in' : 'Please select',
-                  hintStyle: TextStyle(color: HexColor('#FFCCCCCC'), fontSize: 15),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.zero,
-                  suffixIcon: type == 1 ? Padding(padding: EdgeInsets.zero, child: Icon(Icons.keyboard_arrow_right_outlined, color: HexColor('#CCCCCC'))) : null,
-                ),
-              ))
-        ],
-      ),
-    );
   }
 }

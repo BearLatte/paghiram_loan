@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
+import 'package:paghiram_loan/models/bank_card_model.dart';
 import 'package:paghiram_loan/models/borrow_detail_model.dart';
 import 'package:paghiram_loan/models/e_wallet_model.dart';
 import 'package:paghiram_loan/models/id_card_type_entity.dart';
@@ -269,9 +270,9 @@ class NetworkService {
   }
 
   // get user's bound bank cards
-  static Future<void> fetchUserBindedBankCards() async {
-    BaseResponse? response = await HttpUtils.get(path: '/Bank/get_user_banks');
-    debugPrint(response?.originalData);
+  static Future<List<BankCardModel>?> fetchUserBoundBankCards() async {
+    BaseResponse? response = await HttpUtils.get<List<BankCardModel>>(path: '/Bank/get_user_banks');
+    return response?.data;
   }
 
   // get user's bound E-wallet
