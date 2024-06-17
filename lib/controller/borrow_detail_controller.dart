@@ -73,13 +73,16 @@ class BorrowDetailController extends GetxController {
     if (index == 3) {
       var result = await Get.toNamed(ApplicationRoutes.withdrawMethod);
       if (result != null) {
-        WithdrawMethodModel model = result['item'];
-        defaultWithdrawMethod = model;
+        if (result['type'] != 2) {
+          defaultWithdrawMethod = result['item'];
+        }
 
         if (result['type'] == 0) {
-          withdrawMethod.value = model.formattedNoPrefixNumber;
-        } else {
-          withdrawMethod.value = model.name + ' ' + model.formattedBankNumber;
+          withdrawMethod.value = defaultWithdrawMethod!.formattedNoPrefixNumber;
+        } else if (result['type'] == 1) {
+          withdrawMethod.value = defaultWithdrawMethod!.name + ' ' + defaultWithdrawMethod!.formattedBankNumber;
+        } else if (result['type'] == 2) {
+          withdrawMethod.value = 'Cash';
         }
       }
     }

@@ -48,10 +48,6 @@ class WithdrawMethodController extends GetxController {
     _fullName = '${nameData.nameOne} ${nameData.nameTwo} ${nameData.nameThree}';
   }
 
-  void go2cashWithdraw() {
-    debugPrint('DEBUG: 进行现金取款');
-  }
-
   void addButtonAction() async {
     if (selectedItem.value == 0) {
       var result = await Get.toNamed(ApplicationRoutes.addEWallet, arguments: _fullName);

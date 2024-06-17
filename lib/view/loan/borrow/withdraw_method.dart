@@ -116,7 +116,7 @@ class WithdrawMethod extends StatelessWidget {
   Widget _generateCashView() {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       InkWell(
-        onTap: controller.go2cashWithdraw,
+        onTap: () => Get.back(result: {'type': 2}),
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
           padding: EdgeInsets.symmetric(vertical: 20),
