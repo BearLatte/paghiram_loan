@@ -31,6 +31,10 @@ WithdrawMethodModel $WithdrawMethodModelFromJson(Map<String, dynamic> json) {
   if (name != null) {
     withdrawMethodModel.name = name;
   }
+  final int? type = jsonConvert.convert<int>(json['type']);
+  if (type != null) {
+    withdrawMethodModel.type = type;
+  }
   return withdrawMethodModel;
 }
 
@@ -43,6 +47,7 @@ Map<String, dynamic> $WithdrawMethodModelToJson(WithdrawMethodModel entity) {
   data['bank_number'] = entity.bankNumber;
   data['title'] = entity.title;
   data['name'] = entity.name;
+  data['type'] = entity.type;
   return data;
 }
 
@@ -55,6 +60,7 @@ extension WithdrawMethodModelExtension on WithdrawMethodModel {
     String? bankNumber,
     String? title,
     String? name,
+    int? type,
   }) {
     return WithdrawMethodModel()
       ..isDefault = isDefault ?? this.isDefault
@@ -63,7 +69,8 @@ extension WithdrawMethodModelExtension on WithdrawMethodModel {
       ..accountNumber = accountNumber ?? this.accountNumber
       ..bankNumber = bankNumber ?? this.bankNumber
       ..title = title ?? this.title
-      ..name = name ?? this.name;
+      ..name = name ?? this.name
+      ..type = type ?? this.type;
   }
 }
 

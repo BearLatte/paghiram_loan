@@ -29,7 +29,7 @@ class WebView extends StatelessWidget {
                     width: double.infinity,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(color: Constant.themeColor, borderRadius: BorderRadius.circular(100)),
-                    child: Text('Aceptar', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                    child: Text(Get.arguments['buttonText'], style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
                   ),
                 ),
               )

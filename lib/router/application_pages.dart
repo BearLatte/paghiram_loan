@@ -25,6 +25,7 @@ import 'package:paghiram_loan/controller/personal_info_controller.dart';
 import 'package:paghiram_loan/controller/province_select_controller.dart';
 import 'package:paghiram_loan/controller/settings_controller.dart';
 import 'package:paghiram_loan/controller/web_view_controller.dart';
+import 'package:paghiram_loan/controller/withdraw_confirm_controller.dart';
 import 'package:paghiram_loan/controller/withdraw_method_controller.dart';
 import 'package:paghiram_loan/view/certifications/card_ocr_view.dart';
 import 'package:paghiram_loan/view/certifications/city_select_view.dart';
@@ -44,6 +45,7 @@ import 'package:paghiram_loan/view/loan/borrow/add_bank_card.dart';
 import 'package:paghiram_loan/view/loan/borrow/add_e_wallet.dart';
 import 'package:paghiram_loan/view/loan/borrow/detail.dart';
 import 'package:paghiram_loan/view/loan/borrow/index.dart';
+import 'package:paghiram_loan/view/loan/borrow/withdraw_confirm_view.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_method.dart';
 import 'package:paghiram_loan/view/login/change_password_view.dart';
 import 'package:paghiram_loan/view/login/login_view.dart';
@@ -175,6 +177,14 @@ class ApplicationPages {
       page: () => AddBankCard(),
       transition: Transition.native,
       binding: BindingsBuilder(() => Get.lazyPut(() => AddBankCardController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.withdrawConfirm,
+      page: () => WithdrawConfirmView(),
+      transition: Transition.fadeIn,
+      opaque: false,
+      popGesture: false,
+      binding: BindingsBuilder(() => Get.lazyPut(() => WithdrawConfirmController())),
     ),
   ];
 }

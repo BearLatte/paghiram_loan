@@ -5,7 +5,11 @@ import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/common/common_view.dart';
 import 'package:paghiram_loan/controller/borrow_detail_controller.dart';
 import 'package:paghiram_loan/util/constant.dart';
+import 'package:paghiram_loan/util/global.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
+
+import '../../../models/borrow_detail_model.dart';
+import '../../../router/application_routes.dart';
 
 class BorrowDetailView extends StatelessWidget {
   BorrowDetailView({super.key});
@@ -69,15 +73,18 @@ class BorrowDetailView extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 20),
                       child: Text('Repayment schedule', style: TextStyle(color: HexColor('#FF102729'), fontSize: 16, fontWeight: FontWeight.w600)),
                     ),
-                    _generateRepaymentTermItemView(1, isCurrent: true),
-                    _generateRepaymentTermItemView(2),
-                    if (controller.isShowFullTerm.value)
-                      Column(children: [
-                        _generateRepaymentTermItemView(3),
-                        _generateRepaymentTermItemView(4),
-                        _generateRepaymentTermItemView(5),
-                        _generateRepaymentTermItemView(6),
-                      ]),
+                    Column(
+                        children: List.generate(controller.borrowPeriodList.length, (index) {
+                      if (controller.isShowFullTerm.value) {
+                        return _generateRepaymentTermItemView(index + 1, periodItem: controller.borrowPeriodList[index], isCurrent: index == 0);
+                      } else {
+                        if (index < 2) {
+                          return _generateRepaymentTermItemView(index + 1, periodItem: controller.borrowPeriodList[index], isCurrent: index == 0);
+                        } else {
+                          return SizedBox();
+                        }
+                      }
+                    }).toList()),
                     InkWell(
                         onTap: controller.switchTermShowStatus,
                         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -132,7 +139,7 @@ class BorrowDetailView extends StatelessWidget {
     );
   }
 
-  Widget _generateRepaymentTermItemView(int index, {bool isCurrent = false}) {
+  Widget _generateRepaymentTermItemView(int index, {required BorrowDetailModelRepayData periodItem, bool isCurrent = false}) {
     return Container(
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.only(bottom: 12),
@@ -148,12 +155,12 @@ class BorrowDetailView extends StatelessWidget {
           child: Column(children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text('Repayment Date', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
-              Text('占位日期文字', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
+              Text(periodItem.backTime, style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
             ]),
             SizedBox(height: 16),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text('Repayment Amount', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
-              Text('占位金额文字', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
+              Text('PHP ${Global.formatCurrency(periodItem.repayPrice)}', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
             ]),
             SizedBox(height: 16),
             Container(
@@ -162,12 +169,12 @@ class BorrowDetailView extends StatelessWidget {
               child: Column(children: [
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   Text('Principal', style: TextStyle(color: isCurrent ? HexColor('#FF102729') : HexColor('#FF757F8C'), fontSize: 14)),
-                  Text('占位文字', style: TextStyle(color: isCurrent ? HexColor('#FF102729') : HexColor('#FF757F8C'), fontSize: 14))
+                  Text('PHP ${Global.formatCurrency(periodItem.principal)}', style: TextStyle(color: isCurrent ? HexColor('#FF102729') : HexColor('#FF757F8C'), fontSize: 14))
                 ]),
                 SizedBox(height: 12),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   Text('Interest', style: TextStyle(color: isCurrent ? HexColor('#FF102729') : HexColor('#FF757F8C'), fontSize: 14)),
-                  Text('占位文字', style: TextStyle(color: isCurrent ? HexColor('#FF102729') : HexColor('#FF757F8C'), fontSize: 14))
+                  Text('PHP ${Global.formatCurrency(periodItem.interest)}', style: TextStyle(color: isCurrent ? HexColor('#FF102729') : HexColor('#FF757F8C'), fontSize: 14))
                 ]),
               ]),
             )

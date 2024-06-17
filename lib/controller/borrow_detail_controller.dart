@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:paghiram_loan/common/common_image.dart';
+import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/models/borrow_detail_model.dart';
 import 'package:paghiram_loan/models/withdraw_method_model.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
@@ -9,7 +10,6 @@ import 'package:paghiram_loan/service/index.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/global.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
-import 'package:paghiram_loan/view/loan/borrow/withdraw_method.dart';
 
 class BorrowDetailController extends GetxController {
   var loanAgreementChecked = false.obs;
@@ -19,6 +19,7 @@ class BorrowDetailController extends GetxController {
   var serviceFee = ''.obs;
   var withdrawMethod = ''.obs;
   var isShowServiceFee = false.obs;
+  var borrowPeriodList = <BorrowDetailModelRepayData>[].obs;
 
   WithdrawMethodModel? defaultWithdrawMethod;
 
@@ -27,6 +28,7 @@ class BorrowDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _days = Get.arguments['days'];
     _fetchDetailData(Get.arguments);
     _fetchDefaultWithdrawMethod();
   }
@@ -37,9 +39,27 @@ class BorrowDetailController extends GetxController {
     curDetailModel = detailModel;
     loanAmount.value = Global.formatCurrency(detailModel.loanAmount);
     if (detailModel.serviceFee > 0) isShowServiceFee.value = true;
-    String servicePrice = detailModel.serviceFee > 1000 ? Global.formatCurrency(detailModel.serviceFee) : detailModel.serviceFee.toString();
+    String servicePrice = Global.formatCurrency(detailModel.serviceFee);
     serviceFee.value = 'PHP $servicePrice';
-    // withdrawMethod.value = detailModel
+    _generateBorrowPeriod(detailModel.repayData);
+  }
+
+  void _generateBorrowPeriod(List<BorrowDetailModelRepayData> period) {
+    final dateFormat = DateFormat('MM-dd-yyyy');
+    List<BorrowDetailModelRepayData> tempList = period;
+    while (tempList.length < 6) {
+      BorrowDetailModelRepayData lastData = tempList.last;
+      int newDateTimestamp = dateFormat.parse(lastData.backTime).millisecondsSinceEpoch + 24 * 60 * 60 * 1000 * 15;
+      String currentDate = dateFormat.format(DateTime.fromMillisecondsSinceEpoch(newDateTimestamp));
+
+      BorrowDetailModelRepayData newData = BorrowDetailModelRepayData();
+      newData.backTime = currentDate;
+      newData.principal = 10;
+      newData.interest = 10;
+      newData.repayPrice = 10;
+      tempList.add(newData);
+    }
+    borrowPeriodList.value = tempList;
   }
 
   void _fetchDefaultWithdrawMethod() async {
@@ -55,15 +75,44 @@ class BorrowDetailController extends GetxController {
 
   void checkLoanAgreementStatus() => loanAgreementChecked.value = !loanAgreementChecked.value;
 
-  void withdrawAction() {}
+  void withdrawAction() async {
+    if (defaultWithdrawMethod == null) return CommonSnackBar.showSnackBar('Please select withdraw method.');
+    if (!loanAgreementChecked.value) return CommonSnackBar.showSnackBar('Please read and agree to the loan agreement. ');
 
-  void go2readLoanAgreement() {
-    debugPrint('DEBUG: 去查看贷款协议');
+    var result = await Get.toNamed(ApplicationRoutes.withdrawConfirm, arguments: {
+      'amount': loanAmount.value,
+      'term': loanTerm.value,
+      'type': defaultWithdrawMethod!.type,
+      'withdrawName': defaultWithdrawMethod!.type == 0 ? defaultWithdrawMethod!.title : defaultWithdrawMethod!.name,
+      'withdrawNumber': defaultWithdrawMethod!.type == 0 ? defaultWithdrawMethod!.formattedNoPrefixNumber : defaultWithdrawMethod!.formattedBankNumber,
+    });
+
+    if (result != 'confirm') return;
+
+    late String account;
+    late String type;
+    if (defaultWithdrawMethod?.type == 0) {
+      account = defaultWithdrawMethod!.accountNumber;
+      type = '1';
+    } else {
+      account = defaultWithdrawMethod!.bankNumber;
+      type = '2';
+    }
+    bool isNeedCheck = await NetworkService.deviceRiskCheck(withdrawType: type, account: account);
   }
 
-  void switchTermShowStatus() {
-    isShowFullTerm.value = !isShowFullTerm.value;
+  void go2readLoanAgreement() async {
+    String url = 'https://api.paghiram.top/Api/Contract/lending_ios?money=${curDetailModel.loanAmount}&use_days=$_days&token=${Global.accessToken}';
+    var result = await Get.toNamed(ApplicationRoutes.webView, arguments: {
+      'title': 'Loan Agreement',
+      'url': url,
+      'isShowBottomBar': '1',
+      'buttonText': 'Ok, I have read it',
+    });
+    if (result == 'confirm') loanAgreementChecked.value = true;
   }
+
+  void switchTermShowStatus() => isShowFullTerm.value = !isShowFullTerm.value;
 
   void topListItemAction(int index) async {
     if (index == 2) {
@@ -84,6 +133,7 @@ class BorrowDetailController extends GetxController {
         } else if (result['type'] == 2) {
           withdrawMethod.value = 'Cash';
         }
+        defaultWithdrawMethod?.type = result['type'];
       }
     }
   }
@@ -140,4 +190,6 @@ class BorrowDetailController extends GetxController {
       ),
     );
   }
+
+  String? _days;
 }

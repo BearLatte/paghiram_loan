@@ -16,6 +16,7 @@ class WithdrawMethodModel {
   late String bankNumber;
   late String title;
   late String name;
+  int type = 0;
 
   String get icon {
     if (title == 'GCash') {

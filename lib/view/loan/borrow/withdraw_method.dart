@@ -29,15 +29,13 @@ class WithdrawMethod extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: List.generate(
-                  3,
+                  2,
                   (index) {
                     late String title;
                     switch (index) {
                       case 0:
                         title = 'E-Wallet';
                       case 1:
-                        title = 'Cash';
-                      case 2:
                         title = 'BankCard';
                     }
                     return InkWell(
@@ -58,7 +56,7 @@ class WithdrawMethod extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(child: [_eWalletListView(), _generateCashView(), _generateBankCardView()][controller.selectedItem.value])
+            Expanded(child: [_eWalletListView(), /*_generateCashView(),*/ _generateBankCardView()][controller.selectedItem.value])
           ],
         ),
       ),

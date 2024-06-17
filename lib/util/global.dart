@@ -45,7 +45,10 @@ class Global {
     Get.back();
   }
 
-  static String formatCurrency(int amount) => NumberFormat('0,000').format(amount);
+  static String formatCurrency(int amount) {
+    if (amount < 1000) return amount.toString();
+    return NumberFormat('0,000').format(amount);
+  }
 
   static Widget generateAddWithdrawMethodItem(
       String title, {

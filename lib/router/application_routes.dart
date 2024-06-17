@@ -26,4 +26,5 @@ abstract class ApplicationRoutes {
   static const withdrawMethod = '/withdrawMethod';
   static const addEWallet = '/addEWallet';
   static const addBankCard = '/addBankCard';
+  static const withdrawConfirm = '/withdrawConfirm';
 }

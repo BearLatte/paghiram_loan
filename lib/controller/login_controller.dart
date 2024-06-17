@@ -104,8 +104,12 @@ class LoginController extends GetxController {
   }
 
   void go2ReadPrivacyPolicy() async {
-    var result =
-        await Get.toNamed(ApplicationRoutes.webView, arguments: {'title': 'Privacy Policy', 'url': 'https://api.paghiram.top/Api/Help/register_ios', 'isShowBottomBar': '1'});
+    var result = await Get.toNamed(ApplicationRoutes.webView, arguments: {
+      'title': 'Privacy Policy',
+      'url': 'https://api.paghiram.top/Api/Help/register_ios',
+      'isShowBottomBar': '1',
+      'buttonText': 'Aceptar',
+    });
     if (result != null) isCheckedPolicy.value = true;
   }
 

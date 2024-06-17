@@ -25,7 +25,7 @@ class WithdrawMethodController extends GetxController {
       _getBoundEWalletList();
     }
 
-    if (index == 2) {
+    if (index == 1) {
       _getBoundBankCardList();
     }
   }
@@ -62,7 +62,7 @@ class WithdrawMethodController extends GetxController {
         }
         Get.back(result: wallet);
       }
-    } else if (selectedItem.value == 2) {
+    } else if (selectedItem.value == 1) {
       var result = await Get.toNamed(ApplicationRoutes.addBankCard, arguments: _fullName);
       if (result == 'success') _getBoundBankCardList();
     }

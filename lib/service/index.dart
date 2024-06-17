@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
@@ -311,6 +312,14 @@ class NetworkService {
     BaseResponse? response = await HttpUtils.post(path: '/Bank/add', data: wrapperParams);
     if (response?.code == 200) return true;
     return false;
+  }
+
+  // device risk check
+  static Future<bool> deviceRiskCheck({required String withdrawType, required String account}) async {
+    Map<String, dynamic> params = {'dev_id': Global.deviceUUID, 'type': withdrawType, 'account': account};
+    BaseResponse? response = await HttpUtils.post(path: '/Paytwo/control_version', data: params);
+    debugPrint(response?.data);
+    return true;
   }
 
   static Future<void> buryPoint() async {}
