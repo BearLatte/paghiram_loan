@@ -2,14 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
-import 'package:paghiram_loan/models/bank_card_model.dart';
 import 'package:paghiram_loan/models/borrow_detail_model.dart';
-import 'package:paghiram_loan/models/e_wallet_model.dart';
+import 'package:paghiram_loan/models/withdraw_method_model.dart';
 import 'package:paghiram_loan/models/id_card_type_entity.dart';
 import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
 import 'package:paghiram_loan/models/pgm_photo_entity.dart';
@@ -270,14 +268,14 @@ class NetworkService {
   }
 
   // get user's bound bank cards
-  static Future<List<BankCardModel>?> fetchUserBoundBankCards() async {
-    BaseResponse? response = await HttpUtils.get<List<BankCardModel>>(path: '/Bank/get_user_banks');
+  static Future<List<WithdrawMethodModel>?> fetchUserBoundBankCards() async {
+    BaseResponse? response = await HttpUtils.get<List<WithdrawMethodModel>>(path: '/Bank/get_user_banks');
     return response?.data;
   }
 
   // get user's bound E-wallet
-  static Future<List<EWalletModel>?> fetchUserBoundEWallet() async {
-    BaseResponse? response = await HttpUtils.get<List<EWalletModel>>(path: '/ElectronicWallet/get_user_wallet');
+  static Future<List<WithdrawMethodModel>?> fetchUserBoundEWallet() async {
+    BaseResponse? response = await HttpUtils.get<List<WithdrawMethodModel>>(path: '/ElectronicWallet/get_user_wallet');
     return response?.data;
   }
 
@@ -297,6 +295,20 @@ class NetworkService {
   static Future<bool> addNewEWallet(Map<String, dynamic> params) async {
     Map<String, dynamic> wrapperParams = {'data': jsonEncode(params)};
     BaseResponse? response = await HttpUtils.post(path: '/ElectronicWallet/add', data: wrapperParams);
+    if (response?.code == 200) return true;
+    return false;
+  }
+
+  // get bank list
+  static Future<List<BankCardCategory>?> fetchBankList() async {
+    BaseResponse? response = await HttpUtils.get<List<BankCardCategory>>(path: '/Bank/get_bank_list');
+    return response?.data;
+  }
+
+  // add new bank card
+  static Future<bool> addNewBankCard(Map<String, dynamic> params) async {
+    Map<String, dynamic> wrapperParams = {'data': jsonEncode(params)};
+    BaseResponse? response = await HttpUtils.post(path: '/Bank/add', data: wrapperParams);
     if (response?.code == 200) return true;
     return false;
   }

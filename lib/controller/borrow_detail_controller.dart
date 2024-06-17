@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/models/borrow_detail_model.dart';
-import 'package:paghiram_loan/models/e_wallet_model.dart';
+import 'package:paghiram_loan/models/withdraw_method_model.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/service/index.dart';
 import 'package:paghiram_loan/util/constant.dart';
@@ -20,7 +20,7 @@ class BorrowDetailController extends GetxController {
   var withdrawMethod = ''.obs;
   var isShowServiceFee = false.obs;
 
-  EWalletModel? defaultWithdrawMethod;
+  WithdrawMethodModel? defaultWithdrawMethod;
 
   late BorrowDetailModel curDetailModel;
 
@@ -43,7 +43,7 @@ class BorrowDetailController extends GetxController {
   }
 
   void _fetchDefaultWithdrawMethod() async {
-    List<EWalletModel>? wallets = await NetworkService.fetchUserBoundEWallet();
+    List<WithdrawMethodModel>? wallets = await NetworkService.fetchUserBoundEWallet();
     if (wallets == null) return;
     wallets.forEach((item) {
       if (item.isDefault == '1') {
@@ -73,8 +73,14 @@ class BorrowDetailController extends GetxController {
     if (index == 3) {
       var result = await Get.toNamed(ApplicationRoutes.withdrawMethod);
       if (result != null) {
-        defaultWithdrawMethod = result;
-        withdrawMethod.value = result.formattedNoPrefixNumber;
+        WithdrawMethodModel model = result['item'];
+        defaultWithdrawMethod = model;
+
+        if (result['type'] == 0) {
+          withdrawMethod.value = model.formattedNoPrefixNumber;
+        } else {
+          withdrawMethod.value = model.name + ' ' + model.formattedBankNumber;
+        }
       }
     }
   }

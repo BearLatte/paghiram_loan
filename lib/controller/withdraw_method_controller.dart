@@ -1,22 +1,22 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:paghiram_loan/common/common_bottom_sheet.dart';
-import 'package:paghiram_loan/controller/borrow_detail_controller.dart';
-import 'package:paghiram_loan/models/bank_card_model.dart';
-import 'package:paghiram_loan/models/e_wallet_model.dart';
+import 'package:paghiram_loan/models/withdraw_method_model.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/service/index.dart';
 
 class WithdrawMethodController extends GetxController {
   var selectedItem = 0.obs;
-  var eWalletList = <EWalletModel>[].obs;
-  var bankCards = <BankCardModel>[].obs;
+  var eWalletList = <WithdrawMethodModel>[].obs;
+  var bankCards = <WithdrawMethodModel>[].obs;
+
+  late String _fullName;
 
   @override
   void onInit() async {
     super.onInit();
 
     await _getBoundEWalletList();
+    await _fetchBindingCardDefaultName();
   }
 
   void itemSelectAction(int index) {
@@ -31,15 +31,21 @@ class WithdrawMethodController extends GetxController {
   }
 
   Future<void> _getBoundEWalletList() async {
-    List<EWalletModel>? wallets = await NetworkService.fetchUserBoundEWallet();
+    List<WithdrawMethodModel>? wallets = await NetworkService.fetchUserBoundEWallet();
     if (wallets == null) return;
     eWalletList.value = wallets;
   }
 
   Future<void> _getBoundBankCardList() async {
-    List<BankCardModel>? bankCardList = await NetworkService.fetchUserBoundBankCards();
-    if(bankCardList == null) return;
+    List<WithdrawMethodModel>? bankCardList = await NetworkService.fetchUserBoundBankCards();
+    if (bankCardList == null) return;
     bankCards.value = bankCardList;
+  }
+
+  Future<void> _fetchBindingCardDefaultName() async {
+    CardBindingData? nameData = await NetworkService.fetchCardBindingNameData();
+    if (nameData == null) return;
+    _fullName = '${nameData.nameOne} ${nameData.nameTwo} ${nameData.nameThree}';
   }
 
   void go2cashWithdraw() {
@@ -48,10 +54,10 @@ class WithdrawMethodController extends GetxController {
 
   void addButtonAction() async {
     if (selectedItem.value == 0) {
-      var result = await Get.toNamed(ApplicationRoutes.addEWallet);
+      var result = await Get.toNamed(ApplicationRoutes.addEWallet, arguments: _fullName);
       if (result != null) {
         await _getBoundEWalletList();
-        late EWalletModel wallet;
+        late WithdrawMethodModel wallet;
         for (var item in eWalletList) {
           if (item.isDefault == '1') {
             wallet = item;
@@ -61,7 +67,8 @@ class WithdrawMethodController extends GetxController {
         Get.back(result: wallet);
       }
     } else if (selectedItem.value == 2) {
-      Get.toNamed(ApplicationRoutes.addBankCard);
+      var result = await Get.toNamed(ApplicationRoutes.addBankCard, arguments: _fullName);
+      if (result == 'success') _getBoundBankCardList();
     }
   }
 }

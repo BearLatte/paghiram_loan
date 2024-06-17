@@ -1,55 +1,69 @@
 import 'package:paghiram_loan/generated/json/base/json_convert_content.dart';
-import 'package:paghiram_loan/models/e_wallet_model.dart';
+import 'package:paghiram_loan/models/withdraw_method_model.dart';
 
-EWalletModel $EWalletModelFromJson(Map<String, dynamic> json) {
-  final EWalletModel eWalletModel = EWalletModel();
+WithdrawMethodModel $WithdrawMethodModelFromJson(Map<String, dynamic> json) {
+  final WithdrawMethodModel withdrawMethodModel = WithdrawMethodModel();
   final String? isDefault = jsonConvert.convert<String>(json['is_default']);
   if (isDefault != null) {
-    eWalletModel.isDefault = isDefault;
+    withdrawMethodModel.isDefault = isDefault;
   }
   final String? waId = jsonConvert.convert<String>(json['wa_id']);
   if (waId != null) {
-    eWalletModel.waId = waId;
+    withdrawMethodModel.waId = waId;
   }
   final String? id = jsonConvert.convert<String>(json['id']);
   if (id != null) {
-    eWalletModel.id = id;
+    withdrawMethodModel.id = id;
   }
   final String? accountNumber = jsonConvert.convert<String>(json['account_number']);
   if (accountNumber != null) {
-    eWalletModel.accountNumber = accountNumber;
+    withdrawMethodModel.accountNumber = accountNumber;
+  }
+  final String? bankNumber = jsonConvert.convert<String>(json['bank_number']);
+  if (bankNumber != null) {
+    withdrawMethodModel.bankNumber = bankNumber;
   }
   final String? title = jsonConvert.convert<String>(json['title']);
   if (title != null) {
-    eWalletModel.title = title;
+    withdrawMethodModel.title = title;
   }
-  return eWalletModel;
+  final String? name = jsonConvert.convert<String>(json['name']);
+  if (name != null) {
+    withdrawMethodModel.name = name;
+  }
+  return withdrawMethodModel;
 }
 
-Map<String, dynamic> $EWalletModelToJson(EWalletModel entity) {
+Map<String, dynamic> $WithdrawMethodModelToJson(WithdrawMethodModel entity) {
   final Map<String, dynamic> data = <String, dynamic>{};
   data['is_default'] = entity.isDefault;
   data['wa_id'] = entity.waId;
   data['id'] = entity.id;
   data['account_number'] = entity.accountNumber;
+  data['bank_number'] = entity.bankNumber;
   data['title'] = entity.title;
+  data['name'] = entity.name;
   return data;
 }
 
-extension EWalletModelExtension on EWalletModel {
-  EWalletModel copyWith({
+extension WithdrawMethodModelExtension on WithdrawMethodModel {
+  WithdrawMethodModel copyWith({
     String? isDefault,
     String? waId,
     String? id,
     String? accountNumber,
+    String? bankNumber,
     String? title,
+    String? name,
   }) {
-    return EWalletModel()
+    return WithdrawMethodModel()
       ..isDefault = isDefault ?? this.isDefault
       ..waId = waId ?? this.waId
       ..id = id ?? this.id
       ..accountNumber = accountNumber ?? this.accountNumber
-      ..title = title ?? this.title;
+      ..bankNumber = bankNumber ?? this.bankNumber
+      ..title = title ?? this.title
+      ..name = name ?? this.name;
   }
 }
 
@@ -81,6 +95,51 @@ extension EWalletCategoryExtension on EWalletCategory {
     return EWalletCategory()
       ..id = id ?? this.id
       ..title = title ?? this.title;
+  }
+}
+
+BankCardCategory $BankCardCategoryFromJson(Map<String, dynamic> json) {
+  final BankCardCategory bankCardCategory = BankCardCategory();
+  final String? bankid = jsonConvert.convert<String>(json['bankid']);
+  if (bankid != null) {
+    bankCardCategory.bankid = bankid;
+  }
+  final String? bankname = jsonConvert.convert<String>(json['bankname']);
+  if (bankname != null) {
+    bankCardCategory.bankname = bankname;
+  }
+  final String? longname = jsonConvert.convert<String>(json['longname']);
+  if (longname != null) {
+    bankCardCategory.longname = longname;
+  }
+  final String? status = jsonConvert.convert<String>(json['status']);
+  if (status != null) {
+    bankCardCategory.status = status;
+  }
+  return bankCardCategory;
+}
+
+Map<String, dynamic> $BankCardCategoryToJson(BankCardCategory entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['bankid'] = entity.bankid;
+  data['bankname'] = entity.bankname;
+  data['longname'] = entity.longname;
+  data['status'] = entity.status;
+  return data;
+}
+
+extension BankCardCategoryExtension on BankCardCategory {
+  BankCardCategory copyWith({
+    String? bankid,
+    String? bankname,
+    String? longname,
+    String? status,
+  }) {
+    return BankCardCategory()
+      ..bankid = bankid ?? this.bankid
+      ..bankname = bankname ?? this.bankname
+      ..longname = longname ?? this.longname
+      ..status = status ?? this.status;
   }
 }
 

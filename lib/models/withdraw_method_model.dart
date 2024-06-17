@@ -1,10 +1,10 @@
 import 'package:paghiram_loan/generated/json/base/json_field.dart';
 import 'dart:convert';
 
-import '../generated/json/e_wallet_model.g.dart';
+import '../generated/json/withdraw_method_model.g.dart';
 
 @JsonSerializable()
-class EWalletModel {
+class WithdrawMethodModel {
   @JSONField(name: "is_default")
   late String isDefault;
   @JSONField(name: "wa_id")
@@ -12,7 +12,10 @@ class EWalletModel {
   late String id;
   @JSONField(name: "account_number")
   late String accountNumber;
+  @JSONField(name: "bank_number")
+  late String bankNumber;
   late String title;
+  late String name;
 
   String get icon {
     if (title == 'GCash') {
@@ -34,11 +37,15 @@ class EWalletModel {
     return '$title ****${accountNumber.substring(accountNumber.length - 4)}';
   }
 
-  EWalletModel();
+  String get formattedBankNumber {
+    return '****${bankNumber.substring(bankNumber.length - 4)}';
+  }
 
-  factory EWalletModel.fromJson(Map<String, dynamic> json) => $EWalletModelFromJson(json);
+  WithdrawMethodModel();
 
-  Map<String, dynamic> toJson() => $EWalletModelToJson(this);
+  factory WithdrawMethodModel.fromJson(Map<String, dynamic> json) => $WithdrawMethodModelFromJson(json);
+
+  Map<String, dynamic> toJson() => $WithdrawMethodModelToJson(this);
 
   @override
   String toString() {
@@ -63,6 +70,24 @@ class EWalletCategory {
   }
 }
 
+@JsonSerializable()
+class BankCardCategory {
+  late String bankid;
+  late String bankname;
+  late String longname;
+  late String status;
+
+  BankCardCategory();
+
+  factory BankCardCategory.fromJson(Map<String, dynamic> json) => $BankCardCategoryFromJson(json);
+
+  Map<String, dynamic> toJson() => $BankCardCategoryToJson(this);
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+}
 
 @JsonSerializable()
 class CardBindingData {
@@ -72,7 +97,6 @@ class CardBindingData {
   late String nameTwo;
   @JSONField(name: 'name_three')
   late String nameThree;
-
 
   CardBindingData();
 

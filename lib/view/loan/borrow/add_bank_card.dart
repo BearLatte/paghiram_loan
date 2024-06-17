@@ -35,11 +35,28 @@ class AddBankCard extends StatelessWidget {
                   child: SingleChildScrollView(
                       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
                       child: Column(children: [
-                        Global.generateAddWithdrawMethodItem('Full Name'),
-                        Global.generateAddWithdrawMethodItem('Bank Name', type: 1, textFieldOnTap: controller.go2selectBankName),
-                        Global.generateAddWithdrawMethodItem('Bank Account No.'),
-                        Global.generateAddWithdrawMethodItem('Same Bank Account No.'),
-                        Global.generateAddWithdrawMethodItem('Cell Phone No.'),
+                        Global.generateAddWithdrawMethodItem('Full Name', editingController: controller.fullNameController),
+                        Global.generateAddWithdrawMethodItem(
+                          'Bank Name',
+                          type: 1,
+                          editingController: controller.bankNameController,
+                          textFieldOnTap: controller.go2selectBankName,
+                        ),
+                        Global.generateAddWithdrawMethodItem(
+                          'Bank Account No.',
+                          keyboardType: TextInputType.number,
+                          editingController: controller.bankNumberController,
+                        ),
+                        Global.generateAddWithdrawMethodItem(
+                          'Same Bank Account No.',
+                          keyboardType: TextInputType.number,
+                          editingController: controller.repeatNumberController,
+                        ),
+                        Global.generateAddWithdrawMethodItem(
+                          'Cell Phone No.',
+                          keyboardType: TextInputType.phone,
+                          editingController: controller.phoneNumberController,
+                        ),
                         Container(
                           margin: EdgeInsets.only(top: 24),
                           width: double.infinity,

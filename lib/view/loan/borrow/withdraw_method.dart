@@ -84,7 +84,7 @@ class WithdrawMethod extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             ...controller.eWalletList.map((wallet) {
               return InkWell(
-                  onTap: () => Get.back(result: wallet),
+                  onTap: () => Get.back(result: {'type': 0, 'item': wallet}),
                   child: Container(
                     margin: EdgeInsets.only(left: 12, bottom: 16, right: 12),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -153,22 +153,25 @@ class WithdrawMethod extends StatelessWidget {
           child: Column(
             children: [
               ...controller.bankCards.map(
-                (item) => Container(
-                  margin: EdgeInsets.fromLTRB(12, 0, 12, 16),
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: item.isDefault == '1' ? Border.all(color: Constant.themeColor, width: 0.5) : null,
-                  ),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Row(children: [
-                      CommonImage(src: 'asset/icons/bank_card_icon.png'),
-                      SizedBox(width: 7),
-                      Text(item.name, style: TextStyle(color: HexColor('#FF3B414B'))),
+                (item) => InkWell(
+                  onTap: () => Get.back(result: {'type': 1, 'item': item}),
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(12, 0, 12, 16),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: item.isDefault == '1' ? Border.all(color: Constant.themeColor, width: 0.5) : null,
+                    ),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                      Row(children: [
+                        CommonImage(src: 'asset/icons/bank_card_icon.png'),
+                        SizedBox(width: 7),
+                        Text(item.name, style: TextStyle(color: HexColor('#FF3B414B'))),
+                      ]),
+                      Text(item.formattedBankNumber, style: TextStyle(color: HexColor('#FF3B414B'))),
                     ]),
-                    Text(item.formattedBankNumber, style: TextStyle(color: HexColor('#FF3B414B'))),
-                  ]),
+                  ),
                 ),
               ),
               _generateAddButton(controller.addButtonAction),
