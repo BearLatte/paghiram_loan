@@ -11,6 +11,7 @@ import 'package:paghiram_loan/controller/change_password_controller.dart';
 import 'package:paghiram_loan/controller/city_select_controller.dart';
 import 'package:paghiram_loan/controller/contact_controller.dart';
 import 'package:paghiram_loan/controller/delete_account_controller.dart';
+import 'package:paghiram_loan/controller/device_check_dialog_controller.dart';
 import 'package:paghiram_loan/controller/district_select_controller.dart';
 import 'package:paghiram_loan/controller/feedback_controller.dart';
 import 'package:paghiram_loan/controller/feedback_type_select_controller.dart';
@@ -27,6 +28,7 @@ import 'package:paghiram_loan/controller/settings_controller.dart';
 import 'package:paghiram_loan/controller/web_view_controller.dart';
 import 'package:paghiram_loan/controller/withdraw_confirm_controller.dart';
 import 'package:paghiram_loan/controller/withdraw_method_controller.dart';
+import 'package:paghiram_loan/controller/withdraw_success_controller.dart';
 import 'package:paghiram_loan/view/certifications/card_ocr_view.dart';
 import 'package:paghiram_loan/view/certifications/city_select_view.dart';
 import 'package:paghiram_loan/view/certifications/contact_view.dart';
@@ -44,9 +46,11 @@ import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/view/loan/borrow/add_bank_card.dart';
 import 'package:paghiram_loan/view/loan/borrow/add_e_wallet.dart';
 import 'package:paghiram_loan/view/loan/borrow/detail.dart';
+import 'package:paghiram_loan/view/loan/borrow/device_check_dialog.dart';
 import 'package:paghiram_loan/view/loan/borrow/index.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_confirm_view.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_method.dart';
+import 'package:paghiram_loan/view/loan/borrow/withdraw_success_view.dart';
 import 'package:paghiram_loan/view/login/change_password_view.dart';
 import 'package:paghiram_loan/view/login/login_view.dart';
 import 'package:paghiram_loan/view/notes/add_node_view.dart';
@@ -185,6 +189,21 @@ class ApplicationPages {
       opaque: false,
       popGesture: false,
       binding: BindingsBuilder(() => Get.lazyPut(() => WithdrawConfirmController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.withdrawDeviceCheck,
+      page: () => DeviceCheckDialog(),
+      transition: Transition.fadeIn,
+      opaque: false,
+      popGesture: false,
+      binding: BindingsBuilder(() => Get.lazyPut(() => DeviceCheckDialogController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.withdrawSuccess,
+      page: () => WithdrawSuccessView(),
+      transition: Transition.native,
+      popGesture: false,
+      binding: BindingsBuilder(() => Get.lazyPut(() => WithdrawSuccessController())),
     ),
   ];
 }

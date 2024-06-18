@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/controller/withdraw_confirm_controller.dart';
+import 'package:paghiram_loan/util/global.dart';
 import 'package:paghiram_loan/widget/hide_keyboard_wraper.dart';
 
 import '../../../common/common_image.dart';
@@ -95,7 +96,7 @@ class WithdrawConfirmView extends StatelessWidget {
                             )),
                       ),
                       InkWell(
-                          onTap: () => Get.toNamed(ApplicationRoutes.changePwd, arguments: ''),
+                          onTap: () => Get.toNamed(ApplicationRoutes.changePwd, arguments: {'phone': Global.phoneNumber ?? '', 'type': 1}),
                           child: Container(
                             alignment: Alignment.center,
                             padding: EdgeInsets.symmetric(vertical: 16),
@@ -114,7 +115,7 @@ class WithdrawConfirmView extends StatelessWidget {
                                   child: Text('Cancel', style: TextStyle(color: Constant.themeColor, fontSize: 15, fontWeight: FontWeight.w600)),
                                 )),
                             InkWell(
-                                onTap: () => Get.back(result: 'confirm'),
+                                onTap: controller.confirmAction,
                                 child: Container(
                                   width: 140,
                                   height: 44,

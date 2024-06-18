@@ -30,6 +30,16 @@ class WithdrawMethodController extends GetxController {
     }
   }
 
+  void didSelectedItem(WithdrawMethodModel item) async {
+    if (item.type == 0) {
+      bool isSuccess = await NetworkService.updateDefaultEWalletAccount(item.id);
+      if (isSuccess) Get.back(result: {'type': 0, 'item': item});
+    } else {
+      bool isSuccess = await NetworkService.updateDefaultBankAccount(item.id);
+      if (isSuccess) Get.back(result: {'type': 1, 'item': item});
+    }
+  }
+
   Future<void> _getBoundEWalletList() async {
     List<WithdrawMethodModel>? wallets = await NetworkService.fetchUserBoundEWallet();
     if (wallets == null) return;

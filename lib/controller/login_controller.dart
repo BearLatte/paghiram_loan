@@ -99,7 +99,7 @@ class LoginController extends GetxController {
   void turnPasswordSafetyStatus() => isPasswordSafety.value = !isPasswordSafety.value;
 
   void go2ChangePassword() async {
-    var result = await Get.toNamed(ApplicationRoutes.changePwd, arguments: phoneInputController.text);
+    var result = await Get.toNamed(ApplicationRoutes.changePwd, arguments: {'phone': phoneInputController.text, 'type': 0});
     if (result != null) phoneInputController.text = result;
   }
 

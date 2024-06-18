@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
@@ -318,8 +317,61 @@ class NetworkService {
   static Future<bool> deviceRiskCheck({required String withdrawType, required String account}) async {
     Map<String, dynamic> params = {'dev_id': Global.deviceUUID, 'type': withdrawType, 'account': account};
     BaseResponse? response = await HttpUtils.post(path: '/Paytwo/control_version', data: params);
-    debugPrint(response?.data);
-    return true;
+    if (response?.data['code_type'] == 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  // withdraw send verify code
+  static Future<bool> withdrawSendVerifyCode(String phone) async {
+    BaseResponse? response = await HttpUtils.post(path: '/Paytwo/pay_sms_code', data: {'phone': phone});
+    if (response?.code == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // update default E-Wallet
+  static Future<bool> updateDefaultEWalletAccount(String eid) async {
+    BaseResponse? response = await HttpUtils.post(path: '/ElectronicWallet/save', data: {'eid': eid});
+    if (response?.code == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // update default bank card
+  static Future<bool> updateDefaultBankAccount(String bid) async {
+    BaseResponse? response = await HttpUtils.post(path: '/Bank/update_bank', data: {'id': bid});
+    if (response?.code == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // withdraw with E-Wallet
+  static Future<bool> withdrawWithEWallet(Map<String, dynamic> params) async {
+    BaseResponse? response = await HttpUtils.post(path: '/payIns/wallPayPgm', data: params);
+    if (response?.code == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // withdraw with bank card
+  static Future<bool> withdrawWithBankCard(Map<String, dynamic> params) async {
+    BaseResponse? response = await HttpUtils.post(path: '/payIns/payBankPgm', data: params);
+    if (response?.code == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   static Future<void> buryPoint() async {}

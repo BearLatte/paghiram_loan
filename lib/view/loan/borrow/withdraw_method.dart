@@ -82,7 +82,10 @@ class WithdrawMethod extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             ...controller.eWalletList.map((wallet) {
               return InkWell(
-                  onTap: () => Get.back(result: {'type': 0, 'item': wallet}),
+                  onTap: () {
+                    wallet.type = 0;
+                    controller.didSelectedItem(wallet);
+                  },
                   child: Container(
                     margin: EdgeInsets.only(left: 12, bottom: 16, right: 12),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -152,7 +155,10 @@ class WithdrawMethod extends StatelessWidget {
             children: [
               ...controller.bankCards.map(
                 (item) => InkWell(
-                  onTap: () => Get.back(result: {'type': 1, 'item': item}),
+                  onTap: () {
+                    item.type = 1;
+                    controller.didSelectedItem(item);
+                  },
                   child: Container(
                     margin: EdgeInsets.fromLTRB(12, 0, 12, 16),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),

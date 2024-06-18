@@ -24,31 +24,39 @@ class ChangePasswordController extends GetxController {
 
   void turnPasswordSafetyStatus() => isObscureText.value = !isObscureText.value;
 
+  int _enterType = 0;
+
   void changePwdAction() async {
     final phone = phoneEditingController.text.trim();
     final code = verifyCodeEditingController.text.trim();
     final pwd = passwordEditingController.text.trim();
-    if(phone.isEmpty)  return _showSnackBarLogic('Please enter a valid phone number');
+    if (phone.isEmpty) return _showSnackBarLogic('Please enter a valid phone number');
 
-    if(code.isEmpty)  return _showSnackBarLogic('Verification code error.');
+    if (code.isEmpty) return _showSnackBarLogic('Verification code error.');
 
-    if(pwd.isEmpty) return _showSnackBarLogic('Password cannot be empty.');
+    if (pwd.isEmpty) return _showSnackBarLogic('Password cannot be empty.');
 
     bool isValid = await NetworkService.checkIfPhoneAndVerifyCodeAvailable(phone: phone, verifyCode: code);
-    if(!isValid) return;
+    if (!isValid) return;
 
     bool isSuccess = await NetworkService.changePassword(phone: phone, verifyCode: code, newPassword: pwd);
-    if(!isSuccess) return;
+    if (!isSuccess) return;
 
-    NetworkService.login(phoneNumber: phone, password: pwd, verifyCode: '', successCallback: (data) {
-      Global.prefs?.setString(Constant.TOKEN_FLAG, data['token']);
-      Global.prefs?.setBool(Constant.LOGIN_FLAG, true);
-      Global.prefs?.setString(Constant.PHONE_NUMBER_FLAG, data['phone']);
-      Get.until((route) => route.isFirst);
-    });
+    if (_enterType == 0) {
+      NetworkService.login(
+          phoneNumber: phone,
+          password: pwd,
+          verifyCode: '',
+          successCallback: (data) {
+            Global.prefs?.setString(Constant.TOKEN_FLAG, data['token']);
+            Global.prefs?.setBool(Constant.LOGIN_FLAG, true);
+            Global.prefs?.setString(Constant.PHONE_NUMBER_FLAG, data['phone']);
+            Get.until((route) => route.isFirst);
+          });
+    } else {
+      Get.back();
+    }
   }
-
-
 
   void sendVerifyCodeAction(CountDownButtonState state) {
     final phone = phoneEditingController.text.trim();
@@ -66,11 +74,14 @@ class ChangePasswordController extends GetxController {
       return _showSnackBarLogic('Incorrect phone number format.');
     }
 
-    NetworkService.sendVerifyCode(phoneNumber: phone, type: VerifyCodeType.changePassword, successCallback: (){
-      previousPhoneNum = phone;
-      _countDownButtonState = state;
-      state.startTimer();
-    });
+    NetworkService.sendVerifyCode(
+        phoneNumber: phone,
+        type: VerifyCodeType.changePassword,
+        successCallback: () {
+          previousPhoneNum = phone;
+          _countDownButtonState = state;
+          state.startTimer();
+        });
   }
 
   void _showSnackBarLogic(String message) {
@@ -84,7 +95,8 @@ class ChangePasswordController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    phoneEditingController.text = Get.arguments;
+    phoneEditingController.text = Get.arguments['phone'];
+    _enterType = Get.arguments['type'];
     phoneEditingController.addListener(() {
       isShowSuffix.value = phoneEditingController.text.trim().length > 0 ? true : false;
       if (RegExp('^09').hasMatch(phoneEditingController.text) || RegExp('^08').hasMatch(phoneEditingController.text)) {
@@ -99,13 +111,13 @@ class ChangePasswordController extends GetxController {
         }
       }
 
-      if(phoneEditingController.text != previousPhoneNum) {
+      if (phoneEditingController.text != previousPhoneNum) {
         _countDownButtonState?.stopCountDown();
       }
     });
 
     passwordEditingController.addListener(() {
-      if(passwordEditingController.text.trim().length > 6) {
+      if (passwordEditingController.text.trim().length > 6) {
         passwordEditingController.text = passwordEditingController.text.substring(0, 6);
       }
     });

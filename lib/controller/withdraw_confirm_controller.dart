@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:paghiram_loan/common/common_snack_bar.dart';
 
 class WithdrawConfirmController extends GetxController {
   var loanAmount = ''.obs;
@@ -30,5 +31,13 @@ class WithdrawConfirmController extends GetxController {
   void onClose() {
     super.onClose();
     passwordController.dispose();
+  }
+
+  void confirmAction() {
+    String password = passwordController.text.trim();
+    if (password.length != 6) {
+      return CommonSnackBar.showSnackBar('Please enter correct password.');
+    }
+    Get.back(result: password);
   }
 }
