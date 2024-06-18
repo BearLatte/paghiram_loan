@@ -75,6 +75,12 @@ class ProductModelEntity {
     return interest.toStringAsFixed(2);
   }
 
+  String get backTimeDate {
+    if (backTime == null) return '';
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(backTime! * 1000);
+    return DateFormat('MM/dd/yyyy').format(date);
+  }
+
   ProductModelEntity();
 
   factory ProductModelEntity.fromJson(Map<String, dynamic> json) => $ProductModelEntityFromJson(json);

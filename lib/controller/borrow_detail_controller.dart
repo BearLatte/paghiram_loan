@@ -24,13 +24,17 @@ class BorrowDetailController extends GetxController {
   WithdrawMethodModel? defaultWithdrawMethod;
 
   late BorrowDetailModel curDetailModel;
-  late Map<String, dynamic> requestDetailParams;
 
   @override
   void onInit() {
     super.onInit();
-    requestDetailParams = Get.arguments;
-    _fetchDetailData(requestDetailParams);
+    _productId = Get.arguments['product_id'];
+    _tid = Get.arguments['tid'];
+    _rateId = Get.arguments['rate_id'];
+    _days = Get.arguments['days'];
+    _proId = Get.arguments['pro_id'];
+
+    _fetchDetailData(Get.arguments);
     _fetchDefaultWithdrawMethod();
   }
 
@@ -100,35 +104,38 @@ class BorrowDetailController extends GetxController {
       type = '2';
     }
 
-    String? verifyCode;
     bool isNeedCheck = await NetworkService.deviceRiskCheck(withdrawType: type, account: account);
     if (isNeedCheck) {
       bool isSendSuccess = await NetworkService.withdrawSendVerifyCode(Global.phoneNumber ?? '');
       if (isSendSuccess) {
         var code = await Get.toNamed(ApplicationRoutes.withdrawDeviceCheck);
         if (code == null) return;
-        verifyCode = code;
+        if (defaultWithdrawMethod?.type == 0) {
+          _eWalletWithdraw(password, code);
+        } else {
+          _bankCardWithdraw(password, code);
+        }
       }
-    }
-
-    if (defaultWithdrawMethod?.type == 0) {
-      _eWalletWithdraw(password, verifyCode);
     } else {
-      _bankCardWithdraw(password, verifyCode);
+      if (defaultWithdrawMethod?.type == 0) {
+        _eWalletWithdraw(password, null);
+      } else {
+        _bankCardWithdraw(password, null);
+      }
     }
   }
 
   void _eWalletWithdraw(String password, String? verifyCode) async {
     Map<String, dynamic> params = {};
     params['price'] = curDetailModel.loanAmount.toString();
-    params['product_id'] = requestDetailParams['product_id'];
-    params['tid'] = requestDetailParams['tid'];
-    params['rateid'] = requestDetailParams['rate_id'];
-    params['days'] = requestDetailParams['days'];
+    params['product_id'] = _productId;
+    params['tid'] = _tid;
+    params['rateid'] = _rateId;
+    params['days'] = _days;
     params['user_passwords'] = password;
     params['acu_number'] = defaultWithdrawMethod!.accountNumber;
     params['wc_id'] = defaultWithdrawMethod!.waId;
-    params['pro_id'] = requestDetailParams['pro_id'];
+    params['pro_id'] = _proId;
     params['dev_id'] = Global.deviceUUID;
     if (verifyCode != null) {
       params['sms_code'] = verifyCode;
@@ -143,12 +150,12 @@ class BorrowDetailController extends GetxController {
   void _bankCardWithdraw(String password, String? verifyCode) async {
     Map<String, dynamic> params = {};
     params['price'] = curDetailModel.loanAmount.toString();
-    params['product_id'] = requestDetailParams['product_id'];
-    params['tid'] = requestDetailParams['tid'];
-    params['rateid'] = requestDetailParams['rate_id'];
-    params['days'] = requestDetailParams['days'];
+    params['product_id'] = _productId;
+    params['tid'] = _tid;
+    params['rateid'] = _rateId;
+    params['days'] = _days;
     params['user_passwords'] = password;
-    params['pro_id'] = requestDetailParams['pro_id'];
+    params['pro_id'] = _proId;
     params['dev_id'] = Global.deviceUUID;
     if (verifyCode != null) {
       params['sms_code'] = verifyCode;
@@ -161,7 +168,7 @@ class BorrowDetailController extends GetxController {
   }
 
   void go2readLoanAgreement() async {
-    String url = 'https://api.paghiram.top/Api/Contract/lending_ios?money=${curDetailModel.loanAmount}&use_days=${requestDetailParams['days']}&token=${Global.accessToken}';
+    String url = 'https://api.paghiram.top/Api/Contract/lending_ios?money=${curDetailModel.loanAmount}&use_days=${_days}&token=${Global.accessToken}';
     var result = await Get.toNamed(ApplicationRoutes.webView, arguments: {
       'title': 'Loan Agreement',
       'url': url,
@@ -249,4 +256,10 @@ class BorrowDetailController extends GetxController {
       ),
     );
   }
+
+  late String _productId;
+  late String _tid;
+  late String _rateId;
+  late String _days;
+  late String _proId;
 }

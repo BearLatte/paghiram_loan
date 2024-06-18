@@ -24,6 +24,7 @@ import 'package:paghiram_loan/controller/basic_info_controller.dart';
 import 'package:paghiram_loan/controller/orders_controller.dart';
 import 'package:paghiram_loan/controller/personal_info_controller.dart';
 import 'package:paghiram_loan/controller/province_select_controller.dart';
+import 'package:paghiram_loan/controller/repayment_index_controller.dart';
 import 'package:paghiram_loan/controller/settings_controller.dart';
 import 'package:paghiram_loan/controller/web_view_controller.dart';
 import 'package:paghiram_loan/controller/withdraw_confirm_controller.dart';
@@ -51,6 +52,7 @@ import 'package:paghiram_loan/view/loan/borrow/index.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_confirm_view.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_method.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_success_view.dart';
+import 'package:paghiram_loan/view/loan/repayment/index.dart';
 import 'package:paghiram_loan/view/login/change_password_view.dart';
 import 'package:paghiram_loan/view/login/login_view.dart';
 import 'package:paghiram_loan/view/notes/add_node_view.dart';
@@ -204,6 +206,12 @@ class ApplicationPages {
       transition: Transition.native,
       popGesture: false,
       binding: BindingsBuilder(() => Get.lazyPut(() => WithdrawSuccessController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.repaymentIndex,
+      page: () => RepaymentIndex(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => RepaymentIndexController())),
     ),
   ];
 }

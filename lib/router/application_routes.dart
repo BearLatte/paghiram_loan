@@ -29,4 +29,5 @@ abstract class ApplicationRoutes {
   static const withdrawConfirm = '/withdrawConfirm';
   static const withdrawDeviceCheck = '/withdrawDeviceCheck';
   static const withdrawSuccess = '/withdrawSuccess';
+  static const repaymentIndex = '/repaymentIndex';
 }

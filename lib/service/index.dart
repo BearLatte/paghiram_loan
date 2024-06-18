@@ -7,6 +7,7 @@ import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
 import 'package:paghiram_loan/models/borrow_detail_model.dart';
+import 'package:paghiram_loan/models/repayment_detail_model.dart';
 import 'package:paghiram_loan/models/withdraw_method_model.dart';
 import 'package:paghiram_loan/models/id_card_type_entity.dart';
 import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
@@ -372,6 +373,12 @@ class NetworkService {
     } else {
       return false;
     }
+  }
+
+  // get repayment data
+  static Future<RepaymentDetailModel?> fetchRepaymentData(String productId) async {
+    BaseResponse? response = await HttpUtils.post<RepaymentDetailModel>(path: '/repayIns/getRepaymentList', data: {'product_id': productId});
+    return response?.data;
   }
 
   static Future<void> buryPoint() async {}

@@ -61,17 +61,8 @@ class WithdrawMethodController extends GetxController {
   void addButtonAction() async {
     if (selectedItem.value == 0) {
       var result = await Get.toNamed(ApplicationRoutes.addEWallet, arguments: _fullName);
-      if (result != null) {
-        await _getBoundEWalletList();
-        late WithdrawMethodModel wallet;
-        for (var item in eWalletList) {
-          if (item.isDefault == '1') {
-            wallet = item;
-            break;
-          }
-        }
-        Get.back(result: wallet);
-      }
+      if(result == 'success') _getBoundEWalletList();
+
     } else if (selectedItem.value == 1) {
       var result = await Get.toNamed(ApplicationRoutes.addBankCard, arguments: _fullName);
       if (result == 'success') _getBoundBankCardList();

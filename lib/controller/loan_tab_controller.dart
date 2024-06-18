@@ -94,7 +94,11 @@ class LoanTabController extends GetxController {
         go2Feedback();
         return;
       case ProductStatus.canBorrow:
+      case ProductStatus.payFailed:
         Get.toNamed(ApplicationRoutes.borrowIndex, arguments: {'product_id': product.id})?.then((value) => fetchData());
+        return;
+      case ProductStatus.repayment:
+        Get.toNamed(ApplicationRoutes.repaymentIndex, arguments: product.id)?.then((value) => fetchData());
         return;
       default:
         go2Certification('product', product.id);

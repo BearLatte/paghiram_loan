@@ -42,8 +42,10 @@ class HttpUtils {
   // post
   static Future<BaseResponse?> post<T>({required String path, Map<String, dynamic>? data, bool showLoading = true, bool showErrorMessage = true}) async {
     data = await _configParameters(data, path);
+    String pagParams = jsonEncode(data);
+    print(pagParams);
     String responseStr = await httpRequest.request(path: path, method: HttpMethod.post, data: data, showLoading: showLoading, showErrorMessage: showErrorMessage);
-    BaseResponse<T> response = BaseResponse<T>.fromJson(jsonDecode(responseStr));
+    BaseResponse response = BaseResponse<T>.fromJson(jsonDecode(responseStr));
     response.originalData = responseStr;
     if (response.code == 103) {
       EasyLoading.showInfo('Login status is invalid, please log in again');
