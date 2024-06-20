@@ -15,11 +15,12 @@ class AboutUsView extends StatelessWidget {
             const SizedBox(height: 40),
             const CommonImage(src: 'asset/icons/about_us_logo.png'),
             const SizedBox(height: 12),
-            const Text('Paghiram Loan', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600)),
-            _textContainer('GUINA PAWNSHOP AND MONEY CHANGER', topMargin: 30),
-            _textContainer('PS Registration No.31-00316-0-00000'),
-            _textContainer('Address：NATIONAL ROAD, WAKAS, ORION, BATAAN'),
-            _textContainer('Paghiram Loan belongs to GUINA PAWNSHOP AND MONEY CHANGER.')
+            const Text('Paghiram Loan Vip', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600)),
+            _textContainer('CASHMOTO LENDING INC.', topMargin: 30),
+            _textContainer('COMPANY REGISTRATION NO. CS201606749'),
+            _textContainer('CERTIFICATE OF AUTHORITY NO. 1829'),
+            _textContainer('Address：3 Mabini Ext, Dinalupihan, Bataan, Philippines'),
+            _textContainer('Paghiram Loan vip belongs to CASHMOTO LENDING INC.')
           ]),
         ));
   }

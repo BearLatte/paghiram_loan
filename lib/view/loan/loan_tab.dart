@@ -29,7 +29,7 @@ class LoanTab extends StatelessWidget {
           TextButton.icon(
               onPressed: null,
               icon: const CommonImage(src: 'asset/icons/logo.png'),
-              label: const Text('Paghiram Loan', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+              label: const Text('Paghiram Loan Vip', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
               style: TextButton.styleFrom(padding: EdgeInsets.zero)),
           IconButton(onPressed: () => _showProfileView(), icon: const CommonImage(src: 'asset/icons/avatar.png'), padding: EdgeInsets.zero)
         ]),
@@ -99,9 +99,16 @@ class LoanTab extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.fromLTRB(0, 16, 0, 34),
                             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                              CommonImage(src: 'asset/icons/sec_icon.png'),
                               Expanded(
-                                  child: Text('GUINA PAWNSHOP AND MONEY CHANGER\nPS Registration No.31-00316-0-00000\nAddress：NATIONAL ROAD, WAKAS, ORION, BATAAN',
-                                      style: TextStyle(fontSize: 13, color: HexColor('#FF757F8C')))),
+                                child: Text(
+                                  'CASHMOTO LENDING INC.\nCOMPANY REGISTRATION NO. CS201606749\nCERTIFICATE OF AUTHORITY NO. 1829',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: HexColor('#FF757F8C'),
+                                  ),
+                                ),
+                              ),
                             ]),
                           ),
                         ],

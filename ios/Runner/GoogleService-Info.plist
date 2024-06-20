@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBDssk11DUH4o3rpYwEGCd15aAgwmJeXjw</string>
+	<string>AIzaSyA3te_Fy_Pl6ByChikaWSYoTJ_2A8NomQ8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>771823477476</string>
+	<string>151578569164</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.asiasourcefinancial.paghiram.loan</string>
+	<string>com.cashmotolending.paghiram.loan.vip</string>
 	<key>PROJECT_ID</key>
-	<string>paghiram-loan</string>
+	<string>paghiram-loan-vip</string>
 	<key>STORAGE_BUCKET</key>
-	<string>paghiram-loan.appspot.com</string>
+	<string>paghiram-loan-vip.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:771823477476:ios:dcdb91f7aa06a6b2f842f1</string>
+	<string>1:151578569164:ios:b9391bff73790356b59569</string>
 </dict>
 </plist>

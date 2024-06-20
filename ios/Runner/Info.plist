@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Paghiram Loan</string>
+	<string>Paghiram Loan vip</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>paghiram_loan</string>
+	<string>paghiram_loan_vip</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -32,11 +32,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Paghiram Loan Access your camera for setting avatars, uploading authentication data, and code scanning services</string>
+	<string>Paghiram Loan Vip Access your camera for setting avatars, uploading authentication data, and code scanning services</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Use the motion sensor to get the phone orientation</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Paghiram Loan Access your photo library for setting avatars, uploading authentication data, and code scanning services</string>
+	<string>Paghiram Loan Vip Access your photo library for setting avatars, uploading authentication data, and code scanning services</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
