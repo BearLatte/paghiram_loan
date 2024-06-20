@@ -100,6 +100,10 @@ class LoanTabController extends GetxController {
       case ProductStatus.repayment:
         Get.toNamed(ApplicationRoutes.repaymentIndex, arguments: product.id)?.then((value) => fetchData());
         return;
+      case ProductStatus.reloan:
+        NetworkService.submitCertificationInfo(product.id, () {
+          fetchData();
+        });
       default:
         go2Certification('product', product.id);
         return;

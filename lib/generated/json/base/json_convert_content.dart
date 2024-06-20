@@ -245,6 +245,9 @@ class JsonConvert {
     if (<RepaymentDetailModel>[] is M) {
       return data.map<RepaymentDetailModel>((Map<String, dynamic> e) => RepaymentDetailModel.fromJson(e)).toList() as M;
     }
+    if (<RepaymentDetailModelPayData>[] is M) {
+      return data.map<RepaymentDetailModelPayData>((Map<String, dynamic> e) => RepaymentDetailModelPayData.fromJson(e)).toList() as M;
+    }
     if (<SubmitedOcrModelEntity>[] is M) {
       return data.map<SubmitedOcrModelEntity>((Map<String, dynamic> e) => SubmitedOcrModelEntity.fromJson(e)).toList() as M;
     }
@@ -313,6 +316,7 @@ class JsonConvertClassCollection {
     (PgmPhotoEntity).toString(): PgmPhotoEntity.fromJson,
     (ProductModelEntity).toString(): ProductModelEntity.fromJson,
     (RepaymentDetailModel).toString(): RepaymentDetailModel.fromJson,
+    (RepaymentDetailModelPayData).toString(): RepaymentDetailModelPayData.fromJson,
     (SubmitedOcrModelEntity).toString(): SubmitedOcrModelEntity.fromJson,
     (WithdrawMethodModel).toString(): WithdrawMethodModel.fromJson,
     (EWalletCategory).toString(): EWalletCategory.fromJson,

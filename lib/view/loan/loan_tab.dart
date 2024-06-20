@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_image.dart';
-import 'package:paghiram_loan/common/common_view.dart';
-import 'package:paghiram_loan/models/product_model_entity.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/controller/loan_tab_controller.dart';

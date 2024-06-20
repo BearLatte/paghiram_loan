@@ -47,7 +47,7 @@ class ProductModelEntity {
       case 5:
         return ProductStatus.repayment;
       case 6:
-        return ProductStatus.machineReview;
+        return ProductStatus.reloan;
       case 7:
         return ProductStatus.offlineWithdraw;
       case 8:

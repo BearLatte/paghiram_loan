@@ -1,5 +1,9 @@
 import 'package:paghiram_loan/generated/json/base/json_convert_content.dart';
 import 'package:paghiram_loan/models/repayment_detail_model.dart';
+import 'package:intl/intl.dart';
+
+import 'package:paghiram_loan/util/global.dart';
+
 
 RepaymentDetailModel $RepaymentDetailModelFromJson(Map<String, dynamic> json) {
   final RepaymentDetailModel repaymentDetailModel = RepaymentDetailModel();
@@ -71,6 +75,10 @@ RepaymentDetailModel $RepaymentDetailModelFromJson(Map<String, dynamic> json) {
   if (isNormalInstalment != null) {
     repaymentDetailModel.isNormalInstalment = isNormalInstalment;
   }
+  final RepaymentDetailModelPayData? payData = jsonConvert.convert<RepaymentDetailModelPayData>(json['pay_data']);
+  if (payData != null) {
+    repaymentDetailModel.payData = payData;
+  }
   return repaymentDetailModel;
 }
 
@@ -93,6 +101,7 @@ Map<String, dynamic> $RepaymentDetailModelToJson(RepaymentDetailModel entity) {
   data['is_ins_repay'] = entity.isInsRepay;
   data['is_instalment'] = entity.isInstalment;
   data['is_normal_instalment'] = entity.isNormalInstalment;
+  data['pay_data'] = entity.payData?.toJson();
   return data;
 }
 
@@ -115,6 +124,7 @@ extension RepaymentDetailModelExtension on RepaymentDetailModel {
     int? isInsRepay,
     int? isInstalment,
     int? isNormalInstalment,
+    RepaymentDetailModelPayData? payData,
   }) {
     return RepaymentDetailModel()
       ..paymentId = paymentId ?? this.paymentId
@@ -133,6 +143,59 @@ extension RepaymentDetailModelExtension on RepaymentDetailModel {
       ..overtimePrice = overtimePrice ?? this.overtimePrice
       ..isInsRepay = isInsRepay ?? this.isInsRepay
       ..isInstalment = isInstalment ?? this.isInstalment
-      ..isNormalInstalment = isNormalInstalment ?? this.isNormalInstalment;
+      ..isNormalInstalment = isNormalInstalment ?? this.isNormalInstalment
+      ..payData = payData ?? this.payData;
+  }
+}
+
+RepaymentDetailModelPayData $RepaymentDetailModelPayDataFromJson(Map<String, dynamic> json) {
+  final RepaymentDetailModelPayData repaymentDetailModelPayData = RepaymentDetailModelPayData();
+  final int? backTime = jsonConvert.convert<int>(json['back_time']);
+  if (backTime != null) {
+    repaymentDetailModelPayData.backTime = backTime;
+  }
+  final String? id = jsonConvert.convert<String>(json['id']);
+  if (id != null) {
+    repaymentDetailModelPayData.id = id;
+  }
+  final String? interest = jsonConvert.convert<String>(json['interest']);
+  if (interest != null) {
+    repaymentDetailModelPayData.interest = interest;
+  }
+  final String? money = jsonConvert.convert<String>(json['money']);
+  if (money != null) {
+    repaymentDetailModelPayData.money = money;
+  }
+  final String? principal = jsonConvert.convert<String>(json['principal']);
+  if (principal != null) {
+    repaymentDetailModelPayData.principal = principal;
+  }
+  return repaymentDetailModelPayData;
+}
+
+Map<String, dynamic> $RepaymentDetailModelPayDataToJson(RepaymentDetailModelPayData entity) {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['back_time'] = entity.backTime;
+  data['id'] = entity.id;
+  data['interest'] = entity.interest;
+  data['money'] = entity.money;
+  data['principal'] = entity.principal;
+  return data;
+}
+
+extension RepaymentDetailModelPayDataExtension on RepaymentDetailModelPayData {
+  RepaymentDetailModelPayData copyWith({
+    int? backTime,
+    String? id,
+    String? interest,
+    String? money,
+    String? principal,
+  }) {
+    return RepaymentDetailModelPayData()
+      ..backTime = backTime ?? this.backTime
+      ..id = id ?? this.id
+      ..interest = interest ?? this.interest
+      ..money = money ?? this.money
+      ..principal = principal ?? this.principal;
   }
 }

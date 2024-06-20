@@ -30,4 +30,6 @@ abstract class ApplicationRoutes {
   static const withdrawDeviceCheck = '/withdrawDeviceCheck';
   static const withdrawSuccess = '/withdrawSuccess';
   static const repaymentIndex = '/repaymentIndex';
+  static const repaymentMethodSkyPay = '/repaymentMethodSkyPay';
+  static const repaymentMethodPayCools = '/repaymentMethodPayCools';
 }

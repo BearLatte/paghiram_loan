@@ -6,7 +6,7 @@ import '../../common/common_image.dart';
 import '../../util/constant.dart';
 import '../../util/hex_color.dart';
 
-enum ProductStatus { normal, pending, canBorrow, rollback, repayment, machineReview, offlineWithdraw, reject, paying, payFailed }
+enum ProductStatus { normal, pending, canBorrow, rollback, repayment, reloan, offlineWithdraw, reject, paying, payFailed }
 
 class ProductStatusItem {
   static Widget generateProductItem(ProductModelEntity product, {Function()? buttonClickedCallback}) {
@@ -37,7 +37,8 @@ class ProductStatusItem {
                       style: TextStyle(color: HexColor('#FF102729'), fontSize: 16, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis, maxLines: 1, softWrap: true))
             ]),
           ),
-          if (product.productState == ProductStatus.normal) _getNormalStatusContent(product: product, applyClickedCallback: buttonClickedCallback),
+          if (product.productState == ProductStatus.normal || product.productState == ProductStatus.reloan)
+            _getNormalStatusContent(product: product, applyClickedCallback: buttonClickedCallback),
           if (product.productState == ProductStatus.pending) _getPendingStatusContent(product: product),
           if (product.productState == ProductStatus.rollback || product.productState == ProductStatus.reject)
             _getRollbackOrRejectStatusContent(product.productState, product: product, buttonClickedCallback: buttonClickedCallback),
@@ -45,15 +46,6 @@ class ProductStatusItem {
           if (product.productState == ProductStatus.payFailed) _getPayFailedStatusContent(product: product, buttonClickedCallback: buttonClickedCallback),
           if (product.productState == ProductStatus.paying) _getPayingStatusContent(product: product),
           if (product.productState == ProductStatus.repayment) _getRepaymentStatusContent(product: product, buttonClickedCallback: buttonClickedCallback),
-          if (product.productState != ProductStatus.normal &&
-              product.productState != ProductStatus.pending &&
-              product.productState != ProductStatus.rollback &&
-              product.productState != ProductStatus.reject &&
-              product.productState != ProductStatus.canBorrow &&
-              product.productState != ProductStatus.payFailed &&
-              product.productState != ProductStatus.paying &&
-              product.productState != ProductStatus.repayment)
-            _getPendingStatusContent(product: product),
         ],
       ),
     );
@@ -253,8 +245,11 @@ class ProductStatusItem {
             width: double.infinity,
             padding: EdgeInsets.symmetric(vertical: 8),
             alignment: Alignment.center,
-            decoration: BoxDecoration(color: HexColor('#1AFFA940'), borderRadius: BorderRadius.circular(8)),
-            child: Text('Repay on time to maintain good credit', style: TextStyle(color: HexColor('#FFFFA940'), fontSize: 13)),
+            decoration: BoxDecoration(color: product.overdueDays > 0 ? HexColor('#1AFF3232') : HexColor('#1AFFA940'), borderRadius: BorderRadius.circular(8)),
+            child: Text(
+              product.overdueDays > 0 ? 'Overdue ${product.overdueDays} days , please repay as soon as possible' : 'Repay on time to maintain good credit',
+              style: TextStyle(color: product.overdueDays > 0 ? HexColor('#FFFF3232') : HexColor('#FFFFA940'), fontSize: 13),
+            ),
           )
         ]));
   }

@@ -22,9 +22,11 @@ import 'package:paghiram_loan/controller/login_controller.dart';
 import 'package:paghiram_loan/controller/notes_tab_controller.dart';
 import 'package:paghiram_loan/controller/basic_info_controller.dart';
 import 'package:paghiram_loan/controller/orders_controller.dart';
+import 'package:paghiram_loan/controller/pay_cools_method_controller.dart';
 import 'package:paghiram_loan/controller/personal_info_controller.dart';
 import 'package:paghiram_loan/controller/province_select_controller.dart';
 import 'package:paghiram_loan/controller/repayment_index_controller.dart';
+import 'package:paghiram_loan/controller/sky_pay_method_controller.dart';
 import 'package:paghiram_loan/controller/settings_controller.dart';
 import 'package:paghiram_loan/controller/web_view_controller.dart';
 import 'package:paghiram_loan/controller/withdraw_confirm_controller.dart';
@@ -53,6 +55,8 @@ import 'package:paghiram_loan/view/loan/borrow/withdraw_confirm_view.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_method.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_success_view.dart';
 import 'package:paghiram_loan/view/loan/repayment/index.dart';
+import 'package:paghiram_loan/view/loan/repayment/sky_pay_method_view.dart';
+import 'package:paghiram_loan/view/loan/repayment/pay_cools_method_view.dart';
 import 'package:paghiram_loan/view/login/change_password_view.dart';
 import 'package:paghiram_loan/view/login/login_view.dart';
 import 'package:paghiram_loan/view/notes/add_node_view.dart';
@@ -212,6 +216,18 @@ class ApplicationPages {
       page: () => RepaymentIndex(),
       transition: Transition.native,
       binding: BindingsBuilder(() => Get.lazyPut(() => RepaymentIndexController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.repaymentMethodSkyPay,
+      page: () => SkyPayMethodView(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => SkyPayMethodController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.repaymentMethodPayCools,
+      page: () => PayCoolsMethodView(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => PayCoolsMethodController())),
     ),
   ];
 }
