@@ -152,17 +152,13 @@ class RepaymentIndexController extends GetxController {
   }
 
   void payAction(bool isFullRepayment) {
+    String repaymentAmount = isFullRepayment ? 'PHP ${Global.formatCurrency(detailModel.finalAmount)}' : finalRepaymentAmount.value;
+
     switch (detailModel.paymentId) {
       case 1:
-        Get.toNamed(
-          ApplicationRoutes.repaymentMethodSkyPay,
-          arguments: isFullRepayment ? detailModel.finalAmount : detailModel.currentAmount,
-        );
+        Get.toNamed(ApplicationRoutes.repaymentMethodSkyPay, arguments: repaymentAmount);
       case 2:
-        Get.toNamed(
-          ApplicationRoutes.repaymentMethodPayCools,
-          arguments: isFullRepayment ? detailModel.finalAmount : detailModel.currentAmount,
-        );
+        Get.toNamed(ApplicationRoutes.repaymentMethodPayCools, arguments: repaymentAmount);
     }
   }
 
