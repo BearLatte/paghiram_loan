@@ -31,6 +31,7 @@ class RepaymentIndexController extends GetxController {
 
     if (detailModel.isInsRepay == 0) {
       finalRepaymentAmount.value = 'PHP ${Global.formatCurrency(detailModel.finalAmount - detailModel.repaidAmount)}';
+      _isFullPayment = true;
     } else {
       finalRepaymentAmount.value = 'PHP ${Global.formatCurrency(detailModel.currentAmount - detailModel.repaidAmount)}';
     }
@@ -83,8 +84,10 @@ class RepaymentIndexController extends GetxController {
     });
     repaymentTermList.refresh();
     if (isChecked) {
+      _isFullPayment = true;
       finalRepaymentAmount.value = 'PHP ${Global.formatCurrency(detailModel.finalAmount)}';
     } else {
+      _isFullPayment = false;
       finalRepaymentAmount.value = 'PHP ${Global.formatCurrency(detailModel.currentAmount)}';
     }
   }
@@ -148,19 +151,28 @@ class RepaymentIndexController extends GetxController {
           IconButton(onPressed: Get.back, icon: CommonImage(src: 'asset/icons/close_icon.png'))
         ]));
 
-    if (result == 'confirm') payAction(true);
+    if (result == 'confirm') payAction();
   }
 
-  void payAction(bool isFullRepayment) {
-    String repaymentAmount = isFullRepayment ? 'PHP ${Global.formatCurrency(detailModel.finalAmount)}' : finalRepaymentAmount.value;
+  void payAction() {
+    String repaymentAmount = _isFullPayment ? 'PHP ${Global.formatCurrency(detailModel.finalAmount)}' : finalRepaymentAmount.value;
 
     switch (detailModel.paymentId) {
       case 1:
-        Get.toNamed(ApplicationRoutes.repaymentMethodSkyPay, arguments: repaymentAmount);
+        Get.toNamed(ApplicationRoutes.repaymentMethodSkyPay, arguments: {
+          'repaymentAmount': repaymentAmount,
+          'type': _isFullPayment ? '1' : '3',
+          'gid': detailModel.adId,
+        });
       case 2:
-        Get.toNamed(ApplicationRoutes.repaymentMethodPayCools, arguments: repaymentAmount);
+        Get.toNamed(ApplicationRoutes.repaymentMethodPayCools, arguments: {
+          'repaymentAmount': repaymentAmount,
+          'type': _isFullPayment ? '1' : '3',
+          'gid': detailModel.adId,
+        });
     }
   }
 
   late String _productId;
+  bool _isFullPayment = false;
 }

@@ -170,6 +170,14 @@ RepaymentDetailModelPayData $RepaymentDetailModelPayDataFromJson(Map<String, dyn
   if (principal != null) {
     repaymentDetailModelPayData.principal = principal;
   }
+  final bool? canClick = jsonConvert.convert<bool>(json['canClick']);
+  if (canClick != null) {
+    repaymentDetailModelPayData.canClick = canClick;
+  }
+  final bool? isChecked = jsonConvert.convert<bool>(json['isChecked']);
+  if (isChecked != null) {
+    repaymentDetailModelPayData.isChecked = isChecked;
+  }
   return repaymentDetailModelPayData;
 }
 
@@ -180,6 +188,8 @@ Map<String, dynamic> $RepaymentDetailModelPayDataToJson(RepaymentDetailModelPayD
   data['interest'] = entity.interest;
   data['money'] = entity.money;
   data['principal'] = entity.principal;
+  data['canClick'] = entity.canClick;
+  data['isChecked'] = entity.isChecked;
   return data;
 }
 
@@ -190,12 +200,16 @@ extension RepaymentDetailModelPayDataExtension on RepaymentDetailModelPayData {
     String? interest,
     String? money,
     String? principal,
+    bool? canClick,
+    bool? isChecked,
   }) {
     return RepaymentDetailModelPayData()
       ..backTime = backTime ?? this.backTime
       ..id = id ?? this.id
       ..interest = interest ?? this.interest
       ..money = money ?? this.money
-      ..principal = principal ?? this.principal;
+      ..principal = principal ?? this.principal
+      ..canClick = canClick ?? this.canClick
+      ..isChecked = isChecked ?? this.isChecked;
   }
 }

@@ -123,7 +123,7 @@ class RepaymentIndex extends StatelessWidget {
                             Text('Amount due', style: TextStyle(color: HexColor('#FF9DA3AE'), fontSize: 16)),
                           ]),
                           ElevatedButton(
-                            onPressed: () => controller.payAction(false),
+                            onPressed: controller.payAction,
                             style: ElevatedButton.styleFrom(backgroundColor: Constant.themeColor),
                             child: Text('Pay', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
                           )

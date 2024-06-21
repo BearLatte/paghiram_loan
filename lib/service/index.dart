@@ -7,6 +7,7 @@ import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
 import 'package:paghiram_loan/models/borrow_detail_model.dart';
+import 'package:paghiram_loan/models/repayment_code_model.dart';
 import 'package:paghiram_loan/models/repayment_detail_model.dart';
 import 'package:paghiram_loan/models/withdraw_method_model.dart';
 import 'package:paghiram_loan/models/id_card_type_entity.dart';
@@ -379,6 +380,35 @@ class NetworkService {
   static Future<RepaymentDetailModel?> fetchRepaymentData(String productId) async {
     BaseResponse? response = await HttpUtils.post<RepaymentDetailModel>(path: '/repayIns/getRepaymentList', data: {'product_id': productId});
     return response?.data;
+  }
+
+  // generate sky code
+  static Future<RepaymentCodeModel?> fetchSkyCode({required String type, required String gid}) async {
+    BaseResponse? response = await HttpUtils.post<RepaymentCodeModel>(path: '/repayIns/generateRepaymentCode', data: {'type': type, 'gid': gid, 'cop_id': ''});
+    return response?.data;
+  }
+
+  // generate barcode
+  static Future<String> generateBarcode({required String gid, required String type}) async {
+    BaseResponse? response = await HttpUtils.post(path: '/generatorIns/generateBarCode', data: {'type': type, 'g_id': gid, 'c_id': ''});
+    if (response == null) return '';
+    return response.data['photo'];
+  }
+
+  // generate QR-Code
+  static Future<String?> generateQRCode({required String apdId, required String type}) async {
+    BaseResponse? response = await HttpUtils.post(
+      path: '/RepayIns/qrcode',
+      data: {'apd_id': apdId, 'type': type, 'coupon_id': ''},
+    );
+    if (response == null) return null;
+    return response.data['redirect_url'];
+  }
+
+  // pay cools channel repayment
+  static Future<String?> generatePayCoolsChannelUrl({required String apdId, required String type, required String channelCode}) async {
+    BaseResponse? response = await HttpUtils.post(path: '/RepayIns/virtual', data: {'apd_id': apdId, 'type': type, 'coupon_id': '', 'channel_code': channelCode});
+    return response == null ? null : response.data['redirect_url'];
   }
 
   static Future<void> buryPoint() async {}

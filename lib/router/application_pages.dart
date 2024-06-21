@@ -3,6 +3,7 @@ import 'package:paghiram_loan/application.dart';
 import 'package:paghiram_loan/controller/add_bank_card_controller.dart';
 import 'package:paghiram_loan/controller/add_e_wallet_controller.dart';
 import 'package:paghiram_loan/controller/add_note_controller.dart';
+import 'package:paghiram_loan/controller/bar_code_view_controller.dart';
 import 'package:paghiram_loan/controller/borrow_detail_controller.dart';
 import 'package:paghiram_loan/controller/borrow_index_controller.dart';
 import 'package:paghiram_loan/controller/card_ocr_controller.dart';
@@ -26,6 +27,7 @@ import 'package:paghiram_loan/controller/pay_cools_method_controller.dart';
 import 'package:paghiram_loan/controller/personal_info_controller.dart';
 import 'package:paghiram_loan/controller/province_select_controller.dart';
 import 'package:paghiram_loan/controller/repayment_index_controller.dart';
+import 'package:paghiram_loan/controller/repayment_webview_controller.dart';
 import 'package:paghiram_loan/controller/sky_pay_method_controller.dart';
 import 'package:paghiram_loan/controller/settings_controller.dart';
 import 'package:paghiram_loan/controller/web_view_controller.dart';
@@ -54,7 +56,9 @@ import 'package:paghiram_loan/view/loan/borrow/index.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_confirm_view.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_method.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_success_view.dart';
+import 'package:paghiram_loan/view/loan/repayment/bar_code_view.dart';
 import 'package:paghiram_loan/view/loan/repayment/index.dart';
+import 'package:paghiram_loan/view/loan/repayment/repayment_web_view.dart';
 import 'package:paghiram_loan/view/loan/repayment/sky_pay_method_view.dart';
 import 'package:paghiram_loan/view/loan/repayment/pay_cools_method_view.dart';
 import 'package:paghiram_loan/view/login/change_password_view.dart';
@@ -228,6 +232,18 @@ class ApplicationPages {
       page: () => PayCoolsMethodView(),
       transition: Transition.native,
       binding: BindingsBuilder(() => Get.lazyPut(() => PayCoolsMethodController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.skyPayBarCode,
+      page: () => BarCodeView(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => BarCodeViewController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.repaymentWebView,
+      page: () => RepaymentWebView(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => RepaymentWebviewController())),
     ),
   ];
 }
