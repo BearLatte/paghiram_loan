@@ -29,7 +29,7 @@ class LoanTab extends StatelessWidget {
           TextButton.icon(
               onPressed: null,
               icon: const CommonImage(src: 'asset/icons/logo.png'),
-              label: const Text('Paghiram Loan Vip', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+              label: const Text('Paghiram Cash', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
               style: TextButton.styleFrom(padding: EdgeInsets.zero)),
           IconButton(onPressed: () => _showProfileView(), icon: const CommonImage(src: 'asset/icons/avatar.png'), padding: EdgeInsets.zero)
         ]),
