@@ -14,6 +14,7 @@ import 'package:paghiram_loan/models/contact_entity.dart';
 import 'package:paghiram_loan/models/id_card_type_entity.dart';
 import 'package:paghiram_loan/models/marquee_entity.dart';
 import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
+import 'package:paghiram_loan/models/order_model.dart';
 import 'package:paghiram_loan/models/pgm_photo_entity.dart';
 import 'package:paghiram_loan/models/product_model_entity.dart';
 import 'package:paghiram_loan/models/repayment_code_model.dart';
@@ -237,6 +238,9 @@ class JsonConvert {
     if (<OcrRecgnizedEntity>[] is M) {
       return data.map<OcrRecgnizedEntity>((Map<String, dynamic> e) => OcrRecgnizedEntity.fromJson(e)).toList() as M;
     }
+    if (<OrderModel>[] is M) {
+      return data.map<OrderModel>((Map<String, dynamic> e) => OrderModel.fromJson(e)).toList() as M;
+    }
     if (<PgmPhotoEntity>[] is M) {
       return data.map<PgmPhotoEntity>((Map<String, dynamic> e) => PgmPhotoEntity.fromJson(e)).toList() as M;
     }
@@ -317,6 +321,7 @@ class JsonConvertClassCollection {
     (IdCardTypeEntity).toString(): IdCardTypeEntity.fromJson,
     (MarqueeEntity).toString(): MarqueeEntity.fromJson,
     (OcrRecgnizedEntity).toString(): OcrRecgnizedEntity.fromJson,
+    (OrderModel).toString(): OrderModel.fromJson,
     (PgmPhotoEntity).toString(): PgmPhotoEntity.fromJson,
     (ProductModelEntity).toString(): ProductModelEntity.fromJson,
     (RepaymentCodeModel).toString(): RepaymentCodeModel.fromJson,

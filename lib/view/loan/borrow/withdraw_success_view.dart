@@ -21,7 +21,6 @@ class WithdrawSuccessView extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               margin: EdgeInsets.symmetric(vertical: 35),
@@ -37,28 +36,28 @@ class WithdrawSuccessView extends StatelessWidget {
                 ],
               ),
             ),
-            InkWell(
-              onTap: controller.go2certifyingSmile,
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                decoration: BoxDecoration(color: HexColor('#FFEBF8F9'), borderRadius: BorderRadius.circular(12)),
-                child: Column(children: [
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Text('Smile Certification', style: TextStyle(color: Constant.themeColor, fontSize: 16, fontWeight: FontWeight.bold)),
-                    Icon(
-                      Icons.arrow_forward_rounded,
-                      color: Constant.themeColor,
-                      size: 24,
-                    )
-                  ]),
-                  Container(
-                    padding: EdgeInsets.only(top: 14),
-                    child: Text('Adding authentication information can increase the credit limit for loans.', style: TextStyle(color: HexColor('#FF757F8C'), fontSize: 13)),
-                  )
-                ]),
-              ),
-            ),
+            // InkWell(
+            //   onTap: controller.go2certifyingSmile,
+            //   child: Container(
+            //     width: double.infinity,
+            //     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+            //     decoration: BoxDecoration(color: HexColor('#FFEBF8F9'), borderRadius: BorderRadius.circular(12)),
+            //     child: Column(children: [
+            //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            //         Text('Smile Certification', style: TextStyle(color: Constant.themeColor, fontSize: 16, fontWeight: FontWeight.bold)),
+            //         Icon(
+            //           Icons.arrow_forward_rounded,
+            //           color: Constant.themeColor,
+            //           size: 24,
+            //         )
+            //       ]),
+            //       Container(
+            //         padding: EdgeInsets.only(top: 14),
+            //         child: Text('Adding authentication information can increase the credit limit for loans.', style: TextStyle(color: HexColor('#FF757F8C'), fontSize: 13)),
+            //       )
+            //     ]),
+            //   ),
+            // ),
             SizedBox(height: 40),
             InkWell(
               onTap: controller.backAction,

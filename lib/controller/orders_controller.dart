@@ -1,14 +1,26 @@
 import 'package:get/get.dart';
+import 'package:paghiram_loan/models/order_model.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
+import 'package:paghiram_loan/service/index.dart';
 
 class OrdersController extends GetxController {
-  var isOrderTypePending = true.obs;
-  var pendingOrders = [].obs;
-  var historyOrders = [].obs;
+  var orders = <OrderModel>[].obs;
 
-  void pendingItemOnTap() => isOrderTypePending.value = true;
+  @override
+  void onInit() {
+    super.onInit();
+    _fetchOrderList();
+  }
 
-  void historyItemOnTap() => isOrderTypePending.value = false;
+  void _fetchOrderList() async {
+    List<OrderModel>? list = await NetworkService.getOrderList();
+    if (list == null) return;
+    orders.value = list;
+  }
+
+  void repaymentAction(String productId) {
+    Get.toNamed(ApplicationRoutes.repaymentIndex, arguments: productId)?.then((value) => _fetchOrderList());
+  }
 
   void go2loan() => Get.offAllNamed(ApplicationRoutes.home);
 }

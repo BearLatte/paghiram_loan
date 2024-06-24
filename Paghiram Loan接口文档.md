@@ -1202,12 +1202,59 @@
   | apd_id | 接口35中的 ad_id | String | true |
   | type | 1：全还， 3：分期 | String | true |
   | coupon_id | 优惠券id（分期产品传空字符串） | String | true |
-  | channel_code | 优惠券id（分期产品传空字符串） | String | true |
+  | channel_code | gcash: GCASH_STATIC_VA, | String | true |
 
 - 返回值:
 
   ```json
-    
+    {
+      "code":"200",
+      "error":"",
+      "data":{
+        "redirect_url":""
+      }
+    }
+  ```
+
+#### 39. 历史接圈
+
+- 接口地址: `/LoanrecordIns/loan_list`
+
+- 请求方式: `Post`
+
+- 请求参数: 无
+
+- 返回值:
+
+  ```json
+    {
+      "code":"200",
+      "error":"Success",
+      "data":[
+        {
+          "pack_name":"Paghiram",
+          "pack_img":"\/Public\/img\/CashPeso.png",
+          "pid":"2",
+          "back_time":"2024-06-24 23:59:59",
+          "status":0,"price":2060
+        },
+        {
+          "pack_name":"Happy Peso pro",
+          "pack_img":"\/Public\/img\/HappyPesopro.png",
+          "pid":"11","back_time":"2024-07-03 23:59:59",
+          "status":0,
+          "price":1190
+        },
+        {
+          "pack_name":"Cash Peso pro",
+          "pack_img":"\/Public\/img\/CashPesopro.png",
+          "pid":"12",
+          "back_time":"2024-07-17 23:59:59",
+          "status":0,
+          "price":1100
+        }
+      ]
+    }
   ```
 
 

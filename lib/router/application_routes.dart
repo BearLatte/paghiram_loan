@@ -33,5 +33,5 @@ abstract class ApplicationRoutes {
   static const repaymentMethodSkyPay = '/repaymentMethodSkyPay';
   static const repaymentMethodPayCools = '/repaymentMethodPayCools';
   static const skyPayBarCode = '/skyPayBarCode';
-  static const repaymentWebView = '/repaymentWebView';
+  static const repaymentInstructionView = '/repaymentInstructionView';
 }

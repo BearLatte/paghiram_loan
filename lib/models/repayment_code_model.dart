@@ -13,6 +13,10 @@ class RepaymentCodeModel {
   @JSONField(name: "account_name")
   late String accountName;
 
+  String get formattedContractNumber {
+    return contractNumber.replaceAll(RegExp(r'\s+\b|\b\s'), '');
+  }
+
   RepaymentCodeModel();
 
   factory RepaymentCodeModel.fromJson(Map<String, dynamic> json) => $RepaymentCodeModelFromJson(json);

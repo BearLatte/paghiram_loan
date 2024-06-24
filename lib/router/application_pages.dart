@@ -27,7 +27,7 @@ import 'package:paghiram_loan/controller/pay_cools_method_controller.dart';
 import 'package:paghiram_loan/controller/personal_info_controller.dart';
 import 'package:paghiram_loan/controller/province_select_controller.dart';
 import 'package:paghiram_loan/controller/repayment_index_controller.dart';
-import 'package:paghiram_loan/controller/repayment_webview_controller.dart';
+import 'package:paghiram_loan/controller/repayment_instruction_controller.dart';
 import 'package:paghiram_loan/controller/sky_pay_method_controller.dart';
 import 'package:paghiram_loan/controller/settings_controller.dart';
 import 'package:paghiram_loan/controller/web_view_controller.dart';
@@ -58,7 +58,7 @@ import 'package:paghiram_loan/view/loan/borrow/withdraw_method.dart';
 import 'package:paghiram_loan/view/loan/borrow/withdraw_success_view.dart';
 import 'package:paghiram_loan/view/loan/repayment/bar_code_view.dart';
 import 'package:paghiram_loan/view/loan/repayment/index.dart';
-import 'package:paghiram_loan/view/loan/repayment/repayment_web_view.dart';
+import 'package:paghiram_loan/view/loan/repayment/repayment_instruction_view.dart';
 import 'package:paghiram_loan/view/loan/repayment/sky_pay_method_view.dart';
 import 'package:paghiram_loan/view/loan/repayment/pay_cools_method_view.dart';
 import 'package:paghiram_loan/view/login/change_password_view.dart';
@@ -240,10 +240,10 @@ class ApplicationPages {
       binding: BindingsBuilder(() => Get.lazyPut(() => BarCodeViewController())),
     ),
     GetPage(
-      name: ApplicationRoutes.repaymentWebView,
-      page: () => RepaymentWebView(),
+      name: ApplicationRoutes.repaymentInstructionView,
+      page: () => RepaymentInstructionView(),
       transition: Transition.native,
-      binding: BindingsBuilder(() => Get.lazyPut(() => RepaymentWebviewController())),
+      binding: BindingsBuilder(() => Get.lazyPut(() => RepaymentInstructionController())),
     ),
   ];
 }

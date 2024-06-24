@@ -28,7 +28,7 @@ class BarCodeViewController extends GetxController {
     RepaymentCodeModel? model = await NetworkService.fetchSkyCode(type: _repaymentType, gid: _gid);
     if (model == null) return null;
     repaymentAmount.value = 'PHP ${Global.formatCurrency(model.amount)}';
-    contractNumber.value = model.contractNumber;
+    contractNumber.value = model.formattedContractNumber;
     billerName.value = model.accountName;
 
     if (isShowBarCode.value) {
@@ -44,9 +44,26 @@ class BarCodeViewController extends GetxController {
   }
 
   void guidelineOnTap() {
+    late String img;
+    switch (title.value) {
+      case 'GCash':
+        img = 'asset/images/gcash_instruction_img.png';
+      case 'PayMaya':
+        img = 'asset/images/paymaya_instruction_img.png';
+      case 'ShopeePay':
+        img = 'asset/images/shopee_instruction_img.png';
+      case 'BPI QuickPay':
+        img = 'asset/images/bpi_instruction_img.png';
+      case 'Lazada':
+        img = 'asset/images/lazada_instruction_img.png';
+      case 'Bank':
+        img = 'asset/images/bank_instruction_img.png';
+      default:
+        img = 'asset/images/711_instruction_img.png';
+    }
     Get.toNamed(
-      ApplicationRoutes.repaymentWebView,
-      arguments: {'title': title.value, 'url': ''},
+      ApplicationRoutes.repaymentInstructionView,
+      arguments: {'title': title.value, 'imgPath': img},
     );
   }
 

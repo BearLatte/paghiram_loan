@@ -59,14 +59,19 @@ class BarCodeView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Row(children: [
-                        CommonImage(src: 'asset/icons/guideline_icon.png'),
-                        SizedBox(width: 8),
-                        Text(
-                          controller.title.value == 'Bank' ? ' Repayment Guidelines' : controller.title.value + ' Repayment Guidelines',
-                          style: TextStyle(color: HexColor('#FF00A9B8'), fontSize: 16),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            CommonImage(src: 'asset/icons/guideline_icon.png'),
+                            SizedBox(width: 8),
+                            Expanded(
+                                child: Text(
+                              controller.title.value == 'Bank' ? ' Repayment Guidelines' : controller.title.value + ' Repayment Guidelines',
+                              style: TextStyle(color: HexColor('#FF00A9B8'), fontSize: 16),
+                            ))
+                          ],
                         ),
-                      ]),
+                      ),
                       Icon(Icons.keyboard_arrow_right_outlined, color: HexColor('#FF00A9B8')),
                     ]),
                   )),

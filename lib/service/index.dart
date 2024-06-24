@@ -7,6 +7,7 @@ import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
 import 'package:paghiram_loan/models/borrow_detail_model.dart';
+import 'package:paghiram_loan/models/order_model.dart';
 import 'package:paghiram_loan/models/repayment_code_model.dart';
 import 'package:paghiram_loan/models/repayment_detail_model.dart';
 import 'package:paghiram_loan/models/withdraw_method_model.dart';
@@ -409,6 +410,12 @@ class NetworkService {
   static Future<String?> generatePayCoolsChannelUrl({required String apdId, required String type, required String channelCode}) async {
     BaseResponse? response = await HttpUtils.post(path: '/RepayIns/virtual', data: {'apd_id': apdId, 'type': type, 'coupon_id': '', 'channel_code': channelCode});
     return response == null ? null : response.data['redirect_url'];
+  }
+
+  // request order list
+  static Future<List<OrderModel>?> getOrderList() async {
+    BaseResponse? response = await HttpUtils.post<List<OrderModel>>(path: '/LoanrecordIns/loan_list');
+    return response?.data;
   }
 
   static Future<void> buryPoint() async {}

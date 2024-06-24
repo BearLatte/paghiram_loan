@@ -18,6 +18,7 @@ class CommonView extends StatelessWidget {
   final Function()? navLeadingAction;
   final bool resizeToAvoidBottomInset;
   final bool isShowConnectCustomers;
+  final bool? isCneterTitle;
 
   CommonView({
     super.key,
@@ -25,6 +26,7 @@ class CommonView extends StatelessWidget {
     this.navLeading,
     this.navTrailings,
     this.title,
+    this.isCneterTitle,
     this.isShowBackIcon = true,
     this.isShowAppBar = true,
     this.backgroundColor,
@@ -40,9 +42,14 @@ class CommonView extends StatelessWidget {
       appBar: isShowAppBar
           ? AppBar(
               title: Text(title ?? '', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+              centerTitle: isCneterTitle,
               backgroundColor: Constant.themeColor,
               foregroundColor: Colors.white,
-              leading: navLeading ?? _navLeading(),
+              leading: navLeading == null
+                  ? navLeading
+                  : isShowBackIcon
+                      ? _navLeading()
+                      : null,
               actions: isShowConnectCustomers
                   ? [
                       IconButton(
