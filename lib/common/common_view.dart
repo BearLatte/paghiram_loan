@@ -5,6 +5,8 @@ import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
 
+import '../router/application_routes.dart';
+
 class CommonView extends StatelessWidget {
   final Widget child;
   final Widget? navLeading;
@@ -15,6 +17,8 @@ class CommonView extends StatelessWidget {
   final Color? backgroundColor;
   final Function()? navLeadingAction;
   final bool resizeToAvoidBottomInset;
+  final bool isShowConnectCustomers;
+  final bool? isCneterTitle;
 
   CommonView({
     super.key,
@@ -22,11 +26,13 @@ class CommonView extends StatelessWidget {
     this.navLeading,
     this.navTrailings,
     this.title,
+    this.isCneterTitle,
     this.isShowBackIcon = true,
     this.isShowAppBar = true,
     this.backgroundColor,
     this.navLeadingAction,
     this.resizeToAvoidBottomInset = true,
+    this.isShowConnectCustomers = false,
   });
 
   @override
@@ -36,10 +42,25 @@ class CommonView extends StatelessWidget {
       appBar: isShowAppBar
           ? AppBar(
               title: Text(title ?? '', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+              centerTitle: isCneterTitle,
               backgroundColor: Constant.themeColor,
               foregroundColor: Colors.white,
-              leading: navLeading ?? _navLeading(),
-              actions: navTrailings,
+              leading: navLeading == null
+                  ? navLeading
+                  : isShowBackIcon
+                      ? _navLeading()
+                      : null,
+              actions: isShowConnectCustomers
+                  ? [
+                      IconButton(
+                        onPressed: () => Get.toNamed(ApplicationRoutes.webView, arguments: {
+                          'title': 'Help Center',
+                          'url': 'https://api.paghiram.top/Api/Help/index',
+                        }),
+                        icon: CommonImage(src: 'asset/icons/certify_customer_service_icon.png'),
+                      )
+                    ]
+                  : navTrailings,
             )
           : null,
       body: Container(color: backgroundColor ?? HexColor('#FFFAFAFA'), child: child),

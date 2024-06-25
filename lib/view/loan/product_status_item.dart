@@ -6,7 +6,7 @@ import '../../common/common_image.dart';
 import '../../util/constant.dart';
 import '../../util/hex_color.dart';
 
-enum ProductStatus { normal, pending, canBorrow, rollback, repayment, machineReview, offlineWithdraw, reject, paying, payFailed }
+enum ProductStatus { normal, unverified, pending, canBorrow, rollback, repayment, reloan, offlineWithdraw, reject, paying, payFailed }
 
 class ProductStatusItem {
   static Widget generateProductItem(ProductModelEntity product, {Function()? buttonClickedCallback}) {
@@ -37,16 +37,15 @@ class ProductStatusItem {
                       style: TextStyle(color: HexColor('#FF102729'), fontSize: 16, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis, maxLines: 1, softWrap: true))
             ]),
           ),
-          if (product.productState == ProductStatus.normal) _getNormalStatusContent(product: product, applyClickedCallback: buttonClickedCallback),
+          if (product.productState == ProductStatus.normal || product.productState == ProductStatus.reloan || product.productState == ProductStatus.unverified)
+            _getNormalStatusContent(product: product, applyClickedCallback: buttonClickedCallback),
           if (product.productState == ProductStatus.pending) _getPendingStatusContent(product: product),
           if (product.productState == ProductStatus.rollback || product.productState == ProductStatus.reject)
             _getRollbackOrRejectStatusContent(product.productState, product: product, buttonClickedCallback: buttonClickedCallback),
           if (product.productState == ProductStatus.canBorrow) _getWithdrawStatusContent(product: product, buttonClickedCallback: buttonClickedCallback),
-          if (product.productState != ProductStatus.normal &&
-              product.productState != ProductStatus.pending &&
-              product.productState != ProductStatus.rollback && product.productState != ProductStatus.reject &&
-              product.productState != ProductStatus.canBorrow)
-            _getPendingStatusContent(product: product),
+          if (product.productState == ProductStatus.payFailed) _getPayFailedStatusContent(product: product, buttonClickedCallback: buttonClickedCallback),
+          if (product.productState == ProductStatus.paying) _getPayingStatusContent(product: product),
+          if (product.productState == ProductStatus.repayment) _getRepaymentStatusContent(product: product, buttonClickedCallback: buttonClickedCallback),
         ],
       ),
     );
@@ -148,6 +147,110 @@ class ProductStatusItem {
   }
 
   static Widget _getWithdrawStatusContent({required ProductModelEntity product, Function()? buttonClickedCallback}) {
-    return Container();
+    return Container(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text('Maximum amount required', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
+          SizedBox(height: 12),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text('PHP ${product.maxMoneyFormat}', style: TextStyle(color: Constant.themeColor, fontSize: 20, fontFamily: 'Impact')),
+            ElevatedButton(
+              onPressed: () => buttonClickedCallback!(),
+              style: ElevatedButton.styleFrom(backgroundColor: Constant.themeColor),
+              child: const Text('Withdraw money', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+            )
+          ]),
+          SizedBox(height: 12),
+          Text('Loan approval granted, proceed to withdraw funds.', style: TextStyle(color: HexColor('#FFAAAAAA'), fontSize: 13))
+        ],
+      ),
+    );
+  }
+
+  static Widget _getPayFailedStatusContent({required ProductModelEntity product, Function()? buttonClickedCallback}) {
+    return Container(
+      padding: EdgeInsets.all(12),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Text('Maximum amount required', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
+        SizedBox(height: 12),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text('PHP ${product.maxMoneyFormat}', style: TextStyle(color: Constant.themeColor, fontSize: 20, fontFamily: 'Impact')),
+          ElevatedButton(
+            onPressed: () => buttonClickedCallback!(),
+            style: ElevatedButton.styleFrom(backgroundColor: Constant.themeColor),
+            child: const Text('Re-Loan', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+          )
+        ]),
+        SizedBox(height: 12),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(color: HexColor('#1AFF3232'), borderRadius: BorderRadius.circular(10)),
+          child: Text('Warning! Payment failed. Please attempt to withdraw money again.', style: TextStyle(color: HexColor('#FFFF3232'), fontSize: 13)),
+        )
+      ]),
+    );
+  }
+
+  static Widget _getPayingStatusContent({required ProductModelEntity product}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      child: Column(children: [
+        Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(bottom: 10),
+          child: Text('Paying!', style: TextStyle(color: HexColor('#FFFFA940'), fontSize: 16, fontWeight: FontWeight.bold)),
+        ),
+        Text('The system is processing the remittance. Please wait patiently. If the payment fails, you can log into the app to request a re-remittance.')
+      ]),
+    );
+  }
+
+  static Widget _getRepaymentStatusContent({required ProductModelEntity product, Function()? buttonClickedCallback}) {
+    return Container(
+        padding: EdgeInsets.all(12),
+        child: Column(children: [
+          Row(children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('Refund amount', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
+                  SizedBox(height: 12),
+                  Text('PHP ${product.maxMoneyFormat}', style: TextStyle(color: Constant.themeColor, fontSize: 20, fontFamily: 'Impact'))
+                ],
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('1st payment time', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
+                  SizedBox(height: 12),
+                  Text(product.backTimeDate,
+                      style: TextStyle(color: product.overdueDays > 0 ? HexColor('#FFFF3232') : HexColor('#FF102729'), fontSize: 20, fontWeight: FontWeight.w600))
+                ],
+              ),
+            ),
+          ]),
+          SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () => buttonClickedCallback!(),
+            style: ElevatedButton.styleFrom(backgroundColor: product.overdueDays > 0 ? HexColor('#FFFF3232') : Constant.themeColor),
+            child: const Text('Repay', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+          ),
+          SizedBox(height: 16),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 8),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(color: product.overdueDays > 0 ? HexColor('#1AFF3232') : HexColor('#1AFFA940'), borderRadius: BorderRadius.circular(8)),
+            child: Text(
+              product.overdueDays > 0 ? 'Overdue ${product.overdueDays} days , please repay as soon as possible' : 'Repay on time to maintain good credit',
+              style: TextStyle(color: product.overdueDays > 0 ? HexColor('#FFFF3232') : HexColor('#FFFFA940'), fontSize: 13),
+            ),
+          )
+        ]));
   }
 }

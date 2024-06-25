@@ -74,7 +74,16 @@ class DeleteAccountController extends GetxController {
                             shape: PinCodeFieldShape.box,
                           ),
                         ),
-                        TextButton(onPressed: () => Get.toNamed(ApplicationRoutes.changePwd, arguments: Global.phoneNumber), child: Text('Forgot password?')),
+                        TextButton(
+                          onPressed: () => Get.toNamed(
+                            ApplicationRoutes.changePwd,
+                            arguments: {
+                              'phone': Global.phoneNumber,
+                              'type': 0,
+                            },
+                          ),
+                          child: Text('Forgot password?'),
+                        ),
                         SizedBox(height: 20),
                         Container(
                           child: Row(

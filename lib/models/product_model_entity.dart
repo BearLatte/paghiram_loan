@@ -38,6 +38,8 @@ class ProductModelEntity {
 
   ProductStatus get productState {
     switch (status) {
+      case 1:
+        return ProductStatus.unverified;
       case 2:
         return ProductStatus.pending;
       case 3:
@@ -47,7 +49,7 @@ class ProductModelEntity {
       case 5:
         return ProductStatus.repayment;
       case 6:
-        return ProductStatus.machineReview;
+        return ProductStatus.reloan;
       case 7:
         return ProductStatus.offlineWithdraw;
       case 8:
@@ -73,6 +75,12 @@ class ProductModelEntity {
 
   String get rate {
     return interest.toStringAsFixed(2);
+  }
+
+  String get backTimeDate {
+    if (backTime == null) return '';
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(backTime! * 1000);
+    return DateFormat('MM/dd/yyyy').format(date);
   }
 
   ProductModelEntity();

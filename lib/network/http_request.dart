@@ -27,7 +27,7 @@ class HttpRequest {
     //   };
     //
     //   client.findProxy = (uri) {
-    //     return 'PROXY 192.168.0.26:8888';
+    //     return 'PROXY 192.168.3.222:8888';
     //   };
     //   return null;
     // };

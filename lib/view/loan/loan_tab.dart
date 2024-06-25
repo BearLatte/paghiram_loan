@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_image.dart';
-import 'package:paghiram_loan/common/common_view.dart';
-import 'package:paghiram_loan/models/product_model_entity.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/controller/loan_tab_controller.dart';
@@ -184,7 +182,7 @@ class LoanTab extends StatelessWidget {
                 height: 32,
                 child: ElevatedButton(
                     onPressed: Get.back,
-                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(HexColor('#FFEBF8F9')), elevation: MaterialStateProperty.all(0)),
+                    style: ButtonStyle(backgroundColor: WidgetStateProperty.all(HexColor('#FFEBF8F9')), elevation: WidgetStateProperty.all(0)),
                     child: const CommonImage(src: 'asset/icons/profile_double_arrow_icon.png')))
           ],
         ),

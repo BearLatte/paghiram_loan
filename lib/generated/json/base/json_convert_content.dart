@@ -6,15 +6,21 @@
 import 'package:flutter/material.dart' show debugPrint;
 import 'package:paghiram_loan/models/aliyun_key_entity.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
+import 'package:paghiram_loan/models/borrow_detail_model.dart';
+import 'package:paghiram_loan/models/borrow_rate_model.dart';
 import 'package:paghiram_loan/models/certification_entity.dart';
 import 'package:paghiram_loan/models/certify_selection_data_entity.dart';
 import 'package:paghiram_loan/models/contact_entity.dart';
 import 'package:paghiram_loan/models/id_card_type_entity.dart';
 import 'package:paghiram_loan/models/marquee_entity.dart';
 import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
+import 'package:paghiram_loan/models/order_model.dart';
 import 'package:paghiram_loan/models/pgm_photo_entity.dart';
 import 'package:paghiram_loan/models/product_model_entity.dart';
+import 'package:paghiram_loan/models/repayment_code_model.dart';
+import 'package:paghiram_loan/models/repayment_detail_model.dart';
 import 'package:paghiram_loan/models/submited_ocr_model_entity.dart';
+import 'package:paghiram_loan/models/withdraw_method_model.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -148,6 +154,24 @@ class JsonConvert {
     if (<AuthStateEntity>[] is M) {
       return data.map<AuthStateEntity>((Map<String, dynamic> e) => AuthStateEntity.fromJson(e)).toList() as M;
     }
+    if (<BorrowDetailModel>[] is M) {
+      return data.map<BorrowDetailModel>((Map<String, dynamic> e) => BorrowDetailModel.fromJson(e)).toList() as M;
+    }
+    if (<BorrowDetailModelRepayData>[] is M) {
+      return data.map<BorrowDetailModelRepayData>((Map<String, dynamic> e) => BorrowDetailModelRepayData.fromJson(e)).toList() as M;
+    }
+    if (<BorrowRateModel>[] is M) {
+      return data.map<BorrowRateModel>((Map<String, dynamic> e) => BorrowRateModel.fromJson(e)).toList() as M;
+    }
+    if (<BorrowRateModelUserData>[] is M) {
+      return data.map<BorrowRateModelUserData>((Map<String, dynamic> e) => BorrowRateModelUserData.fromJson(e)).toList() as M;
+    }
+    if (<BorrowRateModelUserDataInfo>[] is M) {
+      return data.map<BorrowRateModelUserDataInfo>((Map<String, dynamic> e) => BorrowRateModelUserDataInfo.fromJson(e)).toList() as M;
+    }
+    if (<BorrowRateModelUserDataInfoData>[] is M) {
+      return data.map<BorrowRateModelUserDataInfoData>((Map<String, dynamic> e) => BorrowRateModelUserDataInfoData.fromJson(e)).toList() as M;
+    }
     if (<CertificationEntity>[] is M) {
       return data.map<CertificationEntity>((Map<String, dynamic> e) => CertificationEntity.fromJson(e)).toList() as M;
     }
@@ -214,14 +238,38 @@ class JsonConvert {
     if (<OcrRecgnizedEntity>[] is M) {
       return data.map<OcrRecgnizedEntity>((Map<String, dynamic> e) => OcrRecgnizedEntity.fromJson(e)).toList() as M;
     }
+    if (<OrderModel>[] is M) {
+      return data.map<OrderModel>((Map<String, dynamic> e) => OrderModel.fromJson(e)).toList() as M;
+    }
     if (<PgmPhotoEntity>[] is M) {
       return data.map<PgmPhotoEntity>((Map<String, dynamic> e) => PgmPhotoEntity.fromJson(e)).toList() as M;
     }
     if (<ProductModelEntity>[] is M) {
       return data.map<ProductModelEntity>((Map<String, dynamic> e) => ProductModelEntity.fromJson(e)).toList() as M;
     }
+    if (<RepaymentCodeModel>[] is M) {
+      return data.map<RepaymentCodeModel>((Map<String, dynamic> e) => RepaymentCodeModel.fromJson(e)).toList() as M;
+    }
+    if (<RepaymentDetailModel>[] is M) {
+      return data.map<RepaymentDetailModel>((Map<String, dynamic> e) => RepaymentDetailModel.fromJson(e)).toList() as M;
+    }
+    if (<RepaymentDetailModelPayData>[] is M) {
+      return data.map<RepaymentDetailModelPayData>((Map<String, dynamic> e) => RepaymentDetailModelPayData.fromJson(e)).toList() as M;
+    }
     if (<SubmitedOcrModelEntity>[] is M) {
       return data.map<SubmitedOcrModelEntity>((Map<String, dynamic> e) => SubmitedOcrModelEntity.fromJson(e)).toList() as M;
+    }
+    if (<WithdrawMethodModel>[] is M) {
+      return data.map<WithdrawMethodModel>((Map<String, dynamic> e) => WithdrawMethodModel.fromJson(e)).toList() as M;
+    }
+    if (<EWalletCategory>[] is M) {
+      return data.map<EWalletCategory>((Map<String, dynamic> e) => EWalletCategory.fromJson(e)).toList() as M;
+    }
+    if (<BankCardCategory>[] is M) {
+      return data.map<BankCardCategory>((Map<String, dynamic> e) => BankCardCategory.fromJson(e)).toList() as M;
+    }
+    if (<CardBindingData>[] is M) {
+      return data.map<CardBindingData>((Map<String, dynamic> e) => CardBindingData.fromJson(e)).toList() as M;
     }
 
     debugPrint("$M not found");
@@ -245,6 +293,12 @@ class JsonConvertClassCollection {
   Map<String, JsonConvertFunction> convertFuncMap = {
     (AliyunKeyEntity).toString(): AliyunKeyEntity.fromJson,
     (AuthStateEntity).toString(): AuthStateEntity.fromJson,
+    (BorrowDetailModel).toString(): BorrowDetailModel.fromJson,
+    (BorrowDetailModelRepayData).toString(): BorrowDetailModelRepayData.fromJson,
+    (BorrowRateModel).toString(): BorrowRateModel.fromJson,
+    (BorrowRateModelUserData).toString(): BorrowRateModelUserData.fromJson,
+    (BorrowRateModelUserDataInfo).toString(): BorrowRateModelUserDataInfo.fromJson,
+    (BorrowRateModelUserDataInfoData).toString(): BorrowRateModelUserDataInfoData.fromJson,
     (CertificationEntity).toString(): CertificationEntity.fromJson,
     (CertifySelectionDataEntity).toString(): CertifySelectionDataEntity.fromJson,
     (CertifySelectionDataEschool).toString(): CertifySelectionDataEschool.fromJson,
@@ -267,9 +321,17 @@ class JsonConvertClassCollection {
     (IdCardTypeEntity).toString(): IdCardTypeEntity.fromJson,
     (MarqueeEntity).toString(): MarqueeEntity.fromJson,
     (OcrRecgnizedEntity).toString(): OcrRecgnizedEntity.fromJson,
+    (OrderModel).toString(): OrderModel.fromJson,
     (PgmPhotoEntity).toString(): PgmPhotoEntity.fromJson,
     (ProductModelEntity).toString(): ProductModelEntity.fromJson,
+    (RepaymentCodeModel).toString(): RepaymentCodeModel.fromJson,
+    (RepaymentDetailModel).toString(): RepaymentDetailModel.fromJson,
+    (RepaymentDetailModelPayData).toString(): RepaymentDetailModelPayData.fromJson,
     (SubmitedOcrModelEntity).toString(): SubmitedOcrModelEntity.fromJson,
+    (WithdrawMethodModel).toString(): WithdrawMethodModel.fromJson,
+    (EWalletCategory).toString(): EWalletCategory.fromJson,
+    (BankCardCategory).toString(): BankCardCategory.fromJson,
+    (CardBindingData).toString(): CardBindingData.fromJson,
   };
 
   bool containsKey(String type) {

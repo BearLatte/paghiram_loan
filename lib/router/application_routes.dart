@@ -21,4 +21,17 @@ abstract class ApplicationRoutes {
   static const feedback = '/feedback';
   static const feedbackTypePicker = '/feedbackTypePicker';
   static const feedbackImageEnlarge = '/feedbackImageEnlarge';
+  static const borrowIndex = '/borrowIndex';
+  static const borrowDetail = '/borrowDetail';
+  static const withdrawMethod = '/withdrawMethod';
+  static const addEWallet = '/addEWallet';
+  static const addBankCard = '/addBankCard';
+  static const withdrawConfirm = '/withdrawConfirm';
+  static const withdrawDeviceCheck = '/withdrawDeviceCheck';
+  static const withdrawSuccess = '/withdrawSuccess';
+  static const repaymentIndex = '/repaymentIndex';
+  static const repaymentMethodSkyPay = '/repaymentMethodSkyPay';
+  static const repaymentMethodPayCools = '/repaymentMethodPayCools';
+  static const skyPayBarCode = '/skyPayBarCode';
+  static const repaymentInstructionView = '/repaymentInstructionView';
 }

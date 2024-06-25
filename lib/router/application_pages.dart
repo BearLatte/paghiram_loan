@@ -1,11 +1,18 @@
 import 'package:get/get.dart';
+import 'package:paghiram_loan/application.dart';
+import 'package:paghiram_loan/controller/add_bank_card_controller.dart';
+import 'package:paghiram_loan/controller/add_e_wallet_controller.dart';
 import 'package:paghiram_loan/controller/add_note_controller.dart';
+import 'package:paghiram_loan/controller/bar_code_view_controller.dart';
+import 'package:paghiram_loan/controller/borrow_detail_controller.dart';
+import 'package:paghiram_loan/controller/borrow_index_controller.dart';
 import 'package:paghiram_loan/controller/card_ocr_controller.dart';
 import 'package:paghiram_loan/controller/certification_index_controller.dart';
 import 'package:paghiram_loan/controller/change_password_controller.dart';
 import 'package:paghiram_loan/controller/city_select_controller.dart';
 import 'package:paghiram_loan/controller/contact_controller.dart';
 import 'package:paghiram_loan/controller/delete_account_controller.dart';
+import 'package:paghiram_loan/controller/device_check_dialog_controller.dart';
 import 'package:paghiram_loan/controller/district_select_controller.dart';
 import 'package:paghiram_loan/controller/feedback_controller.dart';
 import 'package:paghiram_loan/controller/feedback_type_select_controller.dart';
@@ -16,10 +23,17 @@ import 'package:paghiram_loan/controller/login_controller.dart';
 import 'package:paghiram_loan/controller/notes_tab_controller.dart';
 import 'package:paghiram_loan/controller/basic_info_controller.dart';
 import 'package:paghiram_loan/controller/orders_controller.dart';
+import 'package:paghiram_loan/controller/pay_cools_method_controller.dart';
 import 'package:paghiram_loan/controller/personal_info_controller.dart';
 import 'package:paghiram_loan/controller/province_select_controller.dart';
+import 'package:paghiram_loan/controller/repayment_index_controller.dart';
+import 'package:paghiram_loan/controller/repayment_instruction_controller.dart';
+import 'package:paghiram_loan/controller/sky_pay_method_controller.dart';
 import 'package:paghiram_loan/controller/settings_controller.dart';
 import 'package:paghiram_loan/controller/web_view_controller.dart';
+import 'package:paghiram_loan/controller/withdraw_confirm_controller.dart';
+import 'package:paghiram_loan/controller/withdraw_method_controller.dart';
+import 'package:paghiram_loan/controller/withdraw_success_controller.dart';
 import 'package:paghiram_loan/view/certifications/card_ocr_view.dart';
 import 'package:paghiram_loan/view/certifications/city_select_view.dart';
 import 'package:paghiram_loan/view/certifications/contact_view.dart';
@@ -34,6 +48,19 @@ import 'package:paghiram_loan/view/feedback/feedback_type_select_view.dart';
 import 'package:paghiram_loan/view/feedback/feedback_view.dart';
 import 'package:paghiram_loan/view/home_view.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
+import 'package:paghiram_loan/view/loan/borrow/add_bank_card.dart';
+import 'package:paghiram_loan/view/loan/borrow/add_e_wallet.dart';
+import 'package:paghiram_loan/view/loan/borrow/detail.dart';
+import 'package:paghiram_loan/view/loan/borrow/device_check_dialog.dart';
+import 'package:paghiram_loan/view/loan/borrow/index.dart';
+import 'package:paghiram_loan/view/loan/borrow/withdraw_confirm_view.dart';
+import 'package:paghiram_loan/view/loan/borrow/withdraw_method.dart';
+import 'package:paghiram_loan/view/loan/borrow/withdraw_success_view.dart';
+import 'package:paghiram_loan/view/loan/repayment/bar_code_view.dart';
+import 'package:paghiram_loan/view/loan/repayment/index.dart';
+import 'package:paghiram_loan/view/loan/repayment/repayment_instruction_view.dart';
+import 'package:paghiram_loan/view/loan/repayment/sky_pay_method_view.dart';
+import 'package:paghiram_loan/view/loan/repayment/pay_cools_method_view.dart';
 import 'package:paghiram_loan/view/login/change_password_view.dart';
 import 'package:paghiram_loan/view/login/login_view.dart';
 import 'package:paghiram_loan/view/notes/add_node_view.dart';
@@ -133,7 +160,90 @@ class ApplicationPages {
       page: () => FeedbackImageEnlargeView(),
       opaque: false,
       popGesture: false,
-      transition: Transition.size
-    )
+      transition: Transition.size,
+    ),
+    GetPage(
+      name: ApplicationRoutes.borrowIndex,
+      page: () => BorrowIndex(),
+      transition: Transition.rightToLeft,
+      binding: BindingsBuilder(() => Get.lazyPut(() => BorrowIndexController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.borrowDetail,
+      page: () => BorrowDetailView(),
+      transition: Transition.rightToLeft,
+      binding: BindingsBuilder(() => Get.lazyPut(() => BorrowDetailController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.withdrawMethod,
+      page: () => WithdrawMethod(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => WithdrawMethodController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.addEWallet,
+      page: () => AddEWallet(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => AddEWalletController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.addBankCard,
+      page: () => AddBankCard(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => AddBankCardController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.withdrawConfirm,
+      page: () => WithdrawConfirmView(),
+      transition: Transition.fadeIn,
+      opaque: false,
+      popGesture: false,
+      binding: BindingsBuilder(() => Get.lazyPut(() => WithdrawConfirmController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.withdrawDeviceCheck,
+      page: () => DeviceCheckDialog(),
+      transition: Transition.fadeIn,
+      opaque: false,
+      popGesture: false,
+      binding: BindingsBuilder(() => Get.lazyPut(() => DeviceCheckDialogController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.withdrawSuccess,
+      page: () => WithdrawSuccessView(),
+      transition: Transition.native,
+      popGesture: false,
+      binding: BindingsBuilder(() => Get.lazyPut(() => WithdrawSuccessController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.repaymentIndex,
+      page: () => RepaymentIndex(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => RepaymentIndexController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.repaymentMethodSkyPay,
+      page: () => SkyPayMethodView(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => SkyPayMethodController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.repaymentMethodPayCools,
+      page: () => PayCoolsMethodView(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => PayCoolsMethodController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.skyPayBarCode,
+      page: () => BarCodeView(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => BarCodeViewController())),
+    ),
+    GetPage(
+      name: ApplicationRoutes.repaymentInstructionView,
+      page: () => RepaymentInstructionView(),
+      transition: Transition.native,
+      binding: BindingsBuilder(() => Get.lazyPut(() => RepaymentInstructionController())),
+    ),
   ];
 }

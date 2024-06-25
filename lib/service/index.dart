@@ -1,12 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/models/auth_state_entity.dart';
+import 'package:paghiram_loan/models/borrow_detail_model.dart';
+import 'package:paghiram_loan/models/order_model.dart';
+import 'package:paghiram_loan/models/repayment_code_model.dart';
+import 'package:paghiram_loan/models/repayment_detail_model.dart';
+import 'package:paghiram_loan/models/withdraw_method_model.dart';
 import 'package:paghiram_loan/models/id_card_type_entity.dart';
 import 'package:paghiram_loan/models/ocr_recgnized_entity.dart';
 import 'package:paghiram_loan/models/pgm_photo_entity.dart';
@@ -18,6 +22,7 @@ import 'package:paghiram_loan/util/md5_util.dart';
 import 'package:paghiram_loan/util/random_util.dart';
 import '../models/aliyun_key_entity.dart';
 import '../models/base_response.dart';
+import '../models/borrow_rate_model.dart';
 import '../util/global.dart';
 
 enum VerifyCodeType { login, register, changePassword }
@@ -64,7 +69,7 @@ class NetworkService {
       )
     });
     if (response == null) return null;
-    return response?.data['code_type'];
+    return response.data['code_type'];
   }
 
   // register
@@ -249,11 +254,169 @@ class NetworkService {
 
   // resubmit ID Card photo
   static resubmitIDCard(Map<String, dynamic> parameters, {required void Function() successCallback}) async {
-   BaseResponse? response = await HttpUtils.post(path: '/UserCard/back_card', data: parameters);
-   if(response != null) successCallback();
+    BaseResponse? response = await HttpUtils.post(path: '/UserCard/back_card', data: parameters);
+    if (response != null) successCallback();
   }
 
-  static Future<void> buryPoint() async {
-
+  // fetch product rate(borrow detail page)
+  static Future<BorrowRateModel?> fetchProductRate(String productId) async {
+    BaseResponse? response = await HttpUtils.get<BorrowRateModel>(path: '/instalmentData/getRatePgm', queryParameters: {'product_id': productId});
+    return response?.data;
   }
+
+  // borrow detail
+  static Future<BorrowDetailModel?> fetchBorrowDetail(Map<String, dynamic> param) async {
+    BaseResponse? response = await HttpUtils.post<BorrowDetailModel>(path: '/instalmentData/getInsDataPgm', data: param);
+    return response?.data;
+  }
+
+  // get user's bound bank cards
+  static Future<List<WithdrawMethodModel>?> fetchUserBoundBankCards() async {
+    BaseResponse? response = await HttpUtils.get<List<WithdrawMethodModel>>(path: '/Bank/get_user_banks');
+    return response?.data;
+  }
+
+  // get user's bound E-wallet
+  static Future<List<WithdrawMethodModel>?> fetchUserBoundEWallet() async {
+    BaseResponse? response = await HttpUtils.get<List<WithdrawMethodModel>>(path: '/ElectronicWallet/get_user_wallet');
+    return response?.data;
+  }
+
+  // get e-wallet categories
+  static Future<List<EWalletCategory>?> fetchEWalletCategories() async {
+    BaseResponse? response = await HttpUtils.get<List<EWalletCategory>>(path: '/ElectronicWallet/get_wallet');
+    return response?.data;
+  }
+
+  // get binding card default name
+  static Future<CardBindingData?> fetchCardBindingNameData() async {
+    BaseResponse? response = await HttpUtils.get<CardBindingData>(path: '/Bank/bind_data');
+    return response?.data;
+  }
+
+  // add new E-Wallet
+  static Future<bool> addNewEWallet(Map<String, dynamic> params) async {
+    Map<String, dynamic> wrapperParams = {'data': jsonEncode(params)};
+    BaseResponse? response = await HttpUtils.post(path: '/ElectronicWallet/add', data: wrapperParams);
+    if (response?.code == 200) return true;
+    return false;
+  }
+
+  // get bank list
+  static Future<List<BankCardCategory>?> fetchBankList() async {
+    BaseResponse? response = await HttpUtils.get<List<BankCardCategory>>(path: '/Bank/get_bank_list');
+    return response?.data;
+  }
+
+  // add new bank card
+  static Future<bool> addNewBankCard(Map<String, dynamic> params) async {
+    Map<String, dynamic> wrapperParams = {'data': jsonEncode(params)};
+    BaseResponse? response = await HttpUtils.post(path: '/Bank/add', data: wrapperParams);
+    if (response?.code == 200) return true;
+    return false;
+  }
+
+  // device risk check
+  static Future<bool> deviceRiskCheck({required String withdrawType, required String account}) async {
+    Map<String, dynamic> params = {'dev_id': Global.deviceUUID, 'type': withdrawType, 'account': account};
+    BaseResponse? response = await HttpUtils.post(path: '/Paytwo/control_version', data: params);
+    if (response?.data['code_type'] == 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  // withdraw send verify code
+  static Future<bool> withdrawSendVerifyCode(String phone) async {
+    BaseResponse? response = await HttpUtils.post(path: '/Paytwo/pay_sms_code', data: {'phone': phone});
+    if (response?.code == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // update default E-Wallet
+  static Future<bool> updateDefaultEWalletAccount(String eid) async {
+    BaseResponse? response = await HttpUtils.post(path: '/ElectronicWallet/save', data: {'eid': eid});
+    if (response?.code == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // update default bank card
+  static Future<bool> updateDefaultBankAccount(String bid) async {
+    BaseResponse? response = await HttpUtils.post(path: '/Bank/update_bank', data: {'id': bid});
+    if (response?.code == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // withdraw with E-Wallet
+  static Future<bool> withdrawWithEWallet(Map<String, dynamic> params) async {
+    BaseResponse? response = await HttpUtils.post(path: '/payIns/wallPayPgm', data: params);
+    if (response?.code == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // withdraw with bank card
+  static Future<bool> withdrawWithBankCard(Map<String, dynamic> params) async {
+    BaseResponse? response = await HttpUtils.post(path: '/payIns/payBankPgm', data: params);
+    if (response?.code == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // get repayment data
+  static Future<RepaymentDetailModel?> fetchRepaymentData(String productId) async {
+    BaseResponse? response = await HttpUtils.post<RepaymentDetailModel>(path: '/repayIns/getRepaymentList', data: {'product_id': productId});
+    return response?.data;
+  }
+
+  // generate sky code
+  static Future<RepaymentCodeModel?> fetchSkyCode({required String type, required String gid}) async {
+    BaseResponse? response = await HttpUtils.post<RepaymentCodeModel>(path: '/repayIns/generateRepaymentCode', data: {'type': type, 'gid': gid, 'cop_id': ''});
+    return response?.data;
+  }
+
+  // generate barcode
+  static Future<String> generateBarcode({required String gid, required String type}) async {
+    BaseResponse? response = await HttpUtils.post(path: '/generatorIns/generateBarCode', data: {'type': type, 'g_id': gid, 'c_id': ''});
+    if (response == null) return '';
+    return response.data['photo'];
+  }
+
+  // generate QR-Code
+  static Future<String?> generateQRCode({required String apdId, required String type}) async {
+    BaseResponse? response = await HttpUtils.post(
+      path: '/RepayIns/qrcode',
+      data: {'apd_id': apdId, 'type': type, 'coupon_id': ''},
+    );
+    if (response == null) return null;
+    return response.data['redirect_url'];
+  }
+
+  // pay cools channel repayment
+  static Future<String?> generatePayCoolsChannelUrl({required String apdId, required String type, required String channelCode}) async {
+    BaseResponse? response = await HttpUtils.post(path: '/RepayIns/virtual', data: {'apd_id': apdId, 'type': type, 'coupon_id': '', 'channel_code': channelCode});
+    return response == null ? null : response.data['redirect_url'];
+  }
+
+  // request order list
+  static Future<List<OrderModel>?> getOrderList() async {
+    BaseResponse? response = await HttpUtils.post<List<OrderModel>>(path: '/LoanrecordIns/loan_list');
+    return response?.data;
+  }
+
+  static Future<void> buryPoint() async {}
 }
