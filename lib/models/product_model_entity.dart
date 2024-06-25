@@ -38,6 +38,8 @@ class ProductModelEntity {
 
   ProductStatus get productState {
     switch (status) {
+      case 1:
+        return ProductStatus.unverified;
       case 2:
         return ProductStatus.pending;
       case 3:

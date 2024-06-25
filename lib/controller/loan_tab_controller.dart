@@ -84,6 +84,9 @@ class LoanTabController extends GetxController {
 
   void productButtonClickedCallBack(ProductModelEntity product) {
     switch (product.productState) {
+      case ProductStatus.unverified:
+        go2Certification('product', product.id);
+        return;
       case ProductStatus.normal:
         Get.toNamed(ApplicationRoutes.login)?.then((value) => fetchData());
         return;

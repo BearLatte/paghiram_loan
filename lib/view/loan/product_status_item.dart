@@ -6,7 +6,7 @@ import '../../common/common_image.dart';
 import '../../util/constant.dart';
 import '../../util/hex_color.dart';
 
-enum ProductStatus { normal, pending, canBorrow, rollback, repayment, reloan, offlineWithdraw, reject, paying, payFailed }
+enum ProductStatus { normal, unverified, pending, canBorrow, rollback, repayment, reloan, offlineWithdraw, reject, paying, payFailed }
 
 class ProductStatusItem {
   static Widget generateProductItem(ProductModelEntity product, {Function()? buttonClickedCallback}) {
@@ -37,7 +37,7 @@ class ProductStatusItem {
                       style: TextStyle(color: HexColor('#FF102729'), fontSize: 16, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis, maxLines: 1, softWrap: true))
             ]),
           ),
-          if (product.productState == ProductStatus.normal || product.productState == ProductStatus.reloan)
+          if (product.productState == ProductStatus.normal || product.productState == ProductStatus.reloan || product.productState == ProductStatus.unverified)
             _getNormalStatusContent(product: product, applyClickedCallback: buttonClickedCallback),
           if (product.productState == ProductStatus.pending) _getPendingStatusContent(product: product),
           if (product.productState == ProductStatus.rollback || product.productState == ProductStatus.reject)
