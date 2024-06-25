@@ -45,11 +45,11 @@ class CommonView extends StatelessWidget {
               centerTitle: isCneterTitle,
               backgroundColor: Constant.themeColor,
               foregroundColor: Colors.white,
-              leading: navLeading == null
+              leading: navLeading != null
                   ? navLeading
-                  : isShowBackIcon
+                  : (isShowBackIcon
                       ? _navLeading()
-                      : null,
+                      : null),
               actions: isShowConnectCustomers
                   ? [
                       IconButton(
