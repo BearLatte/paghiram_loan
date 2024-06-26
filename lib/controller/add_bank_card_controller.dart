@@ -70,6 +70,10 @@ class AddBankCardController extends GetxController {
     String bankNumber = bankNumberController.text.trim();
     String repeatNumber = repeatNumberController.text.trim();
 
+    if (RegExp('[\\-\\*\\&\\%\$\\@\\#\\^\\.\\~\\?\\)\\(\\[\\]\\+\\=\\!]').hasMatch(userName)) {
+      return CommonSnackBar.showSnackBar('Please input your name in the correct format!');
+    }
+
     if (_selectedBankCard == null) {
       return CommonSnackBar.showSnackBar('Please select bank name!');
     }
@@ -100,7 +104,7 @@ class AddBankCardController extends GetxController {
     };
 
     bool isSuccess = await NetworkService.addNewBankCard(params);
-    if(isSuccess) {
+    if (isSuccess) {
       Get.back(result: 'success');
     }
   }

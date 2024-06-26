@@ -127,7 +127,7 @@ class NetworkService {
   static Future<AuthStateEntity?> fetchAuthStatus() async {
     BaseResponse? response = await HttpUtils.get<AuthStateEntity>(path: '/ProductApply/index');
     if (response != null) {
-      return response?.data;
+      return response.data;
     } else {
       return null;
     }

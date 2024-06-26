@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/models/product_model_entity.dart';
+import 'package:paghiram_loan/util/global.dart';
 import 'package:paghiram_loan/widget/count_down_widget.dart';
 
 import '../../common/common_image.dart';
@@ -98,16 +100,17 @@ class ProductStatusItem {
       child: Column(
         children: [
           Text('Under Review , The approval result will be given within 12 hours at the latest', style: TextStyle(fontSize: 15, color: HexColor('#FF3B414B'))),
-          // CountDownWidget(countTime: countdownTime ?? 20 * 60, countDownFinishedCallback: countdownStopCallback),
-          // GestureDetector(
-          //     behavior: HitTestBehavior.opaque,
-          //     onTap: () => pendingStatusClickedCallback!(),
-          //     child: Container(
-          //       alignment: Alignment.centerLeft,
-          //       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          //       decoration: BoxDecoration(color: HexColor('#1AFFA940'), borderRadius: BorderRadius.circular(10)),
-          //       child: Text('Service satisfaction survey: Click on the five-star rating.', style: TextStyle(color: HexColor('#FFFFA940'), fontSize: 13)),
-          //     ))
+          SizedBox(height: 16),
+          GestureDetector(
+            onTap: () {
+              CommonSnackBar.showSnackBar('Under Review , The approval result will be given within 12 hours at the latest');
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 60, vertical: 9),
+              decoration: BoxDecoration(color: HexColor('#1AFFA940'), borderRadius: BorderRadius.circular(6)),
+              child: Text('Please wait', style: TextStyle(color: HexColor('#FFFFA940'), fontSize: 15)),
+            ),
+          )
         ],
       ),
     );
@@ -218,7 +221,7 @@ class ProductStatusItem {
                 children: [
                   Text('Refund amount', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
                   SizedBox(height: 12),
-                  Text('PHP ${product.maxMoneyFormat}', style: TextStyle(color: Constant.themeColor, fontSize: 20, fontFamily: 'Impact'))
+                  Text('PHP ${Global.formatCurrency(product.money ?? 0)}', style: TextStyle(color: Constant.themeColor, fontSize: 20, fontFamily: 'Impact'))
                 ],
               ),
             ),
@@ -226,7 +229,7 @@ class ProductStatusItem {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text('1st payment time', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
+                  Text('Payment time', style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
                   SizedBox(height: 12),
                   Text(product.backTimeDate,
                       style: TextStyle(color: product.overdueDays > 0 ? HexColor('#FFFF3232') : HexColor('#FF102729'), fontSize: 20, fontWeight: FontWeight.w600))

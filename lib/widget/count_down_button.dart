@@ -129,7 +129,5 @@ class CountDownButtonState extends State<CountDownButton> {
   void dispose() {
     super.dispose();
     timer?.cancel();
-    // Global.prefs?.setBool(widget.session + boolSuffix, _isStart ?? false);
-    // Global.prefs?.setInt(widget.session + intSuffix, _startTimeStamp ?? 0);
   }
 }

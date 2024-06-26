@@ -78,6 +78,8 @@ class AddEWalletController extends GetxController {
     String walletNumber = walletNoController.text.trim();
     String repeatNumber = repeatNoController.text.trim();
 
+    if (RegExp('[\\-\\*\\&\\%\$\\@\\#\\^\\.\\~\\?\\)\\(\\[\\]\\+\\=\\!]').hasMatch(fullName)) return CommonSnackBar.showSnackBar('Please input your name in the correct format!');
+
     if (fullName.isEmpty) return CommonSnackBar.showSnackBar('Full name item cannot be empty!');
     if (selectedWalletCategory == null) return CommonSnackBar.showSnackBar('Please select E-Wallet name!');
 

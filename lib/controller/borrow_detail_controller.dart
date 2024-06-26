@@ -20,6 +20,7 @@ class BorrowDetailController extends GetxController {
   var withdrawMethod = ''.obs;
   var isShowServiceFee = false.obs;
   var borrowPeriodList = <BorrowDetailModelRepayData>[].obs;
+  var isShowIndicator = false.obs;
 
   WithdrawMethodModel? defaultWithdrawMethod;
 
@@ -41,6 +42,7 @@ class BorrowDetailController extends GetxController {
   void _fetchDetailData(Map<String, dynamic> params) async {
     BorrowDetailModel? detailModel = await NetworkService.fetchBorrowDetail(params);
     if (detailModel == null) return;
+    isShowIndicator.value = detailModel.repayData.length > 1;
     curDetailModel = detailModel;
     loanAmount.value = Global.formatCurrency(detailModel.loanAmount);
     if (detailModel.serviceFee > 0) isShowServiceFee.value = true;

@@ -19,6 +19,7 @@ class RepaymentIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonView(
       title: 'Repayment Details',
+      isShowConnectCustomers: true,
       child: Obx(() => Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -79,20 +80,21 @@ class RepaymentIndex extends StatelessWidget {
                           ]),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 30),
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(color: HexColor('#14FFA940'), borderRadius: BorderRadius.circular(12)),
-                        child: Row(children: [
-                          Icon(Icons.error, color: HexColor('#FFFFA940'), size: 24),
-                          SizedBox(width: 8),
-                          Expanded(
-                              child: Text(
-                            'After the second installment of the loan is paid off on time, other installments of the loan can be forgiven.',
-                            style: TextStyle(color: HexColor('#FFFFA940'), fontSize: 13),
-                          ))
-                        ]),
-                      )
+                      if (controller.isMultipleTerm.value)
+                        Container(
+                          margin: EdgeInsets.only(bottom: 30),
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(color: HexColor('#14FFA940'), borderRadius: BorderRadius.circular(12)),
+                          child: Row(children: [
+                            Icon(Icons.error, color: HexColor('#FFFFA940'), size: 24),
+                            SizedBox(width: 8),
+                            Expanded(
+                                child: Text(
+                              'After the second installment of the loan is paid off on time, other installments of the loan can be forgiven.',
+                              style: TextStyle(color: HexColor('#FFFFA940'), fontSize: 13),
+                            ))
+                          ]),
+                        )
                     ],
                   ),
                 ),
@@ -146,8 +148,9 @@ class RepaymentIndex extends StatelessWidget {
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(children: [
               Text('Term ${index + 1}', style: TextStyle(color: payData.isOvertime ? HexColor('#FFFF3232') : HexColor('#FF102729'), fontSize: 15, fontWeight: FontWeight.w600)),
-              if (payData.isOvertime)
+              if (payData.isOvertime && index == 0)
                 Container(
+                  margin: EdgeInsets.only(left: 12),
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                   decoration: BoxDecoration(color: HexColor('#14FF3232'), borderRadius: BorderRadius.circular(100)),
                   child: Text('Overdue ${payData.overtimeDays} days', style: TextStyle(color: HexColor('#FFFF3232'), fontSize: 13)),

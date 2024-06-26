@@ -17,7 +17,7 @@ class BorrowRateModel {
   late List<BorrowRateModelUserData> userData;
 
   String get maxPriceFormat {
-    return NumberFormat('0,000').format(int.parse(maxPrice));
+    return 'PHP ${NumberFormat('0,000').format(int.parse(maxPrice))}';
   }
 
   BorrowRateModel();

@@ -115,22 +115,26 @@ class BorrowIndex extends StatelessWidget {
                       _generateTextWidget('Warming Tips:'),
                       _generateTextWidget('1. You can choose the required amount and loan date according to your needs.'),
                       _generateTextWidget('2. Repay on time, you can get a higher loan amount and a longer loan term next time.'),
-                      SizedBox(height: 32),
-                      TextButton(
-                        onPressed: controller.confirmWithdraw,
-                        child: Container(
-                          width: double.infinity,
-                          height: 35,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(color: Constant.themeColor, borderRadius: BorderRadius.circular(100)),
-                          child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
-                        ),
-                      ),
-                      SizedBox(height: 55)
                     ],
                   ),
                 ),
-              )
+              ),
+              // SizedBox(height: 32),
+              // ,
+              // SizedBox(height: 55),
+              SafeArea(
+                child: TextButton(
+                  onPressed: controller.confirmWithdraw,
+                  child: Container(
+                    width: double.infinity,
+                    height: 35,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(color: Constant.themeColor, borderRadius: BorderRadius.circular(100)),
+                    child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
             ])),
       ),
     );

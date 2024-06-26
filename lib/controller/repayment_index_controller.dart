@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/models/repayment_detail_model.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
@@ -33,6 +34,7 @@ class RepaymentIndexController extends GetxController {
       finalRepaymentAmount.value = 'PHP ${Global.formatCurrency(detailModel.finalAmount - detailModel.repaidAmount)}';
       _isFullPayment = true;
     } else {
+      isMultipleTerm.value = true;
       finalRepaymentAmount.value = 'PHP ${Global.formatCurrency(detailModel.currentAmount - detailModel.repaidAmount)}';
     }
 
@@ -135,7 +137,7 @@ class RepaymentIndexController extends GetxController {
                     SizedBox(height: 16),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       Text('Repayment Date', style: TextStyle(color: HexColor('#FF102729'), fontSize: 16)),
-                      Text(detailModel.formattedBackTime, style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
+                      Text(DateFormat('MM/dd/yyyy').format(DateTime.now()), style: TextStyle(color: HexColor('#FF102729'), fontSize: 15)),
                     ]),
                   ])),
               Container(

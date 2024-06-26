@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/models/borrow_rate_model.dart';
+
 // import 'package:paghiram_loan/models/borrow_detail_model.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/service/index.dart';
@@ -51,6 +52,7 @@ class BorrowIndexController extends GetxController {
     canBorrowAmount.value = Global.formatCurrency(currentUserData.info.money);
 
     slierMaxValue.value = (currentUserData.info.data.length - 1) / 1.0;
+    sliderValueChangedEnd(slierMaxValue.value);
 
     int currentAmount = currentUserData.info.money;
     for (var item in currentUserData.info.data) {
@@ -59,8 +61,6 @@ class BorrowIndexController extends GetxController {
         break;
       }
     }
-
-    debugPrint(_currentInfoData.toString());
   }
 
   void termSelectAction(int index) {
@@ -72,7 +72,8 @@ class BorrowIndexController extends GetxController {
   void sliderValueChanged(double value) {
     sliderValue.value = value;
     BorrowRateModelUserDataInfoData dataInfoData = currentUserData.info.data[value.truncate()];
-    canBorrowAmount.value = Global.formatCurrency(dataInfoData.amount);
+    _currentBorrowAmount = dataInfoData.amount;
+    canBorrowAmount.value = Global.formatCurrency(_currentBorrowAmount);
   }
 
   void sliderValueChangedEnd(double value) {
@@ -83,17 +84,18 @@ class BorrowIndexController extends GetxController {
         if (item.amount == currentUserData.info.money) {
           currentMaxData = item;
         }
-        _currentInfoData = currentMaxData;
-        canBorrowAmount.value = Global.formatCurrency(currentMaxData.amount);
-        sliderValue.value = currentUserData.info.data.indexOf(currentMaxData) / 1.0;
       }
+      _currentInfoData = currentMaxData;
+      _currentBorrowAmount = currentMaxData.amount;
+      canBorrowAmount.value = Global.formatCurrency(_currentBorrowAmount);
+      sliderValue.value = currentUserData.info.data.indexOf(currentMaxData) / 1.0;
     }
   }
 
   void confirmWithdraw() {
     Map<String, dynamic> params = {};
     params['days'] = currentUserData.days;
-    params['price'] = currentUserData.info.money.toString();
+    params['price'] = _currentBorrowAmount.toString();
     params['pro_id'] = currentUserData.info.proId;
     params['product_id'] = productId;
     params['rate_id'] = _currentInfoData.rid;
@@ -101,4 +103,6 @@ class BorrowIndexController extends GetxController {
 
     Get.toNamed(ApplicationRoutes.borrowDetail, arguments: params);
   }
+
+  late int _currentBorrowAmount;
 }

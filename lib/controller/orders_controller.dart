@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:paghiram_loan/models/order_model.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/service/index.dart';
+import 'package:paghiram_loan/util/global.dart';
 
 class OrdersController extends GetxController {
   var orders = <OrderModel>[].obs;
@@ -9,17 +10,21 @@ class OrdersController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _fetchOrderList();
+    fetchOrderList();
   }
 
-  void _fetchOrderList() async {
-    List<OrderModel>? list = await NetworkService.getOrderList();
-    if (list == null) return;
-    orders.value = list;
+  void fetchOrderList() async {
+    if (Global.isLogin) {
+      List<OrderModel>? list = await NetworkService.getOrderList();
+      if (list == null) return;
+      orders.value = list;
+    } else {
+      orders.value = [];
+    }
   }
 
   void repaymentAction(String productId) {
-    Get.toNamed(ApplicationRoutes.repaymentIndex, arguments: productId)?.then((value) => _fetchOrderList());
+    Get.toNamed(ApplicationRoutes.repaymentIndex, arguments: productId)?.then((value) => fetchOrderList());
   }
 
   void go2loan() => Get.offAllNamed(ApplicationRoutes.home);

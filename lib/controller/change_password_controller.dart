@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
@@ -5,7 +7,6 @@ import 'package:paghiram_loan/service/index.dart';
 
 import '../util/constant.dart';
 import '../util/global.dart';
-import '../widget/count_down_button.dart';
 
 class ChangePasswordController extends GetxController {
   FocusNode focusNode = FocusNode();
@@ -20,11 +21,15 @@ class ChangePasswordController extends GetxController {
   SnackbarStatus? _snackBarStatus = SnackbarStatus.CLOSED;
 
   String? previousPhoneNum;
-  CountDownButtonState? _countDownButtonState;
 
   void turnPasswordSafetyStatus() => isObscureText.value = !isObscureText.value;
 
   int _enterType = 0;
+
+  var sendBtnTitle = 'Send'.obs;
+  var isSendBtnEnable = true.obs;
+
+  Timer? _countdownTimer;
 
   void changePwdAction() async {
     final phone = phoneEditingController.text.trim();
@@ -58,7 +63,8 @@ class ChangePasswordController extends GetxController {
     }
   }
 
-  void sendVerifyCodeAction(CountDownButtonState state) {
+  void sendSMSCode() {
+    if (!isSendBtnEnable.value) return;
     final phone = phoneEditingController.text.trim();
     if (phone.isEmpty) return _showSnackBarLogic('Mobile number cannot be empty.');
 
@@ -79,9 +85,25 @@ class ChangePasswordController extends GetxController {
         type: VerifyCodeType.changePassword,
         successCallback: () {
           previousPhoneNum = phone;
-          _countDownButtonState = state;
-          state.startTimer();
+          sendBtnTitle.value = '60S';
+          _startCountdown();
         });
+  }
+
+  void _startCountdown() {
+    isSendBtnEnable.value = false;
+    int totalCount = 60;
+    _countdownTimer = Timer.periodic(Duration(seconds: 1), (_) {
+      totalCount--;
+      if (totalCount > 0) {
+        sendBtnTitle.value = totalCount.toString() + 'S';
+      } else {
+        sendBtnTitle.value = 'Send';
+        isSendBtnEnable.value = true;
+        totalCount = 60;
+        _countdownTimer?.cancel();
+      }
+    });
   }
 
   void _showSnackBarLogic(String message) {
@@ -95,7 +117,8 @@ class ChangePasswordController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    phoneEditingController.text = Get.arguments['phone'];
+    _currentPhoneNumber = Get.arguments['phone'];
+    phoneEditingController.text = _currentPhoneNumber;
     _enterType = Get.arguments['type'];
     phoneEditingController.addListener(() {
       isShowSuffix.value = phoneEditingController.text.trim().length > 0 ? true : false;
@@ -111,8 +134,14 @@ class ChangePasswordController extends GetxController {
         }
       }
 
-      if (phoneEditingController.text != previousPhoneNum) {
-        _countDownButtonState?.stopCountDown();
+      if (_enterType != 0) {
+        phoneEditingController.text = _currentPhoneNumber;
+      }
+    });
+
+    verifyCodeEditingController.addListener(() {
+      if (verifyCodeEditingController.text.trim().length > 4) {
+        verifyCodeEditingController.text = verifyCodeEditingController.text.substring(0, 4);
       }
     });
 
@@ -128,7 +157,9 @@ class ChangePasswordController extends GetxController {
     focusNode.dispose();
     phoneEditingController.dispose();
     verifyCodeEditingController.dispose();
-    _countDownButtonState?.dispose();
+    _countdownTimer?.cancel();
     super.onClose();
   }
+
+  late String _currentPhoneNumber;
 }
