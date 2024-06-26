@@ -20,7 +20,7 @@ import 'package:get/get.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:scroll_datetime_picker/scroll_datetime_picker.dart';
 
-import '../util/global.dart';
+import '../../util/global.dart';
 
 class CardOcrController extends GetxController {
   var cardType = ''.obs;

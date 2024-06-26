@@ -8,11 +8,11 @@ import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/util/global.dart';
 import 'package:paghiram_loan/util/verify_selection_util.dart';
 
-import '../models/certification_entity.dart';
-import '../models/certify_selection_data_entity.dart';
-import '../router/application_routes.dart';
-import '../util/constant.dart';
-import '../util/file_manager.dart';
+import '../../models/certification_entity.dart';
+import '../../models/certify_selection_data_entity.dart';
+import '../../router/application_routes.dart';
+import '../../util/constant.dart';
+import '../../util/file_manager.dart';
 
 class PersonalInfoController extends GetxController with WidgetsBindingObserver {
   late CertifySelectionDataEntity optionalsData;
@@ -313,7 +313,7 @@ class PersonalInfoController extends GetxController with WidgetsBindingObserver 
       return CommonSnackBar.showSnackBar('Please enter a valid viber phone number.');
     }
 
-    if(viberPhone.length < 10) {
+    if (viberPhone.length < 10) {
       return CommonSnackBar.showSnackBar('Please enter a valid viber phone number.');
     }
 

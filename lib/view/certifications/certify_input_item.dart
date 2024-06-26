@@ -9,6 +9,7 @@ class CertifyInputItem extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool inputEnable;
   final void Function()? onEditingCompleted;
+  final void Function(String text)? onChanged;
 
   const CertifyInputItem(
     this.title, {
@@ -19,6 +20,7 @@ class CertifyInputItem extends StatelessWidget {
     this.keyboardType,
     this.onEditingCompleted,
     this.inputEnable = true,
+    this.onChanged,
   });
 
   @override
@@ -43,6 +45,7 @@ class CertifyInputItem extends StatelessWidget {
                 style: TextStyle(fontSize: 15, color: HexColor('#FF3B414B')),
                 scrollPadding: EdgeInsets.zero,
                 onEditingComplete: onEditingCompleted,
+                onChanged: onChanged,
                 decoration: InputDecoration(
                     hintText: 'Please fill in', border: InputBorder.none, hintStyle: TextStyle(color: HexColor('#ffcccccc')), contentPadding: EdgeInsets.all(0), isDense: true),
                 textInputAction: TextInputAction.done,

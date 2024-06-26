@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/common/common_view.dart';
-import 'package:paghiram_loan/controller/basic_info_controller.dart';
+import 'package:paghiram_loan/controller/certification/basic_info_controller.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/view/certifications/certify_input_item.dart';
 import 'package:paghiram_loan/view/certifications/certify_selection_item.dart';
@@ -56,13 +56,13 @@ class BasicInfoView extends StatelessWidget {
                             ),
                             if (controller.isShowWorkDetail.value)
                               CertifyInputItem(
-
                                 'Company Name',
                                 key: GlobalObjectKey(4),
                                 isEmpty: controller.isNameEmpty.value,
                                 inputController: controller.companyNameInputController,
                                 inputNode: controller.nameNode,
                                 onEditingCompleted: controller.companyNameEditingCompleted,
+                                onChanged: controller.companyNameOnChanged,
                               ),
                             if (controller.isShowWorkDetail.value)
                               CertifySelectionItem(
@@ -112,6 +112,7 @@ class BasicInfoView extends StatelessWidget {
                                 inputController: controller.addressInputController,
                                 inputNode: controller.addressNode,
                                 onEditingCompleted: controller.detailAddressEditingCompleted,
+                                onChanged: controller.completeAddressOnChanged,
                               ),
                             Container(
                                 padding: EdgeInsets.fromLTRB(10, 20, 10, 34),

@@ -202,7 +202,6 @@ class LoginController extends GetxController {
         password: pwd,
         verifyCode: verifyCode,
         successCallback: (data) {
-          // _countDownState?.stopCountDown();
           verifyCodeInputController.clear();
           passwordInputController.clear();
           isCheckedPolicy.value = false;

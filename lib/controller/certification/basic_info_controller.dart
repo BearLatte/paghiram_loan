@@ -14,7 +14,7 @@ import 'package:paghiram_loan/util/hex_color.dart';
 import 'package:paghiram_loan/util/verify_selection_util.dart';
 import 'package:paghiram_loan/widget/select_day_widget.dart';
 
-class BasicInfoController extends GetxController with WidgetsBindingObserver {
+class BasicInfoController extends GetxController {
   var isShowWorkDetail = false.obs;
   var companyNameInputController = TextEditingController();
   var addressInputController = TextEditingController();
@@ -80,21 +80,12 @@ class BasicInfoController extends GetxController with WidgetsBindingObserver {
 
   @override
   void onClose() {
-    super.onClose();
     companyNameInputController.dispose();
     addressInputController.dispose();
     nameNode.dispose();
     addressNode.dispose();
-  }
-
-  @override
-  void didChangeMetrics() {
-    super.didChangeMetrics();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      certificationModel?.companyName = companyNameInputController.text;
-      certificationModel?.wkAddr = addressInputController.text;
-      _saveInfo();
-    });
+    // WidgetsBinding.instance.removeObserver(this);
+    super.onClose();
   }
 
   void backAction() async {
@@ -252,6 +243,16 @@ class BasicInfoController extends GetxController with WidgetsBindingObserver {
     certificationModel?.companyName = companyNameInputController.text;
     _saveInfo();
     if (experience.value.isEmpty) go2selectExperience();
+  }
+
+  void companyNameOnChanged(String companyName) {
+    certificationModel?.companyName = companyNameInputController.text;
+    _saveInfo();
+  }
+
+  void completeAddressOnChanged(String completeAddress) {
+    certificationModel?.wkAddr = addressInputController.text;
+    _saveInfo();
   }
 
   void go2selectExperience() async {

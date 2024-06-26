@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_view.dart';
-import 'package:paghiram_loan/controller/contact_controller.dart';
+import 'package:paghiram_loan/controller/certification/contact_controller.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/view/certifications/certify_selection_item.dart';
 import 'package:paghiram_loan/view/certifications/section_header.dart';

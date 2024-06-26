@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:paghiram_loan/controller/basic_info_controller.dart';
-import 'package:paghiram_loan/controller/personal_info_controller.dart';
+import 'package:paghiram_loan/controller/certification/basic_info_controller.dart';
+import 'package:paghiram_loan/controller/certification/personal_info_controller.dart';
 import 'package:paghiram_loan/models/city_model.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 

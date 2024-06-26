@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_view.dart';
-import 'package:paghiram_loan/controller/province_select_controller.dart';
+import 'package:paghiram_loan/controller/certification/province_select_controller.dart';
 import 'package:paghiram_loan/models/city_model.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
 import 'package:paghiram_loan/view/certifications/city_selection_item.dart';
