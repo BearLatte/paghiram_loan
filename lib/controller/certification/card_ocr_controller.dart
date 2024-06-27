@@ -102,7 +102,11 @@ class CardOcrController extends GetxController {
       confirmText: 'Continue',
     );
     if (result == 'confirm') {
-      Get.until((route) => route.settings.name == ApplicationRoutes.certificationIndex);
+      if (ocrType.value == 1) {
+        Get.back();
+      } else {
+        Get.until((route) => route.settings.name == ApplicationRoutes.certificationIndex);
+      }
     }
   }
 

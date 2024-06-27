@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
+import 'package:paghiram_loan/models/product_model_entity.dart';
 import 'package:paghiram_loan/models/repayment_method_model.dart';
-import 'package:paghiram_loan/router/application_pages.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/service/index.dart';
+import 'package:paghiram_loan/view/loan/product_status_item.dart';
+
+import '../../models/base_response.dart';
+import '../../router/application_pages.dart';
 
 class PayCoolsMethodController extends GetxController {
   var repaymentAmount = ''.obs;
@@ -58,6 +62,7 @@ class PayCoolsMethodController extends GetxController {
     repaymentAmount.value = Get.arguments['repaymentAmount'];
     _apdId = Get.arguments['gid'];
     _repaymentType = Get.arguments['type'];
+    _productId = Get.arguments['productId'];
   }
 
   void itemSelected(RepaymentMethodModel item) async {
@@ -95,6 +100,22 @@ class PayCoolsMethodController extends GetxController {
     Get.toNamed(ApplicationRoutes.webView, arguments: {'title': item.title, 'url': url});
   }
 
+  void backAction() async {
+    BaseResponse? response = await NetworkService.fetchHomeData();
+    List<ProductModelEntity> products = response?.data ?? [];
+    late ProductModelEntity product;
+    products.forEach((item) {
+      if (item.id == _productId) product = item;
+    });
+
+    if (product.productState == ProductStatus.reloan) {
+      Get.until((route) => route.settings.name == ApplicationPages.initial);
+    } else {
+      Get.back();
+    }
+  }
+
   late String _apdId;
   late String _repaymentType;
+  late String _productId;
 }

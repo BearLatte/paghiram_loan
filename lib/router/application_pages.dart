@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:paghiram_loan/controller/add_bank_card_controller.dart';
 import 'package:paghiram_loan/controller/add_e_wallet_controller.dart';
 import 'package:paghiram_loan/controller/add_note_controller.dart';
-import 'package:paghiram_loan/controller/bar_code_view_controller.dart';
+import 'package:paghiram_loan/controller/repayment/bar_code_view_controller.dart';
 import 'package:paghiram_loan/controller/borrow_detail_controller.dart';
 import 'package:paghiram_loan/controller/borrow_index_controller.dart';
 import 'package:paghiram_loan/controller/certification/card_ocr_controller.dart';
@@ -22,12 +22,11 @@ import 'package:paghiram_loan/controller/login_controller.dart';
 import 'package:paghiram_loan/controller/notes_tab_controller.dart';
 import 'package:paghiram_loan/controller/certification/basic_info_controller.dart';
 import 'package:paghiram_loan/controller/orders_controller.dart';
-import 'package:paghiram_loan/controller/pay_cools_method_controller.dart';
+import 'package:paghiram_loan/controller/repayment/pay_cools_method_controller.dart';
 import 'package:paghiram_loan/controller/certification/personal_info_controller.dart';
 import 'package:paghiram_loan/controller/certification/province_select_controller.dart';
-import 'package:paghiram_loan/controller/repayment_index_controller.dart';
-import 'package:paghiram_loan/controller/repayment_instruction_controller.dart';
-import 'package:paghiram_loan/controller/sky_pay_method_controller.dart';
+import 'package:paghiram_loan/controller/repayment/repayment_index_controller.dart';
+import 'package:paghiram_loan/controller/repayment/sky_pay_method_controller.dart';
 import 'package:paghiram_loan/controller/settings_controller.dart';
 import 'package:paghiram_loan/controller/web_view_controller.dart';
 import 'package:paghiram_loan/controller/withdraw_confirm_controller.dart';
@@ -67,6 +66,8 @@ import 'package:paghiram_loan/view/profile/about_us_view.dart';
 import 'package:paghiram_loan/view/profile/delete_account_view.dart';
 import 'package:paghiram_loan/view/profile/web_view.dart';
 import 'package:paghiram_loan/view/profile/settings_view.dart';
+
+import '../controller/repayment/repayment_instruction_controller.dart';
 
 class ApplicationPages {
   static const initial = ApplicationRoutes.home;

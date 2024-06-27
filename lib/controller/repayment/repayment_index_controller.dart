@@ -164,12 +164,14 @@ class RepaymentIndexController extends GetxController {
           'repaymentAmount': repaymentAmount,
           'type': _isFullPayment ? '1' : '3',
           'gid': detailModel.adId,
+          'productId': _productId,
         });
       case 2:
         Get.toNamed(ApplicationRoutes.repaymentMethodPayCools, arguments: {
           'repaymentAmount': repaymentAmount,
           'type': _isFullPayment ? '1' : '3',
           'gid': detailModel.adId,
+          'productId': _productId,
         });
     }
   }

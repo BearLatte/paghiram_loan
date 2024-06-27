@@ -8,6 +8,11 @@ import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/service/index.dart';
 import 'package:paghiram_loan/util/global.dart';
 
+import '../../models/base_response.dart';
+import '../../models/product_model_entity.dart';
+import '../../router/application_pages.dart';
+import '../../view/loan/product_status_item.dart';
+
 class BarCodeViewController extends GetxController {
   var isShowBarCode = false.obs;
   var title = ''.obs;
@@ -35,6 +40,21 @@ class BarCodeViewController extends GetxController {
       String photoString = await NetworkService.generateBarcode(gid: model.goid, type: _repaymentType);
       Uint8List bytes = base64Decode(photoString);
       barcodeData.value = bytes;
+    }
+  }
+
+  void backAction() async {
+    BaseResponse? response = await NetworkService.fetchHomeData();
+    List<ProductModelEntity> products = response?.data ?? [];
+    late ProductModelEntity product;
+    products.forEach((item) {
+      if (item.id == _productId) product = item;
+    });
+
+    if (product.productState == ProductStatus.reloan) {
+      Get.until((route) => route.settings.name == ApplicationPages.initial);
+    } else {
+      Get.back();
     }
   }
 
@@ -69,4 +89,5 @@ class BarCodeViewController extends GetxController {
 
   late String _repaymentType;
   late String _gid;
+  late String _productId;
 }

@@ -43,6 +43,7 @@ class SkyPayMethodController extends GetxController {
       'isShowBarCode': item.needsShowBarCode,
       'type': Get.arguments['type'],
       'gid': Get.arguments['gid'],
+      'productId': Get.arguments['productId'],
     });
   }
 }

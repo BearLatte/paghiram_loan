@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/common/common_view.dart';
-import 'package:paghiram_loan/controller/bar_code_view_controller.dart';
+import 'package:paghiram_loan/controller/repayment/bar_code_view_controller.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
 
@@ -18,6 +18,7 @@ class BarCodeView extends StatelessWidget {
     return CommonView(
       title: Get.arguments['title'],
       isShowConnectCustomers: true,
+      navLeadingAction: controller.backAction,
       child: SingleChildScrollView(
         padding: EdgeInsets.all(12),
         child: Obx(

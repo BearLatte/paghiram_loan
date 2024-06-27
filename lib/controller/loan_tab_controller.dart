@@ -91,7 +91,7 @@ class LoanTabController extends GetxController {
         Get.toNamed(ApplicationRoutes.login)?.then((value) => fetchData());
         return;
       case ProductStatus.rollback:
-        Get.toNamed(ApplicationRoutes.cardOCR, arguments: {'type': 1, 'productId': product.id});
+        Get.toNamed(ApplicationRoutes.cardOCR, arguments: {'type': 1, 'productId': product.id})?.then((_) => fetchData());
         return;
       case ProductStatus.reject:
         go2Feedback();

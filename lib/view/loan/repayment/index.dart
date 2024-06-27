@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/common/common_view.dart';
-import 'package:paghiram_loan/controller/repayment_index_controller.dart';
+import 'package:paghiram_loan/controller/repayment/repayment_index_controller.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
 
@@ -59,8 +59,12 @@ class RepaymentIndex extends StatelessWidget {
                       ),
                       ...List.generate(controller.repaymentTermList.length, (index) {
                         if (index < 2) {
-                          return _generateRepaymentTermItem(controller.repaymentTermList.length == 5 ? index + 1 : index,
-                              payData: controller.repaymentTermList[index], itemCheckAction: controller.selectedTermAction);
+                          return _generateRepaymentTermItem(
+                            controller.repaymentTermList.length == 5 ? index + 1 : index,
+                            isFirst: index == 0,
+                            payData: controller.repaymentTermList[index],
+                            itemCheckAction: controller.selectedTermAction,
+                          );
                         } else {
                           if (controller.isShowAllTerms.value) {
                             return _generateRepaymentTermItem(controller.repaymentTermList.length == 5 ? index + 1 : index,
@@ -136,7 +140,8 @@ class RepaymentIndex extends StatelessWidget {
     );
   }
 
-  Widget _generateRepaymentTermItem(int index, {required RepaymentDetailModelPayData payData, void Function(RepaymentDetailModelPayData data)? itemCheckAction}) {
+  Widget _generateRepaymentTermItem(int index,
+      {required RepaymentDetailModelPayData payData, bool isFirst = false, void Function(RepaymentDetailModelPayData data)? itemCheckAction}) {
     return Container(
       margin: EdgeInsets.only(top: 12),
       clipBehavior: Clip.hardEdge,
@@ -147,8 +152,9 @@ class RepaymentIndex extends StatelessWidget {
           decoration: BoxDecoration(border: Border(bottom: BorderSide(color: HexColor('#FFE6E6E6'), width: 0.5))),
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(children: [
-              Text('Term ${index + 1}', style: TextStyle(color: payData.isOvertime ? HexColor('#FFFF3232') : HexColor('#FF102729'), fontSize: 15, fontWeight: FontWeight.w600)),
-              if (payData.isOvertime && index == 0)
+              Text('Term ${index + 1}',
+                  style: TextStyle(color: payData.isOvertime && isFirst ? HexColor('#FFFF3232') : HexColor('#FF102729'), fontSize: 15, fontWeight: FontWeight.w600)),
+              if (payData.isOvertime && isFirst)
                 Container(
                   margin: EdgeInsets.only(left: 12),
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/common/common_view.dart';
 import 'package:get/get.dart';
-import 'package:paghiram_loan/controller/pay_cools_method_controller.dart';
+import 'package:paghiram_loan/controller/repayment/pay_cools_method_controller.dart';
 
 import '../../../util/constant.dart';
 import '../../../util/hex_color.dart';
@@ -16,6 +16,7 @@ class PayCoolsMethodView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonView(
       title: 'Loan payment',
+      navLeadingAction: controller.backAction,
       child: Obx(
         () => Column(
           children: [

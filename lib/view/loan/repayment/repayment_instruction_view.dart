@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/common/common_view.dart';
-import 'package:paghiram_loan/controller/repayment_instruction_controller.dart';
+
+import '../../../controller/repayment/repayment_instruction_controller.dart';
 
 class RepaymentInstructionView extends StatelessWidget {
   RepaymentInstructionView({super.key});
