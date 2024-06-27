@@ -78,7 +78,7 @@ class BorrowDetailController extends GetxController {
       WithdrawMethodModel methodModel = WithdrawMethodModel();
       bankCards.forEach((item) {
         if(item.isDefault == '1') {
-          withdrawMethod.value = item.formattedBankNumber;
+          withdrawMethod.value = item.formattedNoPrefixNumber;
           defaultWithdrawMethod = item;
         }
       });

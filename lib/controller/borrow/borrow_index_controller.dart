@@ -7,7 +7,7 @@ import 'package:paghiram_loan/router/application_routes.dart';
 import 'package:paghiram_loan/service/index.dart';
 import 'package:paghiram_loan/util/global.dart';
 
-import '../common/common_snack_bar.dart';
+import '../../common/common_snack_bar.dart';
 
 class BorrowIndexController extends GetxController {
   // product_id

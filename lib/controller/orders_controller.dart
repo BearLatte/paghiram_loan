@@ -16,7 +16,10 @@ class OrdersController extends GetxController {
   void fetchOrderList() async {
     if (Global.isLogin) {
       List<OrderModel>? list = await NetworkService.getOrderList();
-      if (list == null) return;
+      if (list == null) {
+        orders.value = [];
+        return;
+      }
       orders.value = list;
     } else {
       orders.value = [];

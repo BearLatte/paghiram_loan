@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_view.dart';
-import 'package:paghiram_loan/controller/borrow_index_controller.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
 
-import '../../../common/common_image.dart';
-import '../../../router/application_routes.dart';
+import '../../../controller/borrow/borrow_index_controller.dart';
 
 class BorrowIndex extends StatelessWidget {
   BorrowIndex({super.key});

@@ -3,8 +3,7 @@ import 'package:paghiram_loan/controller/add_bank_card_controller.dart';
 import 'package:paghiram_loan/controller/add_e_wallet_controller.dart';
 import 'package:paghiram_loan/controller/add_note_controller.dart';
 import 'package:paghiram_loan/controller/repayment/bar_code_view_controller.dart';
-import 'package:paghiram_loan/controller/borrow_detail_controller.dart';
-import 'package:paghiram_loan/controller/borrow_index_controller.dart';
+import 'package:paghiram_loan/controller/borrow/borrow_detail_controller.dart';
 import 'package:paghiram_loan/controller/certification/card_ocr_controller.dart';
 import 'package:paghiram_loan/controller/certification/certification_index_controller.dart';
 import 'package:paghiram_loan/controller/change_password_controller.dart';
@@ -67,6 +66,7 @@ import 'package:paghiram_loan/view/profile/delete_account_view.dart';
 import 'package:paghiram_loan/view/profile/web_view.dart';
 import 'package:paghiram_loan/view/profile/settings_view.dart';
 
+import '../controller/borrow/borrow_index_controller.dart';
 import '../controller/repayment/repayment_instruction_controller.dart';
 
 class ApplicationPages {
