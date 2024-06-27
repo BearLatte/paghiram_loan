@@ -34,8 +34,9 @@ target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   pod 'CryptoSwift', '~> 1.7.1'
     # Specify 'AAINetwork' and 'AAILiveness'
-    pod 'AAINetwork', :http => 'https://prod-guardian-cv.oss-ap-southeast-5.aliyuncs.com/sdk/iOS-libraries/AAINetwork/AAINetwork-V1.0.2.tar.bz2', type: :tbz
-    pod 'AAILiveness', :http => 'https://prod-guardian-cv.oss-ap-southeast-5.aliyuncs.com/sdk/iOS-liveness-detection/3.1.2/iOS-Liveness-SDK-V3.1.2.tar.bz2', type: :tbz
+    pod 'AAILiveness', :http => 'https://prod-guardian-cv.oss-ap-southeast-5.aliyuncs.com/sdk/iOS-liveness-detection/3.1.3/iOS-Liveness-SDK-V3.1.3.tar.bz2' , type: :tbz
+    pod 'AAINetwork', :http => 'https://prod-guardian-cv.oss-ap-southeast-5.aliyuncs.com/sdk/iOS-libraries/AAINetwork/AAINetwork-V1.0.2-PrivacyInfo.tar.bz2', type: :tbz
+    pod 'RyukieSwifty/ScreenShield'
   target 'RunnerTests' do
     inherit! :search_paths
   end

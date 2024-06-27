@@ -1,10 +1,19 @@
 import UIKit
+import RyukieSwifty
 import Flutter
 import CryptoSwift
+
+var isGlobalSecureScreen = false
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
     override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window.backgroundColor = .white
+        let vc = PLFViewController()
+        window.rootViewController = vc
+        
         GeneratedPluginRegistrant.register(with: self)
         currentController = window.rootViewController as? FlutterViewController
         methodChannel = FlutterMethodChannel(name: "paghiram.method.channel", binaryMessenger: currentController as! FlutterBinaryMessenger)
@@ -20,6 +29,14 @@ import CryptoSwift
                 let map = call.arguments as! [String : String]
                 let cardType = map["type"] ?? ""
                 self.go2takeIDCard(type: cardType)
+            }
+            
+            if call.method == "changeSecureScreenStatus" {
+                let arguments = call.arguments as! [String : Any]
+                isGlobalSecureScreen = arguments["isSecureScreen"] as! Bool
+                let rootController = self.window.rootViewController as? PLFViewController
+                rootController?.switchViewStatus()
+                resut([:])
             }
         }
         
@@ -39,6 +56,39 @@ extension AppDelegate {
         }
         cameraView.modalPresentationStyle = .fullScreen
         currentController.present(cameraView, animated: true)
+    }
+}
+
+class PLFViewController : FlutterViewController {
+    
+    var isSecureScreen : Bool {
+        return isGlobalSecureScreen
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let v = view
+        v?.backgroundColor = UIColor.white
+        v?.frame = .zero
+        view = makeSecureView();
+        view.addSubview(v!)
+    }
+    
+    
+    func switchViewStatus() {
+        let v = view.subviews[0]
+        view = makeSecureView()
+        view.addSubview(v)
+    }
+    
+    private func makeSecureView() -> UIView? {
+        let tf = UITextField()
+        tf.isSecureTextEntry = isSecureScreen
+        let fv = tf.subviews.first
+        fv?.subviews.forEach{ $0.removeFromSuperview() }
+        fv?.isUserInteractionEnabled = true
+        return fv
     }
 }
 

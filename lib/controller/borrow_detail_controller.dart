@@ -24,10 +24,11 @@ class BorrowDetailController extends GetxController {
 
   WithdrawMethodModel? defaultWithdrawMethod;
 
+
   late BorrowDetailModel curDetailModel;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     _productId = Get.arguments['product_id'];
     _tid = Get.arguments['tid'];
@@ -71,13 +72,27 @@ class BorrowDetailController extends GetxController {
 
   void _fetchDefaultWithdrawMethod() async {
     List<WithdrawMethodModel>? wallets = await NetworkService.fetchUserBoundEWallet();
-    if (wallets == null) return;
-    wallets.forEach((item) {
-      if (item.isDefault == '1') {
-        withdrawMethod.value = item.formattedNoPrefixNumber;
-        defaultWithdrawMethod = item;
-      }
-    });
+    if(wallets == null || wallets.isEmpty) {
+      List<WithdrawMethodModel>? bankCards = await NetworkService.fetchUserBoundBankCards();
+      if(bankCards == null || bankCards.isEmpty) return;
+      WithdrawMethodModel methodModel = WithdrawMethodModel();
+      bankCards.forEach((item) {
+        if(item.isDefault == '1') {
+          withdrawMethod.value = item.formattedBankNumber;
+          defaultWithdrawMethod = item;
+        }
+      });
+    } else {
+      wallets.forEach((item) {
+        if (item.isDefault == '1') {
+          withdrawMethod.value = item.formattedNoPrefixNumber;
+          defaultWithdrawMethod = item;
+        }
+      });
+    }
+
+
+
   }
 
   void checkLoanAgreementStatus() => loanAgreementChecked.value = !loanAgreementChecked.value;

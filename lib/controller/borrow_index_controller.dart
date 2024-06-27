@@ -92,7 +92,7 @@ class BorrowIndexController extends GetxController {
     }
   }
 
-  void confirmWithdraw() {
+  void confirmWithdraw() async {
     Map<String, dynamic> params = {};
     params['days'] = currentUserData.days;
     params['price'] = _currentBorrowAmount.toString();
@@ -101,7 +101,10 @@ class BorrowIndexController extends GetxController {
     params['rate_id'] = _currentInfoData.rid;
     params['tid'] = currentUserData.termId;
 
-    Get.toNamed(ApplicationRoutes.borrowDetail, arguments: params);
+    await Global.channel.invokeMapMethod('changeSecureScreenStatus', {'isSecureScreen': true});
+    Get.toNamed(ApplicationRoutes.borrowDetail, arguments: params)?.then((_) async {
+      await Global.channel.invokeMapMethod('changeSecureScreenStatus', {'isSecureScreen': false});
+    });
   }
 
   late int _currentBorrowAmount;

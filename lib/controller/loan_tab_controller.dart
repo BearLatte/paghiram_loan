@@ -82,7 +82,7 @@ class LoanTabController extends GetxController {
     }
   }
 
-  void productButtonClickedCallBack(ProductModelEntity product) {
+  void productButtonClickedCallBack(ProductModelEntity product) async {
     switch (product.productState) {
       case ProductStatus.unverified:
         go2Certification('product', product.id);
@@ -101,7 +101,11 @@ class LoanTabController extends GetxController {
         Get.toNamed(ApplicationRoutes.borrowIndex, arguments: {'product_id': product.id})?.then((value) => fetchData());
         return;
       case ProductStatus.repayment:
-        Get.toNamed(ApplicationRoutes.repaymentIndex, arguments: product.id)?.then((value) => fetchData());
+        await Global.channel.invokeMapMethod('changeSecureScreenStatus', {'isSecureScreen': true});
+        Get.toNamed(ApplicationRoutes.repaymentIndex, arguments: product.id)?.then((value) async {
+          await Global.channel.invokeMapMethod('changeSecureScreenStatus', {'isSecureScreen': false});
+          fetchData();
+        });
         return;
       case ProductStatus.reloan:
         NetworkService.submitCertificationInfo(product.id, () {
