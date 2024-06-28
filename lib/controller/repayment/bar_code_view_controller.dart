@@ -29,6 +29,7 @@ class BarCodeViewController extends GetxController {
     isShowBarCode.value = Get.arguments['isShowBarCode'];
     _repaymentType = Get.arguments['type'];
     _gid = Get.arguments['gid'];
+    _productId = Get.arguments['productId'];
 
     RepaymentCodeModel? model = await NetworkService.fetchSkyCode(type: _repaymentType, gid: _gid);
     if (model == null) return null;

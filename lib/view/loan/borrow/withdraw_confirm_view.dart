@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:paghiram_loan/controller/withdraw_confirm_controller.dart';
+import 'package:paghiram_loan/controller/borrow/withdraw_confirm_controller.dart';
 import 'package:paghiram_loan/util/global.dart';
 import 'package:paghiram_loan/widget/hide_keyboard_wraper.dart';
 

@@ -4,7 +4,7 @@ import 'package:paghiram_loan/common/common_bottom_sheet.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/service/index.dart';
 
-import '../models/withdraw_method_model.dart';
+import '../../models/withdraw_method_model.dart';
 
 class AddBankCardController extends GetxController {
   TextEditingController fullNameController = TextEditingController();

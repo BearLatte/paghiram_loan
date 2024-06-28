@@ -4,9 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:paghiram_loan/common/common_image.dart';
 import 'package:paghiram_loan/common/common_view.dart';
-import 'package:paghiram_loan/controller/withdraw_method_controller.dart';
 import 'package:paghiram_loan/util/constant.dart';
 import 'package:paghiram_loan/util/hex_color.dart';
+
+import '../../../controller/borrow/withdraw_method_controller.dart';
 
 class WithdrawMethod extends StatelessWidget {
   WithdrawMethod({super.key});

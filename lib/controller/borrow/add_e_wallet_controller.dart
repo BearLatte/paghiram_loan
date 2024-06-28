@@ -6,8 +6,8 @@ import 'package:paghiram_loan/common/common_bottom_sheet.dart';
 import 'package:paghiram_loan/common/common_snack_bar.dart';
 import 'package:paghiram_loan/router/application_routes.dart';
 
-import '../models/withdraw_method_model.dart';
-import '../service/index.dart';
+import '../../models/withdraw_method_model.dart';
+import '../../service/index.dart';
 
 class AddEWalletController extends GetxController {
   var eWalletCategories = <EWalletCategory>[].obs;
